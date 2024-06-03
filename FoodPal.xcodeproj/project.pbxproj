@@ -1,0 +1,413 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */; };
+		B340A4A12C0677C5007B6E9F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A4A02C0677C5007B6E9F /* Home.swift */; };
+		B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B340A4A22C0677C7007B6E9F /* Assets.xcassets */; };
+		B340A4A62C0677C7007B6E9F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B340A4A52C0677C7007B6E9F /* Preview Assets.xcassets */; };
+		B34FC5622C07672A00A279B8 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5612C07672A00A279B8 /* Feed.swift */; };
+		B34FC5642C07679000A279B8 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5632C07679000A279B8 /* Search.swift */; };
+		B34FC5662C0767AF00A279B8 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5652C0767AF00A279B8 /* Favorites.swift */; };
+		B34FC5682C0767B600A279B8 /* AccountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5672C0767B600A279B8 /* AccountInfo.swift */; };
+		B34FC56B2C07740500A279B8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC56A2C07740500A279B8 /* Post.swift */; };
+		B34FC56E2C07BF9300A279B8 /* PostInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC56D2C07BF9300A279B8 /* PostInfo.swift */; };
+		B34FC5702C08AFE200A279B8 /* Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC56F2C08AFE200A279B8 /* Create.swift */; };
+		B34FC58C2C0B5EAA00A279B8 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */; };
+		B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC58E2C0C8E2700A279B8 /* Account.swift */; };
+		B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5902C0C9DBA00A279B8 /* PostView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B340A49B2C0677C5007B6E9F /* FoodPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPalApp.swift; sourceTree = "<group>"; };
+		B340A4A02C0677C5007B6E9F /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		B340A4A22C0677C7007B6E9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B340A4A52C0677C7007B6E9F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B34FC5612C07672A00A279B8 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		B34FC5632C07679000A279B8 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		B34FC5652C0767AF00A279B8 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
+		B34FC5672C0767B600A279B8 /* AccountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfo.swift; sourceTree = "<group>"; };
+		B34FC56A2C07740500A279B8 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		B34FC56D2C07BF9300A279B8 /* PostInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfo.swift; sourceTree = "<group>"; };
+		B34FC56F2C08AFE200A279B8 /* Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Create.swift; sourceTree = "<group>"; };
+		B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		B34FC58D2C0B5F8900A279B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B34FC58E2C0C8E2700A279B8 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		B34FC5902C0C9DBA00A279B8 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B340A4982C0677C5007B6E9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B340A4922C0677C5007B6E9F = {
+			isa = PBXGroup;
+			children = (
+				B340A49D2C0677C5007B6E9F /* FoodPal */,
+				B340A49C2C0677C5007B6E9F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B340A49C2C0677C5007B6E9F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B340A49B2C0677C5007B6E9F /* FoodPal.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B340A49D2C0677C5007B6E9F /* FoodPal */ = {
+			isa = PBXGroup;
+			children = (
+				B34FC58D2C0B5F8900A279B8 /* Info.plist */,
+				B34FC56C2C07BF7400A279B8 /* Views */,
+				B34FC5692C0773F300A279B8 /* Models */,
+				B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */,
+				B340A4A22C0677C7007B6E9F /* Assets.xcassets */,
+				B340A4A42C0677C7007B6E9F /* Preview Content */,
+				B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */,
+			);
+			path = FoodPal;
+			sourceTree = "<group>";
+		};
+		B340A4A42C0677C7007B6E9F /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B340A4A52C0677C7007B6E9F /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B34FC5692C0773F300A279B8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B34FC56A2C07740500A279B8 /* Post.swift */,
+				B34FC58E2C0C8E2700A279B8 /* Account.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B34FC56C2C07BF7400A279B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B34FC5612C07672A00A279B8 /* Feed.swift */,
+				B34FC5652C0767AF00A279B8 /* Favorites.swift */,
+				B34FC5672C0767B600A279B8 /* AccountInfo.swift */,
+				B34FC5632C07679000A279B8 /* Search.swift */,
+				B340A4A02C0677C5007B6E9F /* Home.swift */,
+				B34FC56D2C07BF9300A279B8 /* PostInfo.swift */,
+				B34FC56F2C08AFE200A279B8 /* Create.swift */,
+				B34FC5902C0C9DBA00A279B8 /* PostView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B340A49A2C0677C5007B6E9F /* FoodPal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B340A4A92C0677C7007B6E9F /* Build configuration list for PBXNativeTarget "FoodPal" */;
+			buildPhases = (
+				B340A4972C0677C5007B6E9F /* Sources */,
+				B340A4982C0677C5007B6E9F /* Frameworks */,
+				B340A4992C0677C5007B6E9F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FoodPal;
+			productName = FoodPal;
+			productReference = B340A49B2C0677C5007B6E9F /* FoodPal.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B340A4932C0677C5007B6E9F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					B340A49A2C0677C5007B6E9F = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = B340A4962C0677C5007B6E9F /* Build configuration list for PBXProject "FoodPal" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B340A4922C0677C5007B6E9F;
+			productRefGroup = B340A49C2C0677C5007B6E9F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B340A49A2C0677C5007B6E9F /* FoodPal */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B340A4992C0677C5007B6E9F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B340A4A62C0677C7007B6E9F /* Preview Assets.xcassets in Resources */,
+				B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B340A4972C0677C5007B6E9F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B34FC5702C08AFE200A279B8 /* Create.swift in Sources */,
+				B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */,
+				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
+				B34FC58C2C0B5EAA00A279B8 /* LocationManager.swift in Sources */,
+				B34FC5642C07679000A279B8 /* Search.swift in Sources */,
+				B34FC5622C07672A00A279B8 /* Feed.swift in Sources */,
+				B34FC56E2C07BF9300A279B8 /* PostInfo.swift in Sources */,
+				B34FC5662C0767AF00A279B8 /* Favorites.swift in Sources */,
+				B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */,
+				B34FC56B2C07740500A279B8 /* Post.swift in Sources */,
+				B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */,
+				B34FC5682C0767B600A279B8 /* AccountInfo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B340A4A72C0677C7007B6E9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B340A4A82C0677C7007B6E9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B340A4AA2C0677C7007B6E9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"FoodPal/Preview Content\"";
+				DEVELOPMENT_TEAM = Z4HDAL2M8R;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FoodPal/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location data needed for pickups";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.practice.FoodPal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B340A4AB2C0677C7007B6E9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"FoodPal/Preview Content\"";
+				DEVELOPMENT_TEAM = Z4HDAL2M8R;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FoodPal/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location data needed for pickups";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.practice.FoodPal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B340A4962C0677C5007B6E9F /* Build configuration list for PBXProject "FoodPal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B340A4A72C0677C7007B6E9F /* Debug */,
+				B340A4A82C0677C7007B6E9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B340A4A92C0677C7007B6E9F /* Build configuration list for PBXNativeTarget "FoodPal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B340A4AA2C0677C7007B6E9F /* Debug */,
+				B340A4AB2C0677C7007B6E9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B340A4932C0677C5007B6E9F /* Project object */;
+}
