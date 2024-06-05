@@ -18,10 +18,15 @@ struct Favorites: View {
         NavigationView {
             List {
                 ForEach(posts, id: \.self) {post in
-                    PostView(post: post, dense: false)
+                    ZStack {
+                        PostView(post: post, dense: true)
+                        NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)
+                    }
+                    .listRowBackground(Color.black)
+                    .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                    
                 }
             }
-            .padding(EdgeInsets())
             .navigationTitle("Favorites")
             .navigationBarTitleDisplayMode(.large)
         }

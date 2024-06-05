@@ -1,0 +1,15 @@
+{
+  "originHash" : "08fb70e9c35b644782d1e8fe4620942a2e3e3ea0217f4b022bc4e72816affea9",
+  "pins" : [
+    {
+      "identity" : "capture?tab=readme-ov-file",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/quentinfasquel/Capture?tab=readme-ov-file",
+      "state" : {
+        "revision" : "b80317041b1e623ca2f6d14cc4a95c03c6c6a7bf",
+        "version" : "0.2.0"
+      }
+    }
+  ],
+  "version" : 3
+}

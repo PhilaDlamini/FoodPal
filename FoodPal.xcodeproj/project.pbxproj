@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */; };
 		B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */; };
 		B340A4A12C0677C5007B6E9F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A4A02C0677C5007B6E9F /* Home.swift */; };
 		B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B340A4A22C0677C7007B6E9F /* Assets.xcassets */; };
@@ -21,9 +22,11 @@
 		B34FC58C2C0B5EAA00A279B8 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */; };
 		B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC58E2C0C8E2700A279B8 /* Account.swift */; };
 		B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5902C0C9DBA00A279B8 /* PostView.swift */; };
+		B34FC5942C107D4500A279B8 /* Capture in Frameworks */ = {isa = PBXBuildFile; productRef = B34FC5932C107D4500A279B8 /* Capture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		B340A49B2C0677C5007B6E9F /* FoodPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPalApp.swift; sourceTree = "<group>"; };
 		B340A4A02C0677C5007B6E9F /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -47,12 +50,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B34FC5942C107D4500A279B8 /* Capture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B32CEC4D2C10C3100028C1C4 /* MediaPickers */ = {
+			isa = PBXGroup;
+			children = (
+				B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */,
+			);
+			path = MediaPickers;
+			sourceTree = "<group>";
+		};
 		B340A4922C0677C5007B6E9F = {
 			isa = PBXGroup;
 			children = (
@@ -72,13 +84,14 @@
 		B340A49D2C0677C5007B6E9F /* FoodPal */ = {
 			isa = PBXGroup;
 			children = (
-				B34FC58D2C0B5F8900A279B8 /* Info.plist */,
+				B32CEC4D2C10C3100028C1C4 /* MediaPickers */,
 				B34FC56C2C07BF7400A279B8 /* Views */,
 				B34FC5692C0773F300A279B8 /* Models */,
-				B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */,
-				B340A4A22C0677C7007B6E9F /* Assets.xcassets */,
 				B340A4A42C0677C7007B6E9F /* Preview Content */,
 				B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */,
+				B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */,
+				B340A4A22C0677C7007B6E9F /* Assets.xcassets */,
+				B34FC58D2C0B5F8900A279B8 /* Info.plist */,
 			);
 			path = FoodPal;
 			sourceTree = "<group>";
@@ -131,6 +144,9 @@
 			dependencies = (
 			);
 			name = FoodPal;
+			packageProductDependencies = (
+				B34FC5932C107D4500A279B8 /* Capture */,
+			);
 			productName = FoodPal;
 			productReference = B340A49B2C0677C5007B6E9F /* FoodPal.app */;
 			productType = "com.apple.product-type.application";
@@ -159,6 +175,9 @@
 				Base,
 			);
 			mainGroup = B340A4922C0677C5007B6E9F;
+			packageReferences = (
+				B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */,
+			);
 			productRefGroup = B340A49C2C0677C5007B6E9F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -188,6 +207,7 @@
 				B34FC5702C08AFE200A279B8 /* Create.swift in Sources */,
 				B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */,
 				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
+				B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */,
 				B34FC58C2C0B5EAA00A279B8 /* LocationManager.swift in Sources */,
 				B34FC5642C07679000A279B8 /* Search.swift in Sources */,
 				B34FC5622C07672A00A279B8 /* Feed.swift in Sources */,
@@ -334,7 +354,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodPal/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is necessary to take images of food";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location data needed for pickups";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone access needed to record videos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -366,7 +388,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodPal/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is necessary to take images of food";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location data needed for pickups";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone access needed to record videos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -408,6 +432,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/quentinfasquel/Capture?tab=readme-ov-file";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B34FC5932C107D4500A279B8 /* Capture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */;
+			productName = Capture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B340A4932C0677C5007B6E9F /* Project object */;
 }

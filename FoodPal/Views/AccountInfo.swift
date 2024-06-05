@@ -16,78 +16,95 @@ struct AccountInfo: View {
     var claimed = [ Post(title: "Veggies", userHandle: "@onetwo", distance: "5.5 mile", description: "The freshest veggies. Bought from the store. You should check them out, they are really nice. Should be easy to make too", pictures: ["A", "D", "E"], expiryDate: "7/20"),
                   Post(title: "Pizza", userHandle: "@mikey", distance: "12.8 mile", description: "I bought this but I don't want it anymore. Please come and grab it", pictures: ["A", "G", "H", "B", "D"], expiryDate: "5/11")]
     
-    var body: some View {
+    var body: some View { //TODO: make the posts part of the same scroll view as the rest of the info 
         
         NavigationView {
-            VStack (alignment: .leading, spacing: 30) {
-                HStack (alignment: .top) {
-                    VStack (alignment: .leading, spacing: 10) {
-                        
-                        VStack (alignment: .leading) {
-                            Text("\(account.firstName) \(account.lastName)")
-                                .font(.title)
-                            Text("\(account.id)")
-                                .font(.caption)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("\(account.bio)")
-                            HStack {
-                                Image(systemName: "carrot.fill")
-                                Text("\(account.timesDonated) donations")
+            VStack (alignment: .leading) {
+                
+                VStack (spacing: 30) {
+                    HStack (alignment: .top) {
+                        VStack (alignment: .leading, spacing: 10) {
+                            
+                            VStack (alignment: .leading) {
+                                Text("\(account.firstName) \(account.lastName)")
+                                    .font(.title)
+                                Text("\(account.id)")
                                     .font(.caption)
                             }
+                            
+                            VStack(alignment: .leading) {
+                                Text("\(account.bio)")
+                                HStack {
+                                    Image(systemName: "carrot.fill")
+                                    Text("\(account.timesDonated) donations")
+                                        .font(.caption)
+                                }
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Circle()
+                            .fill(.gray)
+                            .frame(width: 50)
+                    }
+                    HStack {
+                        Button("Edit profile") {
+                            
+                        }
+                        .foregroundColor(.white)
+                        .font(.caption)
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius:5)
+                                .stroke(.white, lineWidth: 1)
+                            // .frame(width: 70, height: 40)
+                            
+                        )
+                        
+                        Spacer()
+                        
+                        Button(action: {}) {
+                            Image(systemName: "square.and.arrow.up")
                         }
                     }
-                    
-                    Spacer()
-                    
-                    Circle()
-                        .fill(.gray)
-                        .frame(width: 50)
-                }
-                HStack {
-                    Button("Edit profile") {
-                        
+                    Picker("", selection: $screen) {
+                        ForEach(screens, id: \.self) {
+                            Text($0)
+                        }
                     }
-                    .foregroundColor(.white)
-                    .font(.caption)
-                    .padding(5)
-                    .overlay(
-                        RoundedRectangle(cornerRadius:5)
-                            .stroke(.white, lineWidth: 1)
-                        // .frame(width: 70, height: 40)
-                        
-                    )
-                    
-                    Spacer()
-                    
-                    Button(action: {}) {
-                        Image(systemName: "square.and.arrow.up")
-                    }
+                    .pickerStyle(.segmented)
                 }
-                Picker("", selection: $screen) {
-                    ForEach(screens, id: \.self) {
-                        Text($0)
-                    }
-                }
-                .pickerStyle(.segmented)
+                .padding()
                 
-                if screen == "Posts" {
-                    List {
-                        ForEach(posts, id: \.self) {post in
-                            PostView(post: post, dense: false)
+                VStack {
+                    if screen == "Posts" {
+                        List { //TODO: make list into standalone view?
+                            ForEach(posts, id: \.self) {post in
+                                ZStack {
+                                    PostView(post: post, dense: false)
+                                    NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)
+                                }
+                                .listRowBackground(Color.black)
+                                .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                                
+                            }
                         }
-                    }
-                } else {
-                    List {
-                        ForEach(claimed, id: \.self) {post in
-                            PostView(post: post, dense: false)
+                    } else {
+                        List {
+                            ForEach(claimed, id: \.self) {post in
+                                ZStack {
+                                    PostView(post: post, dense: false)
+                                    NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)
+                                }
+                                .listRowBackground(Color.black)
+                                .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                                
+                            }
                         }
                     }
                 }
             }
-            .padding()
         }
     }
 }

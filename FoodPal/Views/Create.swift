@@ -33,40 +33,84 @@ struct FoodDetails: View {
     }
 }
 
+
 struct FoodPictures: View {
-    @Binding var capturedPics: Int
-    @State var pics = [String]()
+    @State var showImagePicker = false
+    @Binding var images: [UIImage]
     
     var body: some View {
+        
+        
         VStack {
-            
-            if capturedPics > 0 { 
                 
-                ScrollView(.horizontal) {
-                    LazyHStack {
-                        ForEach(pics, id: \.self) {pic in
-                            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                .fill(.gray)
-                                .frame(width: 200, height: 400)
+                VStack (alignment: .leading) {
+                    
+                    if images.count > 0 {
+                        
+                        VStack(alignment: .leading, spacing: 10) {
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(images, id: \.self) {pic in
+                                        Image(uiImage: pic)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                                            .frame(width: 200, height: 400)
+                                    }
+                                }
                             }
+                            .frame(height: 410)
+                            .scrollIndicators(.hidden)
+                            
+                            Text("At least 3 pictures required")
+                                .foregroundStyle(.gray)
+                                .font(.caption)
+                            
+                        }
+                    } else {
+                        HStack {
+                            Spacer()
+                            VStack (alignment: .center, spacing: 10) {
+                                Spacer()
+                                Image(systemName: "mug")
+                                    .font(.largeTitle)
+                                    .foregroundColor(.gray)
+                                
+                                Text("Share food pictures")
+                                Spacer()
+                            }
+                            Spacer()
                         }
                     }
-                .frame(height: 410)
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Button(action: {
+                            showImagePicker = true
+                        }) {
+                            Circle()
+                                .fill(.white)
+                                .stroke(.black, lineWidth: 10)
+                                .stroke(.white, lineWidth: 3)
+                                .frame(width: 60)
+                            
+                        }
+                        
+                        Spacer()
+                    }
+                    
+                    
                 }
-            
-            Button(action: {
-                capturedPics += 1
-                pics.append("A \(capturedPics)")
-            }) {
-                Image(systemName: "camera")
+                .sheet(isPresented: $showImagePicker) {
+                    ImagePicker(images: $images, isPickerShowing: $showImagePicker)
+                }
+                .padding()
             }
-            
-            Text("At least 3 pictures required")
-                .font(.caption)
-                .foregroundStyle(.red)
         }
     }
-}
 
 struct PickupLocation: View {
 //    @State var searchResults = [MKMapItem]()
@@ -188,21 +232,21 @@ struct Create: View {
     @State var title = ""
     @State var description = ""
     @State var expiryDate = Date.now
-    @Environment(\.dismiss) var dismiss
-    @State private var capturedPics = 0
     @State private var currView = 1 //The current view to show the user
     @State private var nextText = "Next"
+    @State var images = [UIImage]()
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
                
         NavigationView {
-        VStack {
+            VStack {
                 switch currView {
                 case 1: 
                     FoodDetails(title: $title, description: $description, expiryDate: $expiryDate)
                     
                 case 2:
-                    FoodPictures(capturedPics: $capturedPics)
+                    FoodPictures(images: $images)
                 
                 case 3:
                     PickupLocation()
@@ -234,7 +278,7 @@ struct Create: View {
                             dismiss()
                         }
                     }
-                    .disabled(currView == 2 && capturedPics < 3)
+                    .disabled(currView == 2 && images.count < 3)
                 }
             }
         }

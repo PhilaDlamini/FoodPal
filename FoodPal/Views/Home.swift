@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Capture
 
 struct Home: View {
     @State var currTab = 1
@@ -13,7 +14,8 @@ struct Home: View {
     var account = Account(id: "@phila", firstName: "Phila", lastName: "Nkosi", bio: "Saving a life one meal at a time", timesDonated: 2)
     
     var body: some View {
-            ZStack (alignment: .bottom) {
+
+          ZStack (alignment: .bottom) {
                 
                 TabView(selection: $currTab) {
                     

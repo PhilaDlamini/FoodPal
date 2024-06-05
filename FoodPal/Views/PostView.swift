@@ -1,7 +1,6 @@
 //
 //  PostView.swift
 //  FoodPal
-//
 //  Created by Phila Dlamini on 6/2/24.
 //
 
@@ -13,18 +12,15 @@ struct PostView: View {
     var dummyAccount = Account(id: "@phila", firstName: "Phila", lastName: "Nkosi", bio: "Saving lives one donation at a time", timesDonated: 2)
     
     var body: some View {
-        
-        //TODO: remove padding around list view
-        NavigationLink(destination: PostInfo(post: post)) {
             
             HStack(alignment: .top) {
-                
-//                NavigationLink(destination: AccountInfo(account: dummyAccount)) {
                     Circle() //TODO: figure out how to implement this 
                         .fill(.gray)
                         .frame(width: 35)
+                        .onTapGesture {
+                            print("vising poster account info")
+                        }
                     
-//                }
                 VStack (alignment: .leading, spacing: 10) {
                     
                     VStack (alignment: .leading, spacing: 1){
@@ -42,6 +38,7 @@ struct PostView: View {
                                     
                                 } label: {
                                     Image(systemName: "ellipsis")
+                                        .foregroundColor(.gray)
                                 }
                             }
                             
@@ -64,17 +61,22 @@ struct PostView: View {
                     
                     if dense {
                         HStack (spacing: 10) {
-                            Button(action: claim) {
-                                Image(systemName: "fork.knife")
-                            }
+                            Image(systemName: "fork.knife")
+                                .foregroundColor(.gray)
+                                .onTapGesture {
+                                    print("claiming..")
+                                }
                             
-                            Button(action: favorite) {
-                                Image(systemName: "star")
-                            }
+                            
+                            Image(systemName: "star")
+                                .foregroundColor(.gray)
+                                .onTapGesture {
+                                    print("favoriting")
+                                }
                             
                         }
                     }
-                }
+                    
             }
             
         }
