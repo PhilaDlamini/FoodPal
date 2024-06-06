@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */; };
+		B32CEC4F2C1254800028C1C4 /* FoodDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */; };
+		B32CEC512C1254AE0028C1C4 /* FoodPictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */; };
+		B32CEC532C1254F50028C1C4 /* PickupLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC522C1254F50028C1C4 /* PickupLocation.swift */; };
 		B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */; };
 		B340A4A12C0677C5007B6E9F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A4A02C0677C5007B6E9F /* Home.swift */; };
 		B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B340A4A22C0677C7007B6E9F /* Assets.xcassets */; };
@@ -27,6 +30,9 @@
 
 /* Begin PBXFileReference section */
 		B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetails.swift; sourceTree = "<group>"; };
+		B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPictures.swift; sourceTree = "<group>"; };
+		B32CEC522C1254F50028C1C4 /* PickupLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupLocation.swift; sourceTree = "<group>"; };
 		B340A49B2C0677C5007B6E9F /* FoodPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPalApp.swift; sourceTree = "<group>"; };
 		B340A4A02C0677C5007B6E9F /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -124,6 +130,9 @@
 				B34FC56D2C07BF9300A279B8 /* PostInfo.swift */,
 				B34FC56F2C08AFE200A279B8 /* Create.swift */,
 				B34FC5902C0C9DBA00A279B8 /* PostView.swift */,
+				B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */,
+				B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */,
+				B32CEC522C1254F50028C1C4 /* PickupLocation.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -206,12 +215,15 @@
 			files = (
 				B34FC5702C08AFE200A279B8 /* Create.swift in Sources */,
 				B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */,
+				B32CEC512C1254AE0028C1C4 /* FoodPictures.swift in Sources */,
 				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
+				B32CEC532C1254F50028C1C4 /* PickupLocation.swift in Sources */,
 				B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */,
 				B34FC58C2C0B5EAA00A279B8 /* LocationManager.swift in Sources */,
 				B34FC5642C07679000A279B8 /* Search.swift in Sources */,
 				B34FC5622C07672A00A279B8 /* Feed.swift in Sources */,
 				B34FC56E2C07BF9300A279B8 /* PostInfo.swift in Sources */,
+				B32CEC4F2C1254800028C1C4 /* FoodDetails.swift in Sources */,
 				B34FC5662C0767AF00A279B8 /* Favorites.swift in Sources */,
 				B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */,
 				B34FC56B2C07740500A279B8 /* Post.swift in Sources */,
