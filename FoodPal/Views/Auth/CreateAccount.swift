@@ -16,10 +16,35 @@ struct CreateAccount: View {
     @State var bio = ""
     @State var handleTaken = false
     @State var hidePassword = true
+    @State var showImagePicker = false
+    @State var images = [UIImage]()
     
     var body: some View {
         NavigationView {
-            VStack (spacing: 20) {
+            VStack (spacing: 15) {
+                
+                if images.isEmpty  {
+                    Image(systemName: "camera.fill")
+                        .foregroundColor(.blue)
+                        .onTapGesture {
+                            showImagePicker = true
+                        }
+                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                    
+                } else {
+                    Image(uiImage: images.first!)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 90, height: 90)
+                        .clipShape(Circle())
+                        .onTapGesture {
+                            images.removeAll()
+                             showImagePicker = true
+                        }
+                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+
+                }
+                
                 Form {
                     TextField("Name", text: $name)
                     TextField("Email", text: $email)
@@ -67,6 +92,9 @@ struct CreateAccount: View {
             }
             .navigationTitle("Create Account")
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $showImagePicker) {
+                ImagePicker(images: $images, isPickerShowing: $showImagePicker, sourceType: .photoLibrary)
+            }
         }
     }
 }
