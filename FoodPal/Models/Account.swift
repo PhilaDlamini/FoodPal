@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Account: Identifiable {
-    var id: String //the user handle
-    var firstName: String
-    var lastName: String
+struct Account: Hashable {
+    var fullName: String
+    var email: String
+    var handle: String
     var bio: String
-    var timesDonated: Int 
+    var timesDonated: Int
     
 }

@@ -8,12 +8,15 @@
 import SwiftUI
 import MapKit
 
+enum CreationStage {
+    case details, pictures, location
+}
+
 struct Create: View {
     @State var title = ""
     @State var description = ""
     @State var expiryDate = Date.now
-    @State private var currView = 1 //The current view to show the user. TODO: change to enum (more elegant)
-    @State private var nextText = "Next"
+    @State private var creationStage = CreationStage.details 
     @State var images = [UIImage]()
     @Environment(\.dismiss) var dismiss
     
@@ -21,18 +24,13 @@ struct Create: View {
                
         NavigationView {
             VStack {
-                switch currView {
-                case 1: 
+                switch creationStage {
+                case .details:
                     FoodDetails(title: $title, description: $description, expiryDate: $expiryDate)
-                    
-                case 2:
+                case .pictures:
                     FoodPictures(images: $images)
-                
-                case 3:
+                case .location:
                     PickupLocation()
-                    
-                default:
-                    FoodDetails(title: $title, description: $description, expiryDate: $expiryDate)
                 }
             }
             .navigationTitle("New Post")
@@ -46,19 +44,22 @@ struct Create: View {
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("\(nextText)") {
-                        if currView == 1 {
-                            currView = 2
-                        } else if currView == 2 {
-                            nextText = "Done"
-                            currView = 3
-                        } else {
-                            //finish
+                     
+                    switch creationStage {
+                    case .details:
+                        Button("Next") {
+                            creationStage = .pictures
+                        }
+                    case .pictures:
+                        Button("Next") {
+                            creationStage = .location
+                        }
+                    case .location:
+                        Button("Done") {
                             post()
                             dismiss()
                         }
                     }
-                  //  .disabled(currView == 2 && images.count < 3)
                 }
             }
         }

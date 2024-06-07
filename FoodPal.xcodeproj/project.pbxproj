@@ -11,6 +11,7 @@
 		B32CEC4F2C1254800028C1C4 /* FoodDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */; };
 		B32CEC512C1254AE0028C1C4 /* FoodPictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */; };
 		B32CEC532C1254F50028C1C4 /* PickupLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC522C1254F50028C1C4 /* PickupLocation.swift */; };
+		B32CEC552C133FCC0028C1C4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B32CEC542C133FCC0028C1C4 /* GoogleService-Info.plist */; };
 		B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */; };
 		B340A4A12C0677C5007B6E9F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A4A02C0677C5007B6E9F /* Home.swift */; };
 		B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B340A4A22C0677C7007B6E9F /* Assets.xcassets */; };
@@ -26,6 +27,12 @@
 		B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC58E2C0C8E2700A279B8 /* Account.swift */; };
 		B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5902C0C9DBA00A279B8 /* PostView.swift */; };
 		B34FC5942C107D4500A279B8 /* Capture in Frameworks */ = {isa = PBXBuildFile; productRef = B34FC5932C107D4500A279B8 /* Capture */; };
+		B38D5E952C1345FC00C6E931 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E942C1345FC00C6E931 /* FirebaseAnalytics */; };
+		B38D5E982C134B5500C6E931 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E972C134B5500C6E931 /* FirebaseAuth */; };
+		B38D5E9A2C134B6000C6E931 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E992C134B6000C6E931 /* FirebaseDatabase */; };
+		B38D5E9C2C134B6700C6E931 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E9B2C134B6700C6E931 /* FirebaseStorage */; };
+		B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5E9F2C13A2B200C6E931 /* SignIn.swift */; };
+		B38D5EA22C13A6A100C6E931 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +40,7 @@
 		B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetails.swift; sourceTree = "<group>"; };
 		B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPictures.swift; sourceTree = "<group>"; };
 		B32CEC522C1254F50028C1C4 /* PickupLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupLocation.swift; sourceTree = "<group>"; };
+		B32CEC542C133FCC0028C1C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B340A49B2C0677C5007B6E9F /* FoodPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPalApp.swift; sourceTree = "<group>"; };
 		B340A4A02C0677C5007B6E9F /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -49,6 +57,8 @@
 		B34FC58D2C0B5F8900A279B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B34FC58E2C0C8E2700A279B8 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B34FC5902C0C9DBA00A279B8 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		B38D5E9F2C13A2B200C6E931 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
+		B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +66,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B38D5E952C1345FC00C6E931 /* FirebaseAnalytics in Frameworks */,
+				B38D5E982C134B5500C6E931 /* FirebaseAuth in Frameworks */,
+				B38D5E9A2C134B6000C6E931 /* FirebaseDatabase in Frameworks */,
+				B38D5E9C2C134B6700C6E931 /* FirebaseStorage in Frameworks */,
 				B34FC5942C107D4500A279B8 /* Capture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,12 +77,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B32CEC4D2C10C3100028C1C4 /* MediaPickers */ = {
+		B32CEC4D2C10C3100028C1C4 /* Image */ = {
 			isa = PBXGroup;
 			children = (
 				B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */,
 			);
-			path = MediaPickers;
+			path = Image;
 			sourceTree = "<group>";
 		};
 		B340A4922C0677C5007B6E9F = {
@@ -76,6 +90,7 @@
 			children = (
 				B340A49D2C0677C5007B6E9F /* FoodPal */,
 				B340A49C2C0677C5007B6E9F /* Products */,
+				B38D5E962C134B5500C6E931 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,13 +105,14 @@
 		B340A49D2C0677C5007B6E9F /* FoodPal */ = {
 			isa = PBXGroup;
 			children = (
-				B32CEC4D2C10C3100028C1C4 /* MediaPickers */,
+				B38D5E9D2C13515900C6E931 /* Location */,
+				B32CEC4D2C10C3100028C1C4 /* Image */,
 				B34FC56C2C07BF7400A279B8 /* Views */,
 				B34FC5692C0773F300A279B8 /* Models */,
 				B340A4A42C0677C7007B6E9F /* Preview Content */,
-				B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */,
 				B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */,
 				B340A4A22C0677C7007B6E9F /* Assets.xcassets */,
+				B32CEC542C133FCC0028C1C4 /* GoogleService-Info.plist */,
 				B34FC58D2C0B5F8900A279B8 /* Info.plist */,
 			);
 			path = FoodPal;
@@ -122,19 +138,68 @@
 		B34FC56C2C07BF7400A279B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B34FC5612C07672A00A279B8 /* Feed.swift */,
-				B34FC5652C0767AF00A279B8 /* Favorites.swift */,
-				B34FC5672C0767B600A279B8 /* AccountInfo.swift */,
-				B34FC5632C07679000A279B8 /* Search.swift */,
+				B38D5EA52C13B7FD00C6E931 /* Tabs */,
+				B38D5EA42C13B7CE00C6E931 /* PostCreation */,
+				B38D5EA32C13B79300C6E931 /* Posts */,
+				B38D5E9E2C13A2A300C6E931 /* Auth */,
 				B340A4A02C0677C5007B6E9F /* Home.swift */,
-				B34FC56D2C07BF9300A279B8 /* PostInfo.swift */,
-				B34FC56F2C08AFE200A279B8 /* Create.swift */,
-				B34FC5902C0C9DBA00A279B8 /* PostView.swift */,
-				B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */,
-				B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */,
-				B32CEC522C1254F50028C1C4 /* PickupLocation.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		B38D5E962C134B5500C6E931 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B38D5E9D2C13515900C6E931 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		B38D5E9E2C13A2A300C6E931 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				B38D5E9F2C13A2B200C6E931 /* SignIn.swift */,
+				B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		B38D5EA32C13B79300C6E931 /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				B34FC56D2C07BF9300A279B8 /* PostInfo.swift */,
+				B34FC5902C0C9DBA00A279B8 /* PostView.swift */,
+			);
+			path = Posts;
+			sourceTree = "<group>";
+		};
+		B38D5EA42C13B7CE00C6E931 /* PostCreation */ = {
+			isa = PBXGroup;
+			children = (
+				B34FC56F2C08AFE200A279B8 /* Create.swift */,
+				B32CEC522C1254F50028C1C4 /* PickupLocation.swift */,
+				B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */,
+				B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */,
+			);
+			path = PostCreation;
+			sourceTree = "<group>";
+		};
+		B38D5EA52C13B7FD00C6E931 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				B34FC5632C07679000A279B8 /* Search.swift */,
+				B34FC5672C0767B600A279B8 /* AccountInfo.swift */,
+				B34FC5652C0767AF00A279B8 /* Favorites.swift */,
+				B34FC5612C07672A00A279B8 /* Feed.swift */,
+			);
+			path = Tabs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,6 +220,10 @@
 			name = FoodPal;
 			packageProductDependencies = (
 				B34FC5932C107D4500A279B8 /* Capture */,
+				B38D5E942C1345FC00C6E931 /* FirebaseAnalytics */,
+				B38D5E972C134B5500C6E931 /* FirebaseAuth */,
+				B38D5E992C134B6000C6E931 /* FirebaseDatabase */,
+				B38D5E9B2C134B6700C6E931 /* FirebaseStorage */,
 			);
 			productName = FoodPal;
 			productReference = B340A49B2C0677C5007B6E9F /* FoodPal.app */;
@@ -186,6 +255,7 @@
 			mainGroup = B340A4922C0677C5007B6E9F;
 			packageReferences = (
 				B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */,
+				B32CEC562C13443C0028C1C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = B340A49C2C0677C5007B6E9F /* Products */;
 			projectDirPath = "";
@@ -203,6 +273,7 @@
 			files = (
 				B340A4A62C0677C7007B6E9F /* Preview Assets.xcassets in Resources */,
 				B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */,
+				B32CEC552C133FCC0028C1C4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,10 +286,12 @@
 			files = (
 				B34FC5702C08AFE200A279B8 /* Create.swift in Sources */,
 				B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */,
+				B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */,
 				B32CEC512C1254AE0028C1C4 /* FoodPictures.swift in Sources */,
 				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
 				B32CEC532C1254F50028C1C4 /* PickupLocation.swift in Sources */,
 				B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */,
+				B38D5EA22C13A6A100C6E931 /* CreateAccount.swift in Sources */,
 				B34FC58C2C0B5EAA00A279B8 /* LocationManager.swift in Sources */,
 				B34FC5642C07679000A279B8 /* Search.swift in Sources */,
 				B34FC5622C07672A00A279B8 /* Feed.swift in Sources */,
@@ -366,7 +439,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodPal/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is necessary to take images of food";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Location data needed for pickups ";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location data needed for pickups";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone access needed to record videos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -400,7 +475,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodPal/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is necessary to take images of food";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Location data needed for pickups ";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location data needed for pickups";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone access needed to record videos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -446,6 +523,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B32CEC562C13443C0028C1C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.27.0;
+			};
+		};
 		B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/quentinfasquel/Capture?tab=readme-ov-file";
@@ -461,6 +546,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */;
 			productName = Capture;
+		};
+		B38D5E942C1345FC00C6E931 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B32CEC562C13443C0028C1C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		B38D5E972C134B5500C6E931 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B32CEC562C13443C0028C1C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B38D5E992C134B6000C6E931 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B32CEC562C13443C0028C1C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		B38D5E9B2C134B6700C6E931 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B32CEC562C13443C0028C1C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

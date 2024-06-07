@@ -13,10 +13,10 @@ import MapKit
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
-    
+
+    //These are optional since the user could turn off location services at any point
     @Published var location: CLLocation?
-    @Published var mapItem: MKMapItem?
-    @Published var authorizationStatus: CLAuthorizationStatus?
+    @Published var status: CLAuthorizationStatus?
 
     override init() {
         super.init()
@@ -25,24 +25,29 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
-
-    // CLLocationManagerDelegate method
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            DispatchQueue.main.async {
-                self.location = location
-                self.mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)))
-            }
-            //Stop updating to save battery life 
-            locationManager.stopUpdatingLocation()
+    
+    
+    // Called when the user updates their location authorization
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        self.status = status
+        
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            manager.startUpdatingLocation()
+            
+        case .denied, .restricted:
+            print("location services denied or restricted -- tell user to go to settings")
+            
+        default:
+            break
         }
     }
-
-    // CLLocationManagerDelegate method
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        DispatchQueue.main.async {
-            self.authorizationStatus = status
-        }
+    
+    
+    // Called when the user location updates
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let latestLocation = locations.last else { return }
+        self.location = latestLocation
     }
 
     // CLLocationManagerDelegate method

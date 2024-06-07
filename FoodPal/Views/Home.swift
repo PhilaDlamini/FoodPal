@@ -8,15 +8,20 @@
 import SwiftUI
 import Capture
 
+enum AuthPage {
+    case signIn, createAccount
+}
+
 struct Home: View {
     @State var currTab = 1
     @State var creatingPost = false
-    var account = Account(id: "@phila", firstName: "Phila", lastName: "Nkosi", bio: "Saving a life one meal at a time", timesDonated: 2)
+    @State var isNotSignedIn = true //Change to use firebase stuff
+    @State var page = AuthPage.signIn
+    var account = Account( fullName: "Phila Nkosi", email: "", handle: "@phila", bio: "Saving a life one meal at a time", timesDonated: 2)
     
     var body: some View {
 
           ZStack (alignment: .bottom) {
-                
                 TabView(selection: $currTab) {
                     
                     //TODO: make the icons actually black
@@ -68,6 +73,14 @@ struct Home: View {
                     
                 }
             }
+          .sheet(isPresented: $isNotSignedIn) {
+              switch page {
+              case .signIn: 
+                  SignIn(page: $page)
+              case .createAccount:
+                  CreateAccount(page: $page)
+            }
+          }
         }
 }
 

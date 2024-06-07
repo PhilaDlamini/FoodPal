@@ -10,11 +10,14 @@ import MapKit
 
 struct LocationSearch: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var pickedLocation: String
+    @Binding var usingAlternateLocation: Bool
+    @Binding var alternateLocation: CLLocation?
     @State var searchResults = ["43 Wintrop St", "124th E st", "21 Front St", "100 Packard Ave",
                                 "123 CityTown St, Somerville", "34 Tesla Ave, Medford"]
     @State var searchText = ""
     
+    
+    //TODO: make map show currently selected location on the pin 
     var body: some View {
         
         VStack {
@@ -39,8 +42,10 @@ struct LocationSearch: View {
             List {
                 ForEach(searchResults, id: \.self) { res in
                     Text("\(res)")
+                        .contentShape(Rectangle())
                         .onTapGesture {
-                            pickedLocation = res
+                            usingAlternateLocation = true
+                            alternateLocation = CLLocation(latitude: 10, longitude: -20)
                             dismiss()
                         }
                 }
@@ -50,21 +55,38 @@ struct LocationSearch: View {
 }
 
 struct PickupLocation: View {
-    //    @State var searchResults = [MKMapItem]()
-   
-    @State var pickedLocation = "43 Winthrop St"
     @State var searching = false
+    @State var usingAlternateLocation = false
+    @State var alternateLocation: CLLocation?
     @StateObject private var locationManager = LocationManager()
     
     var body: some View {
         VStack (spacing: 15) {
+            
             HStack {
                 VStack (alignment: .leading) {
                     Text("Pickup location:")
                         .font(.headline)
                         .bold()
-                    Text("\(pickedLocation)")
-                        .font(.caption)
+                    
+                    if usingAlternateLocation {
+                        if let alternateLocation = alternateLocation {
+                            Text("\(getAddress(for: MKMapItem(placemark: MKPlacemark(coordinate: alternateLocation.coordinate))))")
+                                .font(.caption)
+                        } else {
+                            Text("No alternate location")
+                                .font(.caption)
+                        }
+                    } else {
+                        
+                        if let location = locationManager.location {
+                            Text("\(getAddress(for: MKMapItem(placemark: MKPlacemark(coordinate: location.coordinate))))")
+                                .font(.caption)
+                        } else {
+                            Text("Current location not found")
+                                .font(.caption)
+                        }
+                    }
                 }
                 
                 Spacer()
@@ -76,15 +98,34 @@ struct PickupLocation: View {
                 }
             }
             
-            Map {
-                //Add mark
+            ZStack (alignment: .bottomTrailing) {
+                Map {
+                    if usingAlternateLocation {
+                        if let alternateLocation = alternateLocation {
+                            Marker(item: MKMapItem(placemark: MKPlacemark(coordinate: alternateLocation.coordinate)))
+                        }
+                    } else {
+                        if let location = locationManager.location {
+                            Marker(item: MKMapItem(placemark: MKPlacemark(coordinate: location.coordinate)))
+                        }
+                    }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .frame(height: 400)
+                
+                if usingAlternateLocation {
+                    Image(systemName: "dot.scope")
+                        .onTapGesture {
+                            usingAlternateLocation = false
+                            alternateLocation = nil
+                        }
+                        .padding()
+                }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .frame(height: 400)
             
         }
         .sheet(isPresented: $searching) {
-            LocationSearch(pickedLocation: $pickedLocation)
+            LocationSearch(usingAlternateLocation: $usingAlternateLocation, alternateLocation: $alternateLocation)
         }
         .padding()
     }
