@@ -33,6 +33,7 @@
 		B38D5E9C2C134B6700C6E931 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E9B2C134B6700C6E931 /* FirebaseStorage */; };
 		B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5E9F2C13A2B200C6E931 /* SignIn.swift */; };
 		B38D5EA22C13A6A100C6E931 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */; };
+		B38D5EA82C14920600C6E931 /* toDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EA72C14920600C6E931 /* toDict.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		B34FC5902C0C9DBA00A279B8 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		B38D5E9F2C13A2B200C6E931 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
+		B38D5EA72C14920600C6E931 /* toDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDict.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 		B340A49D2C0677C5007B6E9F /* FoodPal */ = {
 			isa = PBXGroup;
 			children = (
+				B38D5EA72C14920600C6E931 /* toDict.swift */,
 				B38D5E9D2C13515900C6E931 /* Location */,
 				B32CEC4D2C10C3100028C1C4 /* Image */,
 				B34FC56C2C07BF7400A279B8 /* Views */,
@@ -289,6 +292,7 @@
 				B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */,
 				B32CEC512C1254AE0028C1C4 /* FoodPictures.swift in Sources */,
 				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
+				B38D5EA82C14920600C6E931 /* toDict.swift in Sources */,
 				B32CEC532C1254F50028C1C4 /* PickupLocation.swift in Sources */,
 				B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */,
 				B38D5EA22C13A6A100C6E931 /* CreateAccount.swift in Sources */,

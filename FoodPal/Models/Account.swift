@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Account: Hashable {
+struct Account: Hashable, Codable {
     var fullName: String
     var email: String
     var handle: String
     var bio: String
     var timesDonated: Int
-    
+    var picURL: URL 
 }

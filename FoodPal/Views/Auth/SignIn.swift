@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SignIn: View {
     @State var email = ""
     @State var password = ""
     @Binding var page: AuthPage
+    @Binding var doneUploading: Bool
     @State var hidePassword = true
 
     
@@ -30,9 +32,7 @@ struct SignIn: View {
                 .frame(height: 130)
                 
                 
-                Button("Sign in") {
-                    
-                }
+                Button("Sign in", action: signIn)
                 .buttonStyle(.borderedProminent)
                 .cornerRadius(15)
                 
@@ -59,8 +59,22 @@ struct SignIn: View {
                 
                 Spacer()
             }
+            .onAppear{
+                doneUploading = true
+            }
             .navigationTitle("Sign in")
             .navigationBarTitleDisplayMode(.inline)
+            .interactiveDismissDisabled()
+        }
+    }
+    
+    func signIn() {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if authResult?.user != nil {
+                print("Sign in successful")
+            } else {
+                print("Failed to sign in")
+            }
         }
     }
 }

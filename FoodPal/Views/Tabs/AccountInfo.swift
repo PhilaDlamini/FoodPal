@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct AccountInfo: View {
     var account: Account
@@ -45,9 +46,24 @@ struct AccountInfo: View {
                                 .frame(width: 50)
                         }
                         HStack {
+                           
                             Button("Edit profile") {
                                 
                             }
+                            .foregroundColor(.white)
+                            .font(.caption)
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius:5)
+                                    .stroke(.white, lineWidth: 1)
+                                // .frame(width: 70, height: 40)
+                                
+                            )
+                            
+                            //TODO: redesign this to be better please :/
+                            Spacer()
+                        
+                            Button("Sign out", action: signOut)
                             .foregroundColor(.white)
                             .font(.caption)
                             .padding(5)
@@ -77,6 +93,16 @@ struct AccountInfo: View {
                 }
             }
             .padding()
+        }
+    }
+    
+    func signOut() {
+        do {
+            print("about to sign out")
+            try Auth.auth().signOut()
+            print("should have signed out")
+        } catch {
+            print("\(error.localizedDescription)")
         }
     }
 }

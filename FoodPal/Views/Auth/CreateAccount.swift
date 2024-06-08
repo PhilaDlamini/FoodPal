@@ -6,9 +6,16 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseDatabaseInternal
+import FirebaseStorage
+
+
+//TODO: only dismiss the sheet once the backend is done
 
 struct CreateAccount: View {
     @Binding var page: AuthPage
+    @Binding var doneUploading: Bool
     @State var name = ""
     @State var email = ""
     @State var password = ""
@@ -73,9 +80,7 @@ struct CreateAccount: View {
                 .frame(height: 370)
                 
                 
-                Button("Create") {
-                    
-                }
+                Button("Create", action: createUser)
                 .buttonStyle(.borderedProminent)
                 .cornerRadius(15)
                 
@@ -90,11 +95,52 @@ struct CreateAccount: View {
                 
                 Spacer()
             }
+            .onAppear {
+                doneUploading = false
+            }
             .navigationTitle("Create Account")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showImagePicker) {
                 ImagePicker(images: $images, isPickerShowing: $showImagePicker, sourceType: .photoLibrary)
             }
+            .interactiveDismissDisabled()
+        }
+    }
+    
+    func createUser() {
+        
+        if let profilePic = images.first {
+            
+            //create the user
+            Auth.auth().createUser(withEmail: email, password: password) {authResult, error in
+                if let user = authResult?.user {
+                    print("Account created")
+                    
+                    //Upload the profile picture
+                    let storageRef = Storage.storage().reference().child("profile pictures").child(user.uid)
+                    storageRef.putData(profilePic.pngData()!) {metadata, error in
+                        print("Pic uploaded")
+                        
+                        storageRef.downloadURL { url, error in
+                            guard let url = url else { 
+                                print("Failed to get pic url")
+                                return
+                            }
+                            
+                            //Save account info in database
+                            let account = Account(fullName: name, email: email, handle: handle, bio: bio, timesDonated: 0, picURL: url)
+                            let jsonData = toDict(model: account)
+                            Database.database().reference().child("users").child(user.uid).setValue(jsonData)
+                            print("Account info saved. Finishing up...")
+                            doneUploading = true
+                        }
+                        
+                    }
+                    
+                }
+            }
+        } else {
+            print("No profile pic selected. Aborting")
         }
     }
 }
