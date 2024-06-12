@@ -14,8 +14,9 @@ import FirebaseStorage
 //TODO: only dismiss the sheet once the backend is done
 
 struct CreateAccount: View {
+    @EnvironmentObject var account: Account
     @Binding var page: AuthPage
-    @Binding var doneUploading: Bool
+    @Binding var done: Bool
     @State var name = ""
     @State var email = ""
     @State var password = ""
@@ -96,7 +97,7 @@ struct CreateAccount: View {
                 Spacer()
             }
             .onAppear {
-                doneUploading = false
+                done = false
             }
             .navigationTitle("Create Account")
             .navigationBarTitleDisplayMode(.inline)
@@ -118,7 +119,7 @@ struct CreateAccount: View {
                     
                     //Upload the profile picture
                     let storageRef = Storage.storage().reference().child("profile pictures").child(user.uid)
-                    storageRef.putData(profilePic.pngData()!) {metadata, error in
+                    storageRef.putData(profilePic.jpegData(compressionQuality: 0.4)!) {metadata, error in
                         print("Pic uploaded")
                         
                         storageRef.downloadURL { url, error in
@@ -127,14 +128,15 @@ struct CreateAccount: View {
                                 return
                             }
                             
-                            //Save account info in database
-                            let account = Account(fullName: name, email: email, handle: handle, bio: bio, timesDonated: 0, picURL: url)
-                            let jsonData = toDict(model: account)
+                            //Save account info in database and user defaults 
+                            let acc = Account(fullName: name, email: email, handle: handle, bio: bio, timesDonated: 0, picURL: url, uid: user.uid)
+                            let jsonData = toDict(model: acc)
                             Database.database().reference().child("users").child(user.uid).setValue(jsonData)
-                            print("Account info saved. Finishing up...")
-                            doneUploading = true
+                            account.update(to: acc)
+                            account.saveToDefaults()
+                            print("Account info saved to database")
+                            done = true 
                         }
-                        
                     }
                     
                 }
@@ -144,4 +146,6 @@ struct CreateAccount: View {
         }
     }
 }
+
+//TODO: down-sample image (takes way too long to upload otherwise!!)
 

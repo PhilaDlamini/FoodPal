@@ -7,13 +7,15 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseDatabase
 
 struct SignIn: View {
     @State var email = ""
     @State var password = ""
     @Binding var page: AuthPage
-    @Binding var doneUploading: Bool
+    @Binding var done: Bool
     @State var hidePassword = true
+    @EnvironmentObject var account: Account
 
     
     var body: some View {
@@ -60,7 +62,7 @@ struct SignIn: View {
                 Spacer()
             }
             .onAppear{
-                doneUploading = true
+                done = true
             }
             .navigationTitle("Sign in")
             .navigationBarTitleDisplayMode(.inline)
@@ -70,8 +72,19 @@ struct SignIn: View {
     
     func signIn() {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if authResult?.user != nil {
-                print("Sign in successful")
+            if let user = authResult?.user {
+                print("Sign in successful. Retrieving user info ")
+                
+                //retrieve user data from database
+                let ref = Database.database().reference()
+                ref.child("users").child(user.uid).observeSingleEvent(of: .value) {snapshot, _ in
+                    if let accountData = snapshot.value as? [String: Any] {
+                        let acc: Account = try! Account.fromDict(dictionary: accountData)
+                        //update the account
+                        account.update(to: acc)
+                        account.saveToDefaults()
+                    }
+                }
             } else {
                 print("Failed to sign in")
             }

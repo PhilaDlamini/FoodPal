@@ -22,7 +22,7 @@ struct PostInfo: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack { //creates views as needed, not all at once
-                        ForEach(post.pictures, id: \.self) {img in
+                        ForEach(post.images, id: \.self) {img in
                             RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
                                 .fill(.white)
                                 .stroke(.black, lineWidth: 1)
@@ -147,6 +147,3 @@ struct PostInfo: View {
     }
 }
 
-#Preview {
-    PostInfo(post:  Post(title: "Veggies", userHandle: "@elias", distance: "1.8 mile", description: "Fresh vegetables from the store!", pictures: ["A", "B", "D"], expiryDate: "5/11"))
-}

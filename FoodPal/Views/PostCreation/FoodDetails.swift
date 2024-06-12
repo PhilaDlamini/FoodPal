@@ -14,6 +14,7 @@ struct FoodDetails: View {
     @Binding var description: String
     @Binding var expiryDate: Date
     
+
     var body: some View {
         Form  {
             TextField("Title", text: $title)
@@ -23,7 +24,8 @@ struct FoodDetails: View {
             }
             
             Section {
-                DatePicker("Expiry date", selection: $expiryDate, displayedComponents: .date)
+                DatePicker("Expiry date", selection: $expiryDate, in: Date()..., displayedComponents: .date)
+                
                 Text("The earliest expiry date of an item in your donation")
                     .font(.caption)
             }

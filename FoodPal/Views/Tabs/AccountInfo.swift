@@ -9,9 +9,8 @@ import SwiftUI
 import FirebaseAuth
 
 struct AccountInfo: View {
-    var account: Account
-    var posts = [ Post(title: "Chips", userHandle: "@jack", distance: "1.5 mile", description: "We bought these a day ago, nobody wants to have them in the house. Please take them", pictures: ["A", "B", "C", "D", "E"], expiryDate: "7/20"),
-                  Post(title: "Veggies", userHandle: "@thenji", distance: "1.8 mile", description: "Fresh vegetables from the store!", pictures: ["A", "B", "D"], expiryDate: "5/11")]
+    @EnvironmentObject var account: Account
+    var posts: [Post] = []
     
     var body: some View { //TODO: make the posts part of the same scroll view as the rest of the info 
         
@@ -82,7 +81,7 @@ struct AccountInfo: View {
                         }
                     }
                     
-                    ForEach(posts, id: \.self) {post in
+                    ForEach(posts) {post in
                         ZStack {
                             PostView(post: post, dense: false)
                             NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)

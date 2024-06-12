@@ -9,9 +9,7 @@ import SwiftUI
 struct Search: View {
     @State var searchText = ""
 //    let searchResults: [Post] = []
-    let searchResults = [
-        Post(title: "Salmon", userHandle: "@jack_nathaniel", distance: "1 mile", description: "A pack of store-bought, juicy salmon. Unopened. This is the best salmon you've ever seen. You should come see for yourself. You'll be really really pleased. And I think that you would like it very much. Yes", pictures: ["A", "B", "C", "D"], expiryDate: "5/20"),
-    ]
+    let searchResults: [Post] = []
     
     var body: some View {
         NavigationView {
@@ -49,7 +47,7 @@ struct Search: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(searchResults, id: \.self) {post in
+                        ForEach(searchResults) {post in
                             ZStack {
                                 PostView(post: post, dense: true)
                                 NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)

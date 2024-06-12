@@ -50,7 +50,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         self.location = latestLocation
     }
 
-    // CLLocationManagerDelegate method
+    // Called when there's a failure with an error
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get user location: \(error.localizedDescription)")
     }

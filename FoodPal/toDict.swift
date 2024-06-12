@@ -7,6 +7,7 @@
 
 import Foundation
 
+//TODO: make this an extension of encodable 
 func toDict <T: Codable> (model: T) -> NSDictionary? {
     let encoder = JSONEncoder()
     
@@ -21,4 +22,13 @@ func toDict <T: Codable> (model: T) -> NSDictionary? {
     }
     
     return nil
+}
+
+extension Decodable {
+    static func fromDict<T:Decodable> (dictionary: [String: Any]) throws -> T {
+            let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+            let decoder = JSONDecoder()
+            let obj = try decoder.decode(T.self, from: jsonData)
+            return obj
+    }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 struct PostView: View {
     var post: Post
     var dense: Bool
-    var dummyAccount = Account(fullName: "Phila", email: "", handle: "@phila", bio: "Saving lives one donation at a time", timesDonated: 2, picURL: URL(fileURLWithPath: ""))
+  //  var dummyAccount = Account(fullName: "Phila", email: "", handle: "@phila", bio: "Saving lives one donation at a time", timesDonated: 2, picURL: URL(fileURLWithPath: ""))
     
     var body: some View {
             
@@ -51,7 +51,7 @@ struct PostView: View {
                     Text ("\(post.description)")
                     
                     HStack {
-                        ForEach(post.pictures, id: \.self) {image in
+                        ForEach(post.images, id: \.self) {image in
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(.white)
                                 .stroke(.black, lineWidth: 1)
