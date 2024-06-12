@@ -12,6 +12,7 @@ import MapKit
 struct PostInfo: View {
     var post: Post
     @State var showExpiryDateInfo = false
+    @State var address = ""
     
     var body: some View {
         ScrollView (.vertical, showsIndicators: false) {
@@ -19,14 +20,23 @@ struct PostInfo: View {
                 Text("\(post.description)")
                 
                 
-                
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack { //creates views as needed, not all at once
                         ForEach(post.images, id: \.self) {img in
-                            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                .fill(.white)
-                                .stroke(.black, lineWidth: 1)
-                                .frame(width: 200, height: 400)
+                            
+                            AsyncImage(url: img) {phase in
+                                if let image = phase.image {
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                } else if phase.error != nil {
+                                    Color.red
+                                } else {
+                                    ProgressView()
+                                }
+                            }
+                            .frame(width: 200, height: 400)
+                            .cornerRadius(25)
                         }
                     }
                 }
@@ -36,7 +46,7 @@ struct PostInfo: View {
                         Text("Pickup location:")
                             .font(.headline)
                             .bold()
-                        Text("43 Winthrop St")
+                        Text("\(address)")
                             .font(.caption)
                     }
                     
@@ -50,7 +60,7 @@ struct PostInfo: View {
                 }
                 
                 Map {
-                    //Add mark
+                    Marker("", coordinate: CLLocationCoordinate2D(latitude: post.latitude, longitude: post.longitude))
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .frame(height: 400)
@@ -60,7 +70,7 @@ struct PostInfo: View {
                         Text("Expiry date:")
                             .font(.headline)
                             .bold()
-                        Text("Aug 24th")
+                        Text("\(post.expiryDateText)")
                             .font(.caption)
                     }
                     
@@ -123,6 +133,11 @@ struct PostInfo: View {
             }
            
         }
+        .onAppear {
+            getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {add in
+                address = add
+            }
+        }
         .alert("Expiry date", isPresented: $showExpiryDateInfo) {
             Button("Ok", role: .cancel) {}
         } message: {
@@ -131,10 +146,21 @@ struct PostInfo: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 
-                //TODO: make into poster image
-                Circle()
-                    .fill(.gray)
-                    .frame(width: 25)
+                AsyncImage(url: post.userPicURL) {phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    } else if phase.error != nil {
+                        Color.red
+                    } else {
+                        ProgressView()
+                    }
+                }
+                .frame(width: 25)
+                .onTapGesture {
+                    print("Going to account info from post info")
+                }
 
                 
                 

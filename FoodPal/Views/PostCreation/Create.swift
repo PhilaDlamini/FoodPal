@@ -24,6 +24,7 @@ struct Create: View {
     @State var sendingPost = false
     @State var creationStage = CreationStage.details
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var account: Account
     
     
     var body: some View {
@@ -85,41 +86,51 @@ struct Create: View {
     
     func sendPost(city: String, region: String, country: String) {
         print("Got city: \(city), region: \(region), country: \(country)")
+        let group = DispatchGroup()
         
         //Upload the pictures
         var pics = [URL]()
-        var postId = UUID()
+        let postId = UUID()
         let storageRef = Storage.storage().reference().child("post pictures/\(country)/\(region)/\(city)/\(postId)")
         
-        for image in images {
-            storageRef.putData(image.jpegData(compressionQuality: 0.1)!) {metadata, error in
-                print("image uploaded")
+        for i in 0..<images.count {
+            let image = images[i]
+            group.enter()
+            storageRef.child("\(i)").putData(image.jpegData(compressionQuality: 0.1)!) {metadata, error in
+                
+                if error != nil {
+                    group.leave()
+                } else {
+                    print("image uploaded")
+                }
                 
                 //get each image pic
-                storageRef.downloadURL { url, error in
+                storageRef.child("\(i)").downloadURL { url, error in
                     guard let url = url else {
                         print("Failed to get image url")
+                        group.leave()
                         return
                     }
                     pics.append(url)
+                    group.leave()
                 }
                 
             }
         }
         
-    
-        //send the post
-       // while (pics.count < images.count) {}
-        print("post will have \(pics.count) associated images")
-        let post = Post(id: postId, uid: "", title: title, description: description, expiryDate: expiryDate, latitude: latitude, longitude: longitude, images: pics)
-        let jsonData = toDict(model: post)
-        Database.database().reference().child("posts/\(country)/\(region)/\(city)").setValue(jsonData)
-        print("Post sent successfully")
-        
-        //dismiss the view
-        dismiss()
-        creationStage = .details
-        
+        //attach a completion listener to the group
+        group.notify(queue: .main) {
+            //upload the images
+            print("post will have \(pics.count) associated images")
+            let post = Post(id: postId, userPicURL: account.picURL, userHandle: account.handle, uid: account.uid, title: title, description: description, expiryDate: expiryDate, latitude: latitude, longitude: longitude, images: pics)
+            let jsonData = toDict(model: post)
+            Database.database().reference().child("posts/\(country)/\(region)/\(city)/\(post.id)").setValue(jsonData)
+            print("Post sent successfully")
+            
+            //dismiss the view
+            dismiss()
+            creationStage = .details
+        }
     }
 }
 

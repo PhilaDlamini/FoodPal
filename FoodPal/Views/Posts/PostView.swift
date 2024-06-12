@@ -9,17 +9,25 @@ import SwiftUI
 struct PostView: View {
     var post: Post
     var dense: Bool
-  //  var dummyAccount = Account(fullName: "Phila", email: "", handle: "@phila", bio: "Saving lives one donation at a time", timesDonated: 2, picURL: URL(fileURLWithPath: ""))
     
     var body: some View {
-            
             HStack(alignment: .top) {
-                    Circle() //TODO: figure out how to implement this 
-                        .fill(.gray)
-                        .frame(width: 35)
-                        .onTapGesture {
-                            print("vising poster account info")
-                        }
+                AsyncImage(url: post.userPicURL) {phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    } else if phase.error != nil {
+                        Color.red
+                    } else {
+                        ProgressView()
+                    }
+                }
+                .frame(width: 35)
+                .clipShape(Circle())
+                .onTapGesture {
+                    print("vising poster account info")
+                } 
                     
                 VStack (alignment: .leading, spacing: 10) {
                     
@@ -27,7 +35,7 @@ struct PostView: View {
                         HStack {
                             Text("\(post.title)")
                                 .bold()
-                            Text("\(post.distance) . Exp \(post.expiryDate)")
+                            Text("\(post.distance) . Exp \(post.expiryDateText)")
                                 .font(.caption)
                             Spacer()
                             
@@ -52,10 +60,21 @@ struct PostView: View {
                     
                     HStack {
                         ForEach(post.images, id: \.self) {image in
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.white)
-                                .stroke(.black, lineWidth: 1)
-                                .frame(width: 40, height: 40)
+                            
+                            AsyncImage(url: image) {phase in
+                                if let image = phase.image {
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                } else if phase.error != nil {
+                                    Color.red
+                                } else {
+                                    ProgressView()
+                                }
+                            }
+                            .frame(width: 40, height: 40)
+                            .cornerRadius(10)
+                                
                         }
                     }
                     

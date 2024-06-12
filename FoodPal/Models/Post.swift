@@ -8,7 +8,9 @@
 import Foundation
  
  struct Post: Identifiable, Codable {
-     var id: UUID // the post id 
+     var id: UUID // the post id
+     var userPicURL: URL //for ease, TODO: issue -- what happens if the user updates thier info after this post was sent out?
+     var userHandle: String //for ease
      var uid: String
      var title: String
      var description: String
@@ -21,8 +23,13 @@ import Foundation
          return "1 m"
      }
      
-     var userHandle: String {
-         return "@what"
+     var expiryDateText: String {
+         let formatter = DateFormatter()
+         //formatter.dateFormat = "MMMM dd"
+         formatter.dateStyle = .short
+         formatter.timeStyle = .none
+         return formatter.string(from: expiryDate)
+        
      }
  }
  
