@@ -16,6 +16,16 @@ class Account: Codable, ObservableObject {
     var picURL: URL 
     var uid: String
     
+    init() {
+        self.fullName = "undefined"
+        self.email = "undefined"
+        self.handle = "undefined"
+        self.bio = "undefined"
+        self.timesDonated = -1
+        self.picURL = URL(string: "https://www.hackingwithswift.com/img/home-start-learning-2@2x.jpg")!
+        self.uid = "undefined"
+    }
+    
     init(fullName: String, email: String, handle: String, bio: String, timesDonated: Int, picURL: URL, uid: String) {
         self.fullName = fullName
         self.email = email

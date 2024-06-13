@@ -125,7 +125,7 @@ struct PickupLocation: View {
                 if let location = pickUpLocation {
                     position = MapCameraPosition.region(MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
                     getAddress(for: location) {updatedAddress in
-                        address = updatedAddress
+                        address = updatedAddress.getString()
                     }
                     latitude = location.coordinate.latitude
                     longitude = location.coordinate.longitude

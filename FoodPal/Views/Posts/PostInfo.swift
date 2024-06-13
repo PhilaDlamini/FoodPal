@@ -12,7 +12,7 @@ import MapKit
 struct PostInfo: View {
     var post: Post
     @State var showExpiryDateInfo = false
-    @State var address = ""
+    @EnvironmentObject var address: Address
     
     var body: some View {
         ScrollView (.vertical, showsIndicators: false) {
@@ -46,7 +46,7 @@ struct PostInfo: View {
                         Text("Pickup location:")
                             .font(.headline)
                             .bold()
-                        Text("\(address)")
+                        Text("\(address.getString())")
                             .font(.caption)
                     }
                     
@@ -132,11 +132,6 @@ struct PostInfo: View {
                 
             }
            
-        }
-        .onAppear {
-            getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {add in
-                address = add
-            }
         }
         .alert("Expiry date", isPresented: $showExpiryDateInfo) {
             Button("Ok", role: .cancel) {}

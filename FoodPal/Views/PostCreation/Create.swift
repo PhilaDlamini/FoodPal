@@ -25,6 +25,7 @@ struct Create: View {
     @State var creationStage = CreationStage.details
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var account: Account
+    @EnvironmentObject var address: Address
     
     
     var body: some View {
@@ -74,7 +75,7 @@ struct Create: View {
                         case .location:
                             Button("Done") {
                                 sendingPost = true
-                                getCityRegionAndCountry(latitude: latitude, longitute: longitude, completion: sendPost)
+                                sendPost()
                             }
                         }
                     }
@@ -84,7 +85,10 @@ struct Create: View {
     }
     
     
-    func sendPost(city: String, region: String, country: String) {
+    func sendPost() {
+        let city = address.city
+        let region = address.region
+        let country = address.country
         print("Got city: \(city), region: \(region), country: \(country)")
         let group = DispatchGroup()
         

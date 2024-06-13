@@ -5,10 +5,14 @@
 //
 
 import SwiftUI
+import FirebaseDatabase
 
 struct PostView: View {
     var post: Post
     var dense: Bool
+    var ref = Database.database().reference()
+    @EnvironmentObject var account: Account
+    @EnvironmentObject var favorited: Favorited
     
     var body: some View {
             HStack(alignment: .top) {
@@ -86,13 +90,15 @@ struct PostView: View {
                                     print("claiming..")
                                 }
                             
-                            
-                            Image(systemName: "star")
-                                .foregroundColor(.gray)
-                                .onTapGesture {
-                                    print("favoriting")
-                                }
-                            
+                            if favorited.favorited.contains(post.id.uuidString) {
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.red)
+                                    .onTapGesture(perform: unfavorite)
+                            } else {
+                                Image(systemName: "star")
+                                    .foregroundColor(.gray)
+                                    .onTapGesture(perform: favorite)
+                            }
                         }
                     }
                     
@@ -107,7 +113,29 @@ struct PostView: View {
     }
     
     func favorite() {
-        print("favoriting")
+        var favs = favorited.favorited
+        favs.append(post.id.uuidString)
+        
+        ref.child("favorited/\(account.uid)").setValue(favs) {error, _ in
+            if let error = error {
+                print("Error favoriting post")
+            } else {
+                print("Favorited post successfully")
+            }
+        }
+    }
+    
+    func unfavorite() {
+        var favs = favorited.favorited
+        favs.removeAll(where: {$0 == post.id.uuidString})
+        
+        ref.child("favorited/\(account.uid)").setValue(favs) {error, _ in
+            if let error = error {
+                print("Error unfavoriting post")
+            } else {
+                print("Unfavorited post")
+            }
+        }
     }
     
     func report() {

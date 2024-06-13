@@ -34,7 +34,9 @@
 		B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5E9F2C13A2B200C6E931 /* SignIn.swift */; };
 		B38D5EA22C13A6A100C6E931 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */; };
 		B38D5EA82C14920600C6E931 /* toDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EA72C14920600C6E931 /* toDict.swift */; };
-		B38D5EAA2C18EC5A00C6E931 /* getAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EA92C18EC5A00C6E931 /* getAddress.swift */; };
+		B38D5EAC2C1AF21300C6E931 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EAB2C1AF21300C6E931 /* Address.swift */; };
+		B38D5EAF2C1B180400C6E931 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EAE2C1B180400C6E931 /* Posts.swift */; };
+		B38D5EB12C1B182D00C6E931 /* Favorited.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EB02C1B182D00C6E931 /* Favorited.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,7 +64,9 @@
 		B38D5E9F2C13A2B200C6E931 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		B38D5EA72C14920600C6E931 /* toDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDict.swift; sourceTree = "<group>"; };
-		B38D5EA92C18EC5A00C6E931 /* getAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getAddress.swift; sourceTree = "<group>"; };
+		B38D5EAB2C1AF21300C6E931 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		B38D5EAE2C1B180400C6E931 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
+		B38D5EB02C1B182D00C6E931 /* Favorited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorited.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,7 @@
 				B32CEC4D2C10C3100028C1C4 /* Image */,
 				B34FC56C2C07BF7400A279B8 /* Views */,
 				B34FC5692C0773F300A279B8 /* Models */,
+				B38D5EAD2C1B17FB00C6E931 /* Home */,
 				B340A4A42C0677C7007B6E9F /* Preview Content */,
 				B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */,
 				B340A4A22C0677C7007B6E9F /* Assets.xcassets */,
@@ -147,7 +152,6 @@
 				B38D5EA42C13B7CE00C6E931 /* PostCreation */,
 				B38D5EA32C13B79300C6E931 /* Posts */,
 				B38D5E9E2C13A2A300C6E931 /* Auth */,
-				B340A4A02C0677C5007B6E9F /* Home.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -163,7 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */,
-				B38D5EA92C18EC5A00C6E931 /* getAddress.swift */,
+				B38D5EAB2C1AF21300C6E931 /* Address.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -206,6 +210,16 @@
 				B34FC5612C07672A00A279B8 /* Feed.swift */,
 			);
 			path = Tabs;
+			sourceTree = "<group>";
+		};
+		B38D5EAD2C1B17FB00C6E931 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B340A4A02C0677C5007B6E9F /* Home.swift */,
+				B38D5EAE2C1B180400C6E931 /* Posts.swift */,
+				B38D5EB02C1B182D00C6E931 /* Favorited.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,11 +305,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B34FC5702C08AFE200A279B8 /* Create.swift in Sources */,
-				B38D5EAA2C18EC5A00C6E931 /* getAddress.swift in Sources */,
+				B38D5EAF2C1B180400C6E931 /* Posts.swift in Sources */,
 				B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */,
 				B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */,
 				B32CEC512C1254AE0028C1C4 /* FoodPictures.swift in Sources */,
+				B38D5EB12C1B182D00C6E931 /* Favorited.swift in Sources */,
 				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
+				B38D5EAC2C1AF21300C6E931 /* Address.swift in Sources */,
 				B38D5EA82C14920600C6E931 /* toDict.swift in Sources */,
 				B32CEC532C1254F50028C1C4 /* PickupLocation.swift in Sources */,
 				B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */,

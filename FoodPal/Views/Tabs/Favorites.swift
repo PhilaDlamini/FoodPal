@@ -8,13 +8,15 @@
 import SwiftUI
     
 struct Favorites: View {
-    let posts: [Post] = []
-    
+    @State var favoritedPosts: [Post] = []
+    @EnvironmentObject var account: Account
+    @EnvironmentObject var favorited: Favorited
+    @EnvironmentObject var posts: Posts
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(posts) {post in
+                ForEach(posts.posts.filter {favorited.favorited.contains($0.id.uuidString)}) {post in
                     ZStack {
                         PostView(post: post, dense: true)
                         NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)
