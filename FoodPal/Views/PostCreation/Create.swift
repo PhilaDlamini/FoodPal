@@ -129,6 +129,7 @@ struct Create: View {
             let post = Post(id: postId, userPicURL: account.picURL, userHandle: account.handle, uid: account.uid, title: title, description: description, expiryDate: expiryDate, latitude: latitude, longitude: longitude, images: pics)
             let jsonData = toDict(model: post)
             Database.database().reference().child("posts/\(country)/\(region)/\(city)/\(post.id)").setValue(jsonData)
+            Database.database().reference().child("user posts/\(account.uid)/\(post.id)").setValue(jsonData)
             print("Post sent successfully")
             
             //dismiss the view
@@ -138,4 +139,5 @@ struct Create: View {
     }
 }
 
+//TODO: error handling when sending posts???
 

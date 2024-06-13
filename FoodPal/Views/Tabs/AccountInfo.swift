@@ -7,10 +7,11 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseDatabase
 
 struct AccountInfo: View {
     @EnvironmentObject var account: Account
-    var posts: [Post] = []
+    @State var posts: [Post] = []
     
     var body: some View { //TODO: make the posts part of the same scroll view as the rest of the info 
         
@@ -91,7 +92,26 @@ struct AccountInfo: View {
                     }
                 }
             }
+            .onAppear(perform: getPosts)
             .padding()
+        }
+    }
+    
+    func getPosts() {
+        let ref = Database.database().reference().child("user posts/\(account.uid)")
+        ref.getData {error, snapshot in
+            if let snapshot = snapshot {
+                for _ in snapshot.children {
+                    if let postData = snapshot.value as? [String: Any] {
+                        do {
+                            let post: Post = try Post.fromDict(dictionary: postData)
+                            posts.append(post)
+                        } catch {
+                            print("Failed to decode post from postData")
+                        }
+                    }
+                }
+            }
         }
     }
     
