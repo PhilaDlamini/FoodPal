@@ -1,7 +1,3 @@
-{\rtf1\ansi\ansicpg1252\cocoartf949
-{\fonttbl}
-{\colortbl;\red255\green255\blue255;}
-\margl1440\margr1440\vieww9000\viewh8400\viewkind0
 
 Have food you don't want and/or might throw out? FoolPal makes it easy to donate it to someone who might use it.
 Just write a quick description of the food, take a few pictures of it, and upload it on the app, and someone on the other side 

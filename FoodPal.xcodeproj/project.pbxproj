@@ -100,6 +100,7 @@
 		B340A4922C0677C5007B6E9F = {
 			isa = PBXGroup;
 			children = (
+				B38D5EB52C1C70B800C6E931 /* README.md */,
 				B340A49D2C0677C5007B6E9F /* FoodPal */,
 				B340A49C2C0677C5007B6E9F /* Products */,
 				B38D5E962C134B5500C6E931 /* Frameworks */,
@@ -128,7 +129,6 @@
 				B340A4A22C0677C7007B6E9F /* Assets.xcassets */,
 				B32CEC542C133FCC0028C1C4 /* GoogleService-Info.plist */,
 				B34FC58D2C0B5F8900A279B8 /* Info.plist */,
-				B38D5EB52C1C70B800C6E931 /* README.md */,
 			);
 			path = FoodPal;
 			sourceTree = "<group>";
