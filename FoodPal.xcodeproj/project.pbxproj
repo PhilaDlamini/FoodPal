@@ -38,6 +38,7 @@
 		B38D5EAF2C1B180400C6E931 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EAE2C1B180400C6E931 /* Posts.swift */; };
 		B38D5EB12C1B182D00C6E931 /* Favorited.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EB02C1B182D00C6E931 /* Favorited.swift */; };
 		B38D5EB42C1C66DF00C6E931 /* Claimed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EB32C1C66DF00C6E931 /* Claimed.swift */; };
+		B38D5EB62C1C70B800C6E931 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B38D5EB52C1C70B800C6E931 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		B38D5EAE2C1B180400C6E931 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		B38D5EB02C1B182D00C6E931 /* Favorited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorited.swift; sourceTree = "<group>"; };
 		B38D5EB32C1C66DF00C6E931 /* Claimed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Claimed.swift; sourceTree = "<group>"; };
+		B38D5EB52C1C70B800C6E931 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				B340A4A22C0677C7007B6E9F /* Assets.xcassets */,
 				B32CEC542C133FCC0028C1C4 /* GoogleService-Info.plist */,
 				B34FC58D2C0B5F8900A279B8 /* Info.plist */,
+				B38D5EB52C1C70B800C6E931 /* README.md */,
 			);
 			path = FoodPal;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			files = (
 				B340A4A62C0677C7007B6E9F /* Preview Assets.xcassets in Resources */,
 				B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */,
+				B38D5EB62C1C70B800C6E931 /* README.md in Resources */,
 				B32CEC552C133FCC0028C1C4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
