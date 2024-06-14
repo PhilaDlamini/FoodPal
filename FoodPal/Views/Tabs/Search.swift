@@ -12,6 +12,7 @@ struct Search: View {
     @State var region = ""
     @State var country = ""
     @State var results: [Post] = []
+    @State var searched = false
     @EnvironmentObject var address: Address
     
     var body: some View {
@@ -26,23 +27,29 @@ struct Search: View {
                     TextField("City", text: $city)
                         .textFieldStyle(.roundedBorder)
 
-                    Button("Search", action: search)
+                    Button("Search") {
+                        search()
+                        searched = true
+                    }
 
                 }
                 
-                List {
-                    ForEach(results) {post in
-                        ZStack {
-                            PostView(post: post, dense: true)
-                            NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)
+                if searched && results.isEmpty {
+                    
+                    Text("No results")
+                } else {
+                    List {
+                        ForEach(results) {post in
+                            ZStack {
+                                PostView(post: post, dense: true)
+                                NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)
+                            }
+                            .listRowBackground(Color.black)
+                            .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                            
                         }
-                        .listRowBackground(Color.black)
-                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                        
                     }
                 }
-                    
-                
             }
             .padding()
             .onAppear {
@@ -55,17 +62,19 @@ struct Search: View {
     }
     
     func search() {
-        results = []
         let ref = Database.database().reference().child("posts/\(country)/\(region)/\(city)")
         ref.getData {error, snapshot in
             if let snapshot = snapshot {
                 for _ in snapshot.children {
-                    if let postData = snapshot.value as? [String: Any] {
-                        do {
-                            let post: Post = try Post.fromDict(dictionary: postData)
-                            results.append(post)
-                        } catch {
-                            print("Failed to decode post from postData in search")
+                    if let snapData = snapshot.value as? [String: [String: Any]] {
+                        for key in snapData.keys {
+                            do {
+                                let post: Post = try Post.fromDict(dictionary: snapData[key]!)
+                                results.removeAll(where: { $0.id == post.id })
+                                results.append(post)
+                            } catch {
+                                print("Failed to decode post from postData in search")
+                            }
                         }
                     }
                 }

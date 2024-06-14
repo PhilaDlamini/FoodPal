@@ -37,6 +37,7 @@
 		B38D5EAC2C1AF21300C6E931 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EAB2C1AF21300C6E931 /* Address.swift */; };
 		B38D5EAF2C1B180400C6E931 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EAE2C1B180400C6E931 /* Posts.swift */; };
 		B38D5EB12C1B182D00C6E931 /* Favorited.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EB02C1B182D00C6E931 /* Favorited.swift */; };
+		B38D5EB42C1C66DF00C6E931 /* Claimed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EB32C1C66DF00C6E931 /* Claimed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		B38D5EAB2C1AF21300C6E931 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		B38D5EAE2C1B180400C6E931 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		B38D5EB02C1B182D00C6E931 /* Favorited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorited.swift; sourceTree = "<group>"; };
+		B38D5EB32C1C66DF00C6E931 /* Claimed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Claimed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 		B34FC56C2C07BF7400A279B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B38D5EB22C1C66D000C6E931 /* Claiming */,
 				B38D5EA52C13B7FD00C6E931 /* Tabs */,
 				B38D5EA42C13B7CE00C6E931 /* PostCreation */,
 				B38D5EA32C13B79300C6E931 /* Posts */,
@@ -220,6 +223,14 @@
 				B38D5EB02C1B182D00C6E931 /* Favorited.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		B38D5EB22C1C66D000C6E931 /* Claiming */ = {
+			isa = PBXGroup;
+			children = (
+				B38D5EB32C1C66DF00C6E931 /* Claimed.swift */,
+			);
+			path = Claiming;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +323,7 @@
 				B38D5EB12C1B182D00C6E931 /* Favorited.swift in Sources */,
 				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
 				B38D5EAC2C1AF21300C6E931 /* Address.swift in Sources */,
+				B38D5EB42C1C66DF00C6E931 /* Claimed.swift in Sources */,
 				B38D5EA82C14920600C6E931 /* toDict.swift in Sources */,
 				B32CEC532C1254F50028C1C4 /* PickupLocation.swift in Sources */,
 				B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */,

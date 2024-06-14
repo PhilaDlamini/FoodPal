@@ -41,9 +41,19 @@ struct AccountInfo: View {
                             
                             Spacer()
                             
-                            Circle()
-                                .fill(.gray)
-                                .frame(width: 50)
+                            AsyncImage(url: account.picURL) {phase in
+                                if let image = phase.image {
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                } else if phase.error != nil {
+                                    Color.red
+                                } else {
+                                    ProgressView()
+                                }
+                            }
+                            .frame(width: 50)
+                            .clipShape(Circle())
                         }
                         HStack {
                            
@@ -99,16 +109,29 @@ struct AccountInfo: View {
     
     func getPosts() {
         let ref = Database.database().reference().child("user posts/\(account.uid)")
-        ref.getData {error, snapshot in
-            if let snapshot = snapshot {
-                for _ in snapshot.children {
-                    if let postData = snapshot.value as? [String: Any] {
-                        do {
-                            let post: Post = try Post.fromDict(dictionary: postData)
-                            posts.append(post)
-                        } catch {
-                            print("Failed to decode post from postData")
-                        }
+        ref.observe(.childAdded) {snapshot in
+            for _ in snapshot.children {
+                if let snapData = snapshot.value as? [String: Any] {
+                    do {
+                        let post: Post = try Post.fromDict(dictionary: snapData)
+                        posts.removeAll(where: {$0.id == post.id})
+                        posts.append(post)
+                    } catch {
+                        print("Failed to decode post from postData in account info")
+                    }
+                    
+                }
+            }
+        }
+        
+        ref.observe(.childRemoved) {snapshot in
+            for _ in snapshot.children {
+                if let snapData = snapshot.value as? [String: Any] {
+                    do {
+                        let post: Post = try Post.fromDict(dictionary: snapData)
+                        posts.removeAll(where: {$0.id == post.id})
+                    } catch {
+                        print("Failed to decode post from postData in account info")
                     }
                 }
             }
