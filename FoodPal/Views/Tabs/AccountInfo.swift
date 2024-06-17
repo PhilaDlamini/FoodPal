@@ -49,7 +49,8 @@ struct AccountInfo: View {
                                 } else if phase.error != nil {
                                     Color.red
                                 } else {
-                                    ProgressView()
+                                    Circle()
+                                        .fill(.gray)
                                 }
                             }
                             .frame(width: 50)
@@ -93,12 +94,7 @@ struct AccountInfo: View {
                     }
                     
                     ForEach(posts) {post in
-                        ZStack {
-                            PostView(post: post, dense: false)
-                            NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)
-                        }
-                        .listRowBackground(Color.black)
-                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        PostListItem(post: post)
                     }
                 }
             }

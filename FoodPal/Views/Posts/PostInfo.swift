@@ -12,7 +12,12 @@ import MapKit
 struct PostInfo: View {
     var post: Post
     @State var showExpiryDateInfo = false
-    @EnvironmentObject var address: Address
+    @State var address = ""
+    @EnvironmentObject var profile: ProfilePic
+    @EnvironmentObject var foodImages: FoodImages
+    @State var id = UUID()
+    @State var imgId = UUID()
+    
     
     var body: some View {
         ScrollView (.vertical, showsIndicators: false) {
@@ -22,21 +27,41 @@ struct PostInfo: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack { //creates views as needed, not all at once
-                        ForEach(post.images, id: \.self) {img in
-                            
-                            AsyncImage(url: img) {phase in
-                                if let image = phase.image {
-                                    image
+                        
+                        if (foodImages.images != nil) && (foodImages.images!.count == post.images.count) {
+                            if let images = foodImages.images {
+                                ForEach(Array(images.keys), id: \.self) {index in
+                                    images[index]!
                                         .resizable()
                                         .scaledToFit()
-                                } else if phase.error != nil {
-                                    Color.red
-                                } else {
-                                    ProgressView()
+                                        .frame(width: 200, height: 400)
+                                        .cornerRadius(25)
                                 }
                             }
-                            .frame(width: 200, height: 400)
-                            .cornerRadius(25)
+                        } else {
+                            ForEach(post.images, id: \.self) {url in
+                                AsyncImage(url: url) {phase in
+                                    if let image = phase.image {
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 200, height: 400)
+                                            .cornerRadius(25)
+                                            
+                                    } else if phase.error != nil {
+                                        Color.red
+                                            .onAppear {
+                                                imgId = UUID()
+                                            }//Retry loading the image here (other idea: try async again in the postView if the iamge was never retrieved
+                                    } else {
+                                        RoundedRectangle(cornerRadius: 25)
+                                            .fill(.gray)
+                                            .frame(width: 200, height: 400)
+                                    }
+                                }
+                            }
+                            .id(imgId)
+                            
                         }
                     }
                 }
@@ -46,7 +71,7 @@ struct PostInfo: View {
                         Text("Pickup location:")
                             .font(.headline)
                             .bold()
-                        Text("\(address.getString())")
+                        Text("\(address)")
                             .font(.caption)
                     }
                     
@@ -133,6 +158,11 @@ struct PostInfo: View {
             }
            
         }
+        .onAppear {
+            getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {add in
+                address = add.getString()
+            }
+        }
         .alert("Expiry date", isPresented: $showExpiryDateInfo) {
             Button("Ok", role: .cancel) {}
         } message: {
@@ -141,24 +171,37 @@ struct PostInfo: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 
-                AsyncImage(url: post.userPicURL) {phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFit()
-                    } else if phase.error != nil {
-                        Color.red
-                    } else {
-                        ProgressView()
-                    }
-                }
-                .frame(width: 25)
-                .onTapGesture {
-                    print("Going to account info from post info")
-                }
+                if let image = profile.image {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25)
+                        .onTapGesture {
+                            print("Going to account info from post info")
+                        }
 
-                
-                
+                    
+                } else {
+                    AsyncImage(url: post.userPicURL) {phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25)
+                        } else if phase.error != nil {
+                            Color.red
+                                .onAppear {
+                                    id = UUID()
+                                }//Retry loading the image here (other idea: try async again in the postView if the iamge was never retrieved
+                        } else {
+                            Circle()
+                                .fill(.gray)
+                                .frame(width: 25)
+                                
+                        }
+                    }
+                    .id(id)
+                }
             }
             
         }

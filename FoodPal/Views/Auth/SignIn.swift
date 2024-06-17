@@ -20,46 +20,49 @@ struct SignIn: View {
     
     var body: some View {
         NavigationView {
-            VStack (alignment: .center, spacing: 20) {
-                Form {
-                    TextField("Email", text: $email)
+            ScrollView(showsIndicators: false) {
+                
+                VStack (alignment: .center, spacing: 20) {
+                    Form {
+                        TextField("Email", text: $email)
+                        HStack {
+                            TextField("Password", text: $password)
+                            Image(systemName: hidePassword ? "eye" : "eye.slash")
+                                .onTapGesture {
+                                    hidePassword.toggle()
+                                }
+                        }
+                    }
+                    .frame(height: 130)
+                    
+                    
+                    Button("Sign in", action: signIn)
+                        .buttonStyle(.borderedProminent)
+                        .cornerRadius(15)
+                    
                     HStack {
-                        TextField("Password", text: $password)
-                        Image(systemName: hidePassword ? "eye" : "eye.slash")
+                        Text("Dont' have account yet?")
+                        Text("Creat one")
+                            .foregroundStyle(.blue)
                             .onTapGesture {
-                                hidePassword.toggle()
+                                page = .createAccount
                             }
                     }
+                    
+                    Divider()
+                    
+                    //                SignInWithAppleButton(onRequest: {a in
+                    //                    
+                    //                }, onCompletion: {b in
+                    //                    
+                    //                })
+                    //                .frame(width: 40)
+                    
+                    Button("Sign in with Apple") {}
+                    Button("Sign in with Phone") {}
+                    
+                    Spacer()
                 }
-                .frame(height: 130)
-                
-                
-                Button("Sign in", action: signIn)
-                .buttonStyle(.borderedProminent)
-                .cornerRadius(15)
-                
-                HStack {
-                    Text("Dont' have account yet?")
-                    Text("Creat one")
-                        .foregroundStyle(.blue)
-                        .onTapGesture {
-                            page = .createAccount
-                        }
-                }
-                
-                Divider()
-                
-//                SignInWithAppleButton(onRequest: {a in
-//                    
-//                }, onCompletion: {b in
-//                    
-//                })
-//                .frame(width: 40)
-                
-                Button("Sign in with Apple") {}
-                Button("Sign in with Phone") {}
-                
-                Spacer()
             }
             .onAppear{
                 done = true

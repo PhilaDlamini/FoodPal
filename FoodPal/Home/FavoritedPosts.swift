@@ -1,13 +1,12 @@
 //
-//  Posts.swift
+//  FavoritedPosts.swift
 //  FoodPal
 //
-//  Created by Phila Dlamini on 6/13/24.
+//  Created by Phila Dlamini on 6/16/24.
 //
-
 import Foundation
 
-class Posts: ObservableObject {
+class FavoritedPosts: ObservableObject {
     @Published var posts: [UUID: Post]
     
     init() {

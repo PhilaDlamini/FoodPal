@@ -5,11 +5,15 @@
 //
 
 import SwiftUI
+import FirebaseDatabase
+import CoreLocation
 
 struct Claimed: View {
     var post: Post
     @State var cancelClicked = false 
     @State var pickUpAddress = Address()
+    @EnvironmentObject var account: Account
+    let ref = Database.database().reference()
     
     var body: some View {
         NavigationView {
@@ -69,7 +73,7 @@ struct Claimed: View {
                         Spacer()
                         
                         Button("Confirm pickup") {
-                            
+                            getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude), completion: confirmPickUp)
                         }
                         .buttonStyle(.borderedProminent)
                         .cornerRadius(25)
@@ -81,7 +85,6 @@ struct Claimed: View {
                 }
                 .padding()
             }
-            
             .toolbar {
                 
                 ToolbarItem(placement: .topBarLeading) {
@@ -99,13 +102,8 @@ struct Claimed: View {
                 }
             }
             .alert("Cancel pickup", isPresented: $cancelClicked) {
-                Button("Ok", role: .cancel) {
-                    print("Canceling post")
-                }
-                
-                Button("No", role: .destructive) {
-                  
-                }
+                Button("Ok", role: .cancel, action: cancelPickUp)
+                Button("No", role: .destructive) {}
             } message: {
                 Text("Are you sure you want to cancel this pickup?")
             }
@@ -113,6 +111,24 @@ struct Claimed: View {
     }
     
     func cancelPickUp() {
-        print("Canceling pickup")
+        ref.child("claimed/\(account.uid)/\(post.id)").removeValue()
+    }
+    
+    func confirmPickUp(address: Address) {
+          
+        //remove post from main post section
+        ref.child("posts/\(address.country)/\(address.region)/\(address.city)/\(post.id)").removeValue()
+        
+        //remove post from user posts
+        ref.child("user posts/\(account.uid)/\(post.id)").removeValue()
+        
+        //remove the post from favorites, if any
+        ref.child("favorited/\(account.uid)/\(post.id)").removeValue()
+        
+        //remove the claimed post
+        ref.child("claimed/\(account.uid)/\(post.id)").removeValue()
+
+        
+        
     }
 }

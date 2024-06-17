@@ -40,13 +40,7 @@ struct Search: View {
                 } else {
                     List {
                         ForEach(results) {post in
-                            ZStack {
-                                PostView(post: post, dense: true)
-                                NavigationLink(destination: PostInfo(post: post)) {}.opacity(0.0)
-                            }
-                            .listRowBackground(Color.black)
-                            .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                            
+                            PostListItem(post: post)
                         }
                     }
                 }

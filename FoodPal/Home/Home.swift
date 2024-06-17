@@ -22,13 +22,15 @@ struct Home: View {
     @State var doneUploading = true
     @State var page = AuthPage.signIn
     @State var currentUser = Auth.auth().currentUser
+    @State var claimedPost: Post? = nil
     
     //Data accessible to all child views (TODO: adopt this for posts as well)
     @State var locationManager = LocationManager()
     @StateObject var account = Account(fullName: "", email: "", handle: "", bio: "", timesDonated: -1, picURL: URL(fileURLWithPath: ""), uid: "") //the user account
     @StateObject var address = Address() //current user address
     @StateObject var posts = Posts() //all posts for the current city,region,country
-    @StateObject var favorited = Favorited() //all postIds favorited by the user 
+    @StateObject var favorited = FavoritedPosts() //all posts favorited by the user 
+
     
     //Database related
     let ref = Database.database().reference()
@@ -37,74 +39,79 @@ struct Home: View {
         
         if let location = locationManager.location {
             VStack {
-                VStack {
-                    
-                    if doneUploading {
-                        ZStack (alignment: .bottom) {
-                            TabView(selection: $currTab) {
-                                
-                                //TODO: make the icons actually black
-                                Feed()
-                                    .tag(1)
-                                    .tabItem {
-                                        Image(systemName: "house")
-                                        
-                                    }
-                                
-                                Search()
-                                    .tag(2)
-                                    .tabItem {
-                                        Image(systemName: "magnifyingglass")
-                                            .renderingMode(.template)
-                                        
-                                    }
-                                
-                                
-                                Text(" ")
-                                
-                                Favorites()
-                                    .tag(4)
-                                    .tabItem {
-                                        Image(systemName: "heart")
-                                    }
-                                
-                                AccountInfo()
-                                    .tag(5)
-                                    .tabItem {
-                                        Image(systemName: "person.crop.circle")
-                                    }
-                            }
-                            .sheet(isPresented: $creatingPost) {
-                                Create()
-                            }
-                            
-                            HStack {
-                                Spacer()
-                                Button(action: {
-                                    creatingPost = true
-                                }) {
-                                    Image(systemName: "plus.app") //TODO: put background just like threads
-                                        .font(.title)
-                                        .foregroundColor(.white)
-                                        .padding(15)
+                
+                if let claimedPost = claimedPost {
+                    Claimed(post: claimedPost)
+                } else {
+                    VStack {
+                        
+                        if doneUploading {
+                            ZStack (alignment: .bottom) {
+                                TabView(selection: $currTab) {
+                                    
+                                    //TODO: make the icons actually black
+                                    Feed()
+                                        .tag(1)
+                                        .tabItem {
+                                            Image(systemName: "house")
+                                            
+                                        }
+                                    
+                                    Search()
+                                        .tag(2)
+                                        .tabItem {
+                                            Image(systemName: "magnifyingglass")
+                                                .renderingMode(.template)
+                                            
+                                        }
+                                    
+                                    
+                                    Text(" ")
+                                    
+                                    Favorites()
+                                        .tag(4)
+                                        .tabItem {
+                                            Image(systemName: "heart")
+                                        }
+                                    
+                                    AccountInfo()
+                                        .tag(5)
+                                        .tabItem {
+                                            Image(systemName: "person.crop.circle")
+                                        }
                                 }
-                                Spacer()
+                                .sheet(isPresented: $creatingPost) {
+                                    Create()
+                                }
                                 
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        creatingPost = true
+                                    }) {
+                                        Image(systemName: "plus.app") //TODO: put background just like threads
+                                            .font(.title)
+                                            .foregroundColor(.white)
+                                            .padding(15)
+                                    }
+                                    Spacer()
+                                    
+                                }
                             }
-                        }
-                    } else {
-                        VStack (alignment: .center, spacing: 20) {
-                            ProgressView()
-                            Text("Finishing account set up")
+                        } else {
+                            VStack (alignment: .center, spacing: 20) {
+                                ProgressView()
+                                Text("Finishing account set up")
+                            }
                         }
                     }
-                }
-                .sheet(isPresented: $isNotSignedIn) {
-                    switch page {
-                    case .signIn:
-                        SignIn(page: $page, done: $doneUploading)
-                    case .createAccount:
-                        CreateAccount(page: $page, done: $doneUploading)
+                    .sheet(isPresented: $isNotSignedIn) {
+                        switch page {
+                        case .signIn:
+                            SignIn(page: $page, done: $doneUploading)
+                        case .createAccount:
+                            CreateAccount(page: $page, done: $doneUploading)
+                        }
                     }
                 }
             }
@@ -129,9 +136,9 @@ struct Home: View {
                     print("Account data was loaded from user defaults")
                 }
             }
-            .environmentObject(posts)
             .environmentObject(account)
             .environmentObject(address)
+            .environmentObject(posts)
             .environmentObject(favorited)
             .environmentObject(locationManager)
         } else {
@@ -173,21 +180,50 @@ struct Home: View {
         
         //Observer for favorited posts
         ref.child("favorited/\(account.uid)").observe(.childAdded) {snapshot in
-            if let postId = snapshot.value as? String {
-                favorited.add(fav: postId)
-            } else {
-                print("Failed to get postID as a string")
+            for _ in snapshot.children {
+                if let postData = snapshot.value as? [String: Any] {
+                    do {
+                        let post: Post = try Post.fromDict(dictionary: postData)
+                        favorited.add(post: post)
+                    } catch {
+                        print("Failed to decode post from postData")
+                    }
+                }
             }
+
         }
         
         ref.child("favorited/\(account.uid)").observe(.childRemoved) {snapshot in
-            if let postId = snapshot.value as? String {
-                favorited.remove(fav: postId)
-            } else {
-                print("Failed to get postID as a string")
+            for _ in snapshot.children {
+                if let postData = snapshot.value as? [String: Any] {
+                    do {
+                        let post: Post = try Post.fromDict(dictionary: postData)
+                        favorited.remove(post: post)
+                    } catch {
+                        print("Failed to decode post from postData")
+                    }
+                }
             }
         }
         
+        //Observer for claimed posts
+        ref.child("claimed/\(account.uid)").observe(.childAdded) {snapshot in
+            for _ in snapshot.children {
+                if let postData = snapshot.value as? [String: Any] {
+                    do {
+                        let post: Post = try Post.fromDict(dictionary: postData)
+                        claimedPost = post
+                    } catch {
+                        print("Failed to decode post from postData")
+                    }
+                }
+            }
+        }
+        
+        ref.child("claimed/\(account.uid)").observe(.childRemoved) {snapshot in
+            claimedPost = nil
+        }
+
         
     }
     

@@ -75,7 +75,7 @@ struct Create: View {
                         case .location:
                             Button("Done") {
                                 sendingPost = true
-                                sendPost()
+                                getAddress(for: CLLocation(latitude: latitude, longitude: longitude), completion: sendPost)
                             }
                         }
                     }
@@ -85,7 +85,7 @@ struct Create: View {
     }
     
     
-    func sendPost() {
+    func sendPost(address: Address) {
         let city = address.city
         let region = address.region
         let country = address.country
