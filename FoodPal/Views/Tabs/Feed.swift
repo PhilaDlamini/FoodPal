@@ -21,8 +21,9 @@ struct Feed: View {
             }
             .toolbar {
                 ToolbarItem (placement: .principal) {
-                    Image(systemName: "carrot")
-                        .font(.title2)
+                    Image("avocado.png")
+                        .resizable()
+                        .frame(width: 35, height: 35)
                         .onTapGesture {
                             print(address.getString())
                         }

@@ -12,31 +12,60 @@ struct Search: View {
     @State var region = ""
     @State var country = ""
     @State var results: [Post] = []
-    @State var searched = false
+    @State var searched = true
     @EnvironmentObject var address: Address
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack (spacing: 20) {
                 
-                VStack (alignment: .leading, spacing: 20) {
-                    TextField("Country", text: $country)
-                        .textFieldStyle(.roundedBorder)
-                    TextField("Region", text: $region)
-                        .textFieldStyle(.roundedBorder)
-                    TextField("City", text: $city)
-                        .textFieldStyle(.roundedBorder)
-
-                    Button("Search") {
-                        search()
-                        searched = true
+                HStack {
+                    VStack (alignment: .leading, spacing: 25) {
+                        Text("Country: ")
+                        Text("Region: ")
+                        Text("City: ")
                     }
-
+                    
+                    VStack (alignment: .leading, spacing: 10) {
+                        TextField("Country", text: $country)
+                            .padding(5)
+                            .background(.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                        
+                        TextField("Region", text: $region)
+                            .padding(5)
+                            .background(.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                        
+                        TextField("City", text: $city)
+                            .padding(5)
+                            .background(.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    
                 }
+                
+                Button("Search") {
+                    
+                }
+                .buttonStyle(.borderedProminent)
+                .cornerRadius(20)
+                
+                Divider()
                 
                 if searched && results.isEmpty {
                     
-                    Text("No results")
+                    VStack {
+                        Spacer()
+                        VStack (alignment: .center, spacing: 10) {
+                            Image(systemName: "xmark.bin.fill")
+                            Text("No results")
+                        }
+                        Spacer()
+                    }
                 } else {
                     List {
                         ForEach(results) {post in
@@ -45,13 +74,13 @@ struct Search: View {
                     }
                 }
             }
-            .padding()
             .onAppear {
                 country = address.country
                 region = address.region
             }
             .navigationTitle("Search")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.automatic)
+            .padding()
         }
     }
     
