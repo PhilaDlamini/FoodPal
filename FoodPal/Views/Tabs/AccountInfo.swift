@@ -11,10 +11,11 @@ import FirebaseDatabase
 
 struct AccountInfo: View {
     @EnvironmentObject var account: Account
+    @State var showActionSheet = false
     @State var posts: [Post] = []
+    @State var imageId = UUID()
     
-    var body: some View { //TODO: make the posts part of the same scroll view as the rest of the info 
-        
+    var body: some View { //TODO: make the posts part of the same scroll view as the rest of the info
         NavigationView {
             ScrollView( .vertical, showsIndicators: false) {
                 VStack (spacing: 25) {
@@ -41,42 +42,39 @@ struct AccountInfo: View {
                             
                             Spacer()
                             
-                            AsyncImage(url: account.picURL) {phase in
-                                if let image = phase.image {
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                } else if phase.error != nil {
-                                    Color.red
-                                } else {
-                                    Circle()
-                                        .fill(.gray)
+                            VStack(alignment: .center, spacing: 10) {
+                                Image(systemName: "text.justify.trailing")
+                                    .onTapGesture {
+                                        showActionSheet = true
+                                    }
+                                
+                                AsyncImage(url: account.picURL) {phase in
+                                    if let image = phase.image {
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                    } else if phase.error != nil {
+                                        Color.red
+                                            .onAppear {
+                                                imageId = UUID()
+                                            }
+                                    } else {
+                                        Circle()
+                                            .fill(.gray)
+                                    }
                                 }
+                                .id(imageId)
+                                .frame(width: 50)
+                                .clipShape(Circle())
                             }
-                            .frame(width: 50)
-                            .clipShape(Circle())
                         }
                         HStack {
-                           
-                            Button("Edit profile") {
-                                
-                            }
-                            .foregroundColor(.white)
-                            .font(.caption)
-                            .padding(5)
-                            .overlay(
-                                RoundedRectangle(cornerRadius:5)
-                                    .stroke(.white, lineWidth: 1)
-                                // .frame(width: 70, height: 40)
-                                
-                            )
                             
-                            //TODO: redesign this to be better please :/
-                            Spacer()
-                        
-                            Button("Sign out", action: signOut)
-                            .foregroundColor(.white)
+                            Button("Edit profile") {
+                                print("Editting profile not yet supported")
+                            }
                             .font(.caption)
+                            .foregroundColor(.white)
                             .padding(5)
                             .overlay(
                                 RoundedRectangle(cornerRadius:5)
@@ -93,17 +91,33 @@ struct AccountInfo: View {
                         }
                     }
                     
-                    ForEach(posts) {post in
-                        PostListItem(post: post)
+                    if posts.isEmpty {
+                       
+                        VStack (alignment: .center, spacing: 10) {
+                            Image(systemName: "xmark.bin.fill")
+                            Text("No posts")
+                        }
+                        .padding(EdgeInsets(top: 150, leading: 0, bottom: 0, trailing: 0))
+                            
+                    } else {
+                        ForEach(posts) {post in
+                            PostListItem(post: post)
+                        }
                     }
                 }
             }
-            .onAppear(perform: getPosts)
+            .confirmationDialog("Logout of FoodPal", isPresented: $showActionSheet) {
+                Button("Logout", role: .destructive, action: signOut)
+            }
             .padding()
         }
+        
     }
     
     func getPosts() {
+        print("in get account info")
+        
+        //Get user posts
         let ref = Database.database().reference().child("user posts/\(account.uid)")
         ref.observe(.childAdded) {snapshot in
             for _ in snapshot.children {

@@ -13,10 +13,15 @@ struct PostInfo: View {
     var post: Post
     @State var showExpiryDateInfo = false
     @State var address = ""
-    @EnvironmentObject var profile: ProfilePic
-    @EnvironmentObject var foodImages: FoodImages
     @State var id = UUID()
     @State var imgId = UUID()
+    @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var favorited: FavoritedPosts
+    @EnvironmentObject var profile: ProfilePic
+    @EnvironmentObject var foodImages: FoodImages
+    @EnvironmentObject var account: Account
+    @State var selectedImage: Image = Image(systemName: "")
+    @State var showSelectedImage = false
     
     
     var body: some View {
@@ -31,22 +36,39 @@ struct PostInfo: View {
                         if (foodImages.images != nil) && (foodImages.images!.count == post.images.count) {
                             if let images = foodImages.images {
                                 ForEach(Array(images.keys), id: \.self) {index in
-                                    images[index]!
+                                    let image = images[index]!
+                                    image
                                         .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 200, height: 400)
-                                        .cornerRadius(25)
+                                        .scaledToFill()
+                                        .frame(width: 260, height: 400)
+                                        .cornerRadius(20)
+                                        .onTapGesture {
+                                            selectedImage = image
+                                            showSelectedImage = true
+                                        }
+                                        .fullScreenCover(isPresented: $showSelectedImage) {
+                                            ViewImage(image: selectedImage)
+                                        }
+                                    
                                 }
                             }
                         } else {
                             ForEach(post.images, id: \.self) {url in
-                                AsyncImage(url: url) {phase in
+                                
+                                 AsyncImage(url: url) {phase in
                                     if let image = phase.image {
                                         image
                                             .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 200, height: 400)
-                                            .cornerRadius(25)
+                                            .scaledToFill()
+                                            .frame(width: 260, height: 400)
+                                            .cornerRadius(20)
+                                            .onTapGesture{
+                                                selectedImage = image
+                                                showSelectedImage = true
+                                            }
+                                            .fullScreenCover(isPresented: $showSelectedImage) {
+                                                ViewImage(image: selectedImage)
+                                            }
                                             
                                     } else if phase.error != nil {
                                         Color.red
@@ -54,9 +76,9 @@ struct PostInfo: View {
                                                 imgId = UUID()
                                             }//Retry loading the image here (other idea: try async again in the postView if the iamge was never retrieved
                                     } else {
-                                        RoundedRectangle(cornerRadius: 25)
+                                        RoundedRectangle(cornerRadius: 20)
                                             .fill(.gray)
-                                            .frame(width: 200, height: 400)
+                                            .frame(width: 260, height: 400)
                                     }
                                 }
                             }
@@ -79,7 +101,7 @@ struct PostInfo: View {
                     
                     VStack (alignment: .center, spacing: 5) {
                         Image(systemName: "mappin.and.ellipse")
-                        Text("\(post.distance) away")
+                        Text("\(post.getDistance(from: locationManager.location!)) away")
                             .font(.caption)
                     }
                 }
@@ -95,7 +117,7 @@ struct PostInfo: View {
                         Text("Expiry date:")
                             .font(.headline)
                             .bold()
-                        Text("\(post.expiryDateText)")
+                        Text("\(post.expiryDateSpelledOut)")
                             .font(.caption)
                     }
                     
@@ -112,45 +134,48 @@ struct PostInfo: View {
                 
                 HStack {
                     
-                    VStack (spacing: 10)  {
-                        Button(action: {}) {
+                    Button(action: {
+                        claim(account: account, post: post)
+                    }) {
+                        HStack(spacing: 5) {
                             Image(systemName: "fork.knife")
-                                .foregroundColor(.white)
-                                .padding()
-                                .overlay(Circle().stroke(.white, lineWidth: 1))
+                            Text("Claim")
                         }
-                        
-                        Text("Claim")
-                            .font(.caption)
                     }
+                    .buttonStyle(.bordered)
+                    .cornerRadius(25)
                     
                     Spacer()
                     
-                    VStack (spacing: 10) {
-                        Button(action: {}) {
-                            Image(systemName: "star")
-                                .foregroundColor(.white)
-                                .padding()
-                                .overlay(Circle().stroke(.white, lineWidth: 1))
-                        }
                         
-                        Text("Favorite")
-                            .font(.caption)
+                    if favorited.posts.contains(where: { key, value in value.id.uuidString == post.id.uuidString}) {
+                        Button(action: {
+                            favorite(account: account, post: post)
+                        }) {
+                            Image(systemName: "heart.fill")
+                                .foregroundColor(.red)
+                                .padding()
+                        }
+                    } else {
+                        Button(action: {
+                            unfavorite(account: account, post: post)
+                        }) {
+                            Image(systemName: "heart")
+                                .foregroundColor(.gray)
+                                .padding()
+                        }
                     }
-                    
+                        
+                       
                     Spacer()
                     
-                    VStack (spacing: 10) {
-                        Button(action: {}) {
-                            Image(systemName: "flag")
-                                .foregroundColor(.white)
-                                .padding()
-                                .overlay(Circle().stroke(.white, lineWidth: 1))
-                        }
-                        
-                        Text("Report")
-                            .font(.caption)
+                    Button(action: {}) {
+                        Image(systemName: "flag")
+                            .foregroundColor(.white)
+                            .padding()
                     }
+                        
+    
                 }
                 
                 Text("    \n ")
@@ -166,7 +191,7 @@ struct PostInfo: View {
         .alert("Expiry date", isPresented: $showExpiryDateInfo) {
             Button("Ok", role: .cancel) {}
         } message: {
-            Text("The is the earliest that a food item in the donation expires. At this date, this donation will be taken down")
+            Text("The is the earliest date that a food item in this post expires")
         }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -174,19 +199,20 @@ struct PostInfo: View {
                 if let image = profile.image {
                     image
                         .resizable()
-                        .scaledToFit()
+                        .scaledToFill()
                         .frame(width: 25)
+                        .clipShape(Circle())
                         .onTapGesture {
                             print("Going to account info from post info")
                         }
-
                     
                 } else {
                     AsyncImage(url: post.userPicURL) {phase in
                         if let image = phase.image {
                             image
                                 .resizable()
-                                .scaledToFit()
+                                .scaledToFill()
+                                .clipShape(Circle())
                                 .frame(width: 25)
                         } else if phase.error != nil {
                             Color.red

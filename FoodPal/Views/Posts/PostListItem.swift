@@ -11,11 +11,16 @@ struct PostListItem: View {
     var post: Post
     @StateObject var profile = ProfilePic()
     @StateObject var foodImages = FoodImages()
+   // @EnvironmentObject var favorited: FavoritedPosts
     
     var body: some View { //TODO: move all of these into a separate file
         ZStack {
             PostView(post: post, dense: true)
-            NavigationLink(destination: PostInfo(post: post).environmentObject(foodImages).environmentObject(profile)) {}.opacity(0.0)
+            NavigationLink(destination: PostInfo(post: post)
+                .environmentObject(foodImages)
+                .environmentObject(profile)
+                //.environmentObject(favorited)
+            ) {}.opacity(0.0)
         }
         .environmentObject(profile)
         .environmentObject(foodImages)

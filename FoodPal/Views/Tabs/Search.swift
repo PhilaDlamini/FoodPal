@@ -19,6 +19,30 @@ struct Search: View {
         NavigationView {
             VStack (spacing: 20) {
                 
+                HStack(alignment: .center) {
+                    
+                    Text("Search")
+                       .font(.largeTitle)
+                       .fontWeight(.bold)
+                       .padding(EdgeInsets(top: 12, leading: 0, bottom: 0, trailing: 0))
+                    
+                        Spacer()
+                    
+                        Button(action: search) {
+                           HStack(spacing: 5) {
+                               Image(systemName: "magnifyingglass")
+                               Text("Search")
+                           }
+                        }
+                       .font(.caption)
+                       .foregroundColor(.black)
+                       .buttonStyle(.bordered)
+                       .cornerRadius(25)
+                       .disabled(country.isEmpty || region.isEmpty || city.isEmpty)
+                    
+        
+                }
+                
                 HStack {
                     VStack (alignment: .leading, spacing: 25) {
                         Text("Country: ")
@@ -29,32 +53,25 @@ struct Search: View {
                     VStack (alignment: .leading, spacing: 10) {
                         TextField("Country", text: $country)
                             .padding(5)
-                            .background(.gray)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                            .background( Color(red: 34 / 255.0, green: 49 / 255.0, blue: 59 / 255.0)) //textfield background
+                            .cornerRadius(5)
                         
                         TextField("Region", text: $region)
                             .padding(5)
-                            .background(.gray)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                            .background( Color(red: 34 / 255.0, green: 49 / 255.0, blue: 59 / 255.0)) //textfield background
+                            .cornerRadius(5)
                         
                         TextField("City", text: $city)
                             .padding(5)
-                            .background(.gray)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                            .background( Color(red: 34 / 255.0, green: 49 / 255.0, blue: 59 / 255.0)) //textfield background
+                            .cornerRadius(5)
                     }
                     
                 }
                 
-                Button("Search") {
-                    
-                }
-                .buttonStyle(.borderedProminent)
-                .cornerRadius(20)
                 
                 Divider()
+                    .bold()
                 
                 if searched && results.isEmpty {
                     
@@ -78,8 +95,31 @@ struct Search: View {
                 country = address.country
                 region = address.region
             }
-            .navigationTitle("Search")
-            .navigationBarTitleDisplayMode(.automatic)
+//            .toolbar {
+//                ToolbarItem (placement: .topBarTrailing) {
+//                    Button(action: search) {
+//                        HStack(spacing: 5) {
+//                            Image(systemName: "magnifyingglass")
+//                            Text("Search")
+//                        }
+//                    }
+//                    .font(.caption)
+//                    .foregroundColor(.black)
+//                    .buttonStyle(.bordered)
+//                    .cornerRadius(25)
+//                    .disabled(country.isEmpty || region.isEmpty || city.isEmpty)
+//                        
+//                }
+//                
+//                //magnifyingglass
+//                
+//                ToolbarItem (placement: .topBarLeading) {
+//                    Text("Search")
+//                        .font(.largeTitle)
+//                        .fontWeight(.bold)
+//                        .padding(EdgeInsets(top: 12, leading: 0, bottom: 0, trailing: 0))
+//                }
+//            }
             .padding()
         }
     }

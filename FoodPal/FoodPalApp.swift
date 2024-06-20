@@ -24,8 +24,7 @@ struct FoodPalApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Search()
-                .environmentObject(Address(num: "", street: "", city: "Cupertino", region: "CA", country: "United States"))
+            Home()
         }
     }
 }

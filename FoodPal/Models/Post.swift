@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
  
  struct Post: Identifiable, Codable {
      var id: UUID // the post id
@@ -19,16 +20,29 @@ import Foundation
      var longitude: Double
      var images: [URL]
      
-     var distance: String {
-         return "1 m"
+     var isExpired: Bool {
+         return expiryDate < Date.now
      }
      
      var expiryDateText: String {
          let formatter = DateFormatter()
-         //formatter.dateFormat = "MMMM dd"
-         formatter.dateStyle = .short
-         formatter.timeStyle = .none
+         formatter.setLocalizedDateFormatFromTemplate("Md") // This will localize to "M/d", "d/M", etc. based on locale
          return formatter.string(from: expiryDate)
+     }
+     
+     var expiryDateSpelledOut: String {
+         let formatter = DateFormatter()
+         formatter.setLocalizedDateFormatFromTemplate("MMMM dd") // This will localize to "M/d", "d/M", etc. based on locale
+         return formatter.string(from: expiryDate)
+     }
+     
+     
+     func getDistance(from location: CLLocation) -> String {
+         let formatter = NumberFormatter()
+         formatter.usesSignificantDigits = false
+         let distance = location.distance(from: CLLocation(latitude: latitude, longitude: longitude)) / 1000
+         let number = NSNumber(value: distance)
+         return "\(formatter.string(for: number)!) km"
         
      }
  }

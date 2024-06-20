@@ -14,6 +14,9 @@ struct Claimed: View {
     @State var pickUpAddress = Address()
     @EnvironmentObject var account: Account
     let ref = Database.database().reference()
+    @State var selectedImage: Image = Image(systemName: "")
+    @State var showSelectedImage = false
+    @State var imgId = UUID()
     
     var body: some View {
         NavigationView {
@@ -26,22 +29,38 @@ struct Claimed: View {
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack { //creates views as needed, not all at once
-                            ForEach(post.images, id: \.self) {img in
+                            
+                            ForEach(post.images, id: \.self) {url in
                                 
-                                AsyncImage(url: img) {phase in
+                                 AsyncImage(url: url) {phase in
                                     if let image = phase.image {
                                         image
                                             .resizable()
                                             .scaledToFill()
+                                            .frame(width: 260, height: 400)
+                                            .cornerRadius(20)
+                                            .onTapGesture{
+                                                selectedImage = image
+                                                showSelectedImage = true
+                                            }
+                                            .fullScreenCover(isPresented: $showSelectedImage) {
+                                                ViewImage(image: selectedImage)
+                                            }
+                                            
                                     } else if phase.error != nil {
                                         Color.red
+                                            .onAppear {
+                                                imgId = UUID()
+                                            }//Retry loading the image here (other idea: try async again in the postView if the iamge was never retrieved
                                     } else {
-                                        ProgressView()
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(.gray)
+                                            .frame(width: 260, height: 400)
                                     }
                                 }
-                                .frame(width: 200, height: 400)
-                                .cornerRadius(25)
                             }
+                            .id(imgId)
+                            
                         }
                     }
                     

@@ -25,7 +25,7 @@ struct Home: View {
     @State var claimedPost: Post? = nil
     
     //Data accessible to all child views (TODO: adopt this for posts as well)
-    @State var locationManager = LocationManager()
+    @StateObject var locationManager = LocationManager()
     @StateObject var account = Account(fullName: "", email: "", handle: "", bio: "", timesDonated: -1, picURL: URL(fileURLWithPath: ""), uid: "") //the user account
     @StateObject var address = Address() //current user address
     @StateObject var posts = Posts() //all posts for the current city,region,country
