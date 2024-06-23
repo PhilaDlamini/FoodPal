@@ -6,126 +6,42 @@
 
 import SwiftUI
 import FirebaseDatabase
+import MapKit
 
-struct Search: View {
-    @State var city = ""
-    @State var region = ""
-    @State var country = ""
-    @State var results: [Post] = []
-    @State var searched = true
-    @EnvironmentObject var address: Address
+
+struct Results: View {
+    @Binding var showsResults: Bool
+    @State var address: Address
+    @State var posts: [Post] = []
     
     var body: some View {
         NavigationView {
-            VStack (spacing: 20) {
-                
-                HStack(alignment: .center) {
-                    
-                    Text("Search")
-                       .font(.largeTitle)
-                       .fontWeight(.bold)
-                       .padding(EdgeInsets(top: 12, leading: 0, bottom: 0, trailing: 0))
-                    
-                        Spacer()
-                    
-                        Button(action: search) {
-                           HStack(spacing: 5) {
-                               Image(systemName: "magnifyingglass")
-                               Text("Search")
-                           }
-                        }
-                       .font(.caption)
-                       .foregroundColor(.black)
-                       .buttonStyle(.bordered)
-                       .cornerRadius(25)
-                       .disabled(country.isEmpty || region.isEmpty || city.isEmpty)
-                    
+            VStack(alignment: .leading) {
         
+                List {
+                    ForEach(posts) {post in
+                        PostListItem(post: post)
+                    }
                 }
-                
-                HStack {
-                    VStack (alignment: .leading, spacing: 25) {
-                        Text("Country: ")
-                        Text("Region: ")
-                        Text("City: ")
-                    }
-                    
-                    VStack (alignment: .leading, spacing: 10) {
-                        TextField("Country", text: $country)
-                            .padding(5)
-                            .background( Color(red: 34 / 255.0, green: 49 / 255.0, blue: 59 / 255.0)) //textfield background
-                            .cornerRadius(5)
-                        
-                        TextField("Region", text: $region)
-                            .padding(5)
-                            .background( Color(red: 34 / 255.0, green: 49 / 255.0, blue: 59 / 255.0)) //textfield background
-                            .cornerRadius(5)
-                        
-                        TextField("City", text: $city)
-                            .padding(5)
-                            .background( Color(red: 34 / 255.0, green: 49 / 255.0, blue: 59 / 255.0)) //textfield background
-                            .cornerRadius(5)
-                    }
-                    
-                }
-                
-                
-                Divider()
-                    .bold()
-                
-                if searched && results.isEmpty {
-                    
-                    VStack {
-                        Spacer()
-                        VStack (alignment: .center, spacing: 10) {
-                            Image(systemName: "xmark.bin.fill")
-                            Text("No results")
+            }
+            .navigationTitle("\(flagMap[address.country]!) \(address.city), \(address.region)")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem (placement: .topBarLeading) {
+                    Image(systemName: "chevron.backward")
+                        .onTapGesture {
+                            showsResults = false
                         }
-                        Spacer()
-                    }
-                } else {
-                    List {
-                        ForEach(results) {post in
-                            PostListItem(post: post)
-                        }
-                    }
                 }
             }
             .onAppear {
-                country = address.country
-                region = address.region
+                searchPosts(at: address)
             }
-//            .toolbar {
-//                ToolbarItem (placement: .topBarTrailing) {
-//                    Button(action: search) {
-//                        HStack(spacing: 5) {
-//                            Image(systemName: "magnifyingglass")
-//                            Text("Search")
-//                        }
-//                    }
-//                    .font(.caption)
-//                    .foregroundColor(.black)
-//                    .buttonStyle(.bordered)
-//                    .cornerRadius(25)
-//                    .disabled(country.isEmpty || region.isEmpty || city.isEmpty)
-//                        
-//                }
-//                
-//                //magnifyingglass
-//                
-//                ToolbarItem (placement: .topBarLeading) {
-//                    Text("Search")
-//                        .font(.largeTitle)
-//                        .fontWeight(.bold)
-//                        .padding(EdgeInsets(top: 12, leading: 0, bottom: 0, trailing: 0))
-//                }
-//            }
-            .padding()
         }
     }
     
-    func search() {
-        let ref = Database.database().reference().child("posts/\(country)/\(region)/\(city)")
+    func searchPosts(at address: Address) {
+        let ref = Database.database().reference().child("posts/\(address.country)/\(address.region)/\(address.city)")
         ref.getData {error, snapshot in
             if let snapshot = snapshot {
                 for _ in snapshot.children {
@@ -133,10 +49,10 @@ struct Search: View {
                         for key in snapData.keys {
                             do {
                                 let post: Post = try Post.fromDict(dictionary: snapData[key]!)
-                                results.removeAll(where: { $0.id == post.id })
-                                results.append(post)
+                                posts.removeAll(where: { $0.id == post.id })
+                                posts.append(post)
                             } catch {
-                                print("Failed to decode post from postData in search")
+                                print("Failed to decode post from postData in search results")
                             }
                         }
                     }
@@ -144,6 +60,84 @@ struct Search: View {
             }
         }
     }
+}
+
+struct Search: View {
+    @State var city = ""
+    @State var region = ""
+    @State var country = ""
+    @State var results: [Post] = []
+    @State var searched = true
+    @State var countries = [Country]()
+    @State var countryIndex = 0
+    @State var regionIndex = 0
+    @State var cityIndex = 0
+    @EnvironmentObject var address: Address
+    
+    
+    @State var showResults = false
+    @State var searchResults: [Address] = []
+    @State var searchText = ""
+ 
+    var body: some View {
+        
+        if showResults  {
+            Results(showsResults: $showResults, address: address)
+        } else {
+            
+            NavigationView {
+                VStack {
+                    List {
+                        ForEach(searchResults) {address in
+                            VStack(alignment: .leading) {
+                                Text("\(flagMap[address.country]!) \(address.city)")
+                                        .font(.headline)
+                                    Text("\(address.region) \(address.country)")
+                                        .font(.caption)
+                                }
+                                .onTapGesture {
+                                    showResults = true
+                            }
+                        }
+                    }
+                    .padding(.top, 20)
+                }
+                .searchable(text: $searchText, prompt: "City, Country")
+                .onSubmit(of: .search) {
+                    searchLocations(query: searchText)
+                }
+                .navigationTitle("Search")
+                .navigationBarTitleDisplayMode(.large)
+            }
+            .onAppear {
+//                address.country = "United States"
+//                address.region = "CA"
+//                address.city = "Cupertino"
+//                searchResults.append(address)
+            }
+        }
+    }
+    
+    func searchLocations(query: String) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = query
+        request.resultTypes = .address
+        
+        Task {
+            let search = MKLocalSearch(request: request)
+            let response = try? await search.start()
+            let results = response?.mapItems ?? []
+            
+            for result in results {
+                let cod = result.placemark.coordinate
+                getAddress(for: CLLocation(latitude: cod.latitude, longitude: cod.longitude)) {
+                    searchResults.append($0)
+                }
+            }
+        }
+    }
+   
+
 }
 
 #Preview {

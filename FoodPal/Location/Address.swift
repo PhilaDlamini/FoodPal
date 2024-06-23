@@ -8,7 +8,14 @@
 import Foundation
 import MapKit
 
-class Address: ObservableObject {
+let flagMap = [
+    "United States" : "🇺🇸",
+    "South Africa" : "🇿🇦"
+]
+
+
+class Address: ObservableObject, Identifiable {
+    var id = UUID()
     @Published var num: String
     @Published var street: String
     @Published var city: String
