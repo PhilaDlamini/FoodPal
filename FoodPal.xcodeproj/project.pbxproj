@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B32CEC4C2C10BB180028C1C4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */; };
-		B32CEC4F2C1254800028C1C4 /* FoodDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */; };
-		B32CEC512C1254AE0028C1C4 /* FoodPictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */; };
+		B32CEC4F2C1254800028C1C4 /* PostDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC4E2C1254800028C1C4 /* PostDetails.swift */; };
 		B32CEC532C1254F50028C1C4 /* PickupLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CEC522C1254F50028C1C4 /* PickupLocation.swift */; };
 		B32CEC552C133FCC0028C1C4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B32CEC542C133FCC0028C1C4 /* GoogleService-Info.plist */; };
 		B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340A49E2C0677C5007B6E9F /* FoodPalApp.swift */; };
@@ -51,8 +50,7 @@
 
 /* Begin PBXFileReference section */
 		B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetails.swift; sourceTree = "<group>"; };
-		B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPictures.swift; sourceTree = "<group>"; };
+		B32CEC4E2C1254800028C1C4 /* PostDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetails.swift; sourceTree = "<group>"; };
 		B32CEC522C1254F50028C1C4 /* PickupLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupLocation.swift; sourceTree = "<group>"; };
 		B32CEC542C133FCC0028C1C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B340A49B2C0677C5007B6E9F /* FoodPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -225,8 +223,7 @@
 			children = (
 				B34FC56F2C08AFE200A279B8 /* Create.swift */,
 				B32CEC522C1254F50028C1C4 /* PickupLocation.swift */,
-				B32CEC4E2C1254800028C1C4 /* FoodDetails.swift */,
-				B32CEC502C1254AE0028C1C4 /* FoodPictures.swift */,
+				B32CEC4E2C1254800028C1C4 /* PostDetails.swift */,
 			);
 			path = PostCreation;
 			sourceTree = "<group>";
@@ -352,7 +349,6 @@
 				B38D5EB82C1DE96B00C6E931 /* Test.swift in Sources */,
 				B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */,
 				B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */,
-				B32CEC512C1254AE0028C1C4 /* FoodPictures.swift in Sources */,
 				B38D5EC42C21EECB00C6E931 /* ViewImage.swift in Sources */,
 				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
 				B38D5EAC2C1AF21300C6E931 /* Address.swift in Sources */,
@@ -368,7 +364,7 @@
 				B34FC5622C07672A00A279B8 /* Feed.swift in Sources */,
 				B38D5EBE2C1F426100C6E931 /* PostListItem.swift in Sources */,
 				B34FC56E2C07BF9300A279B8 /* PostInfo.swift in Sources */,
-				B32CEC4F2C1254800028C1C4 /* FoodDetails.swift in Sources */,
+				B32CEC4F2C1254800028C1C4 /* PostDetails.swift in Sources */,
 				B34FC5662C0767AF00A279B8 /* Favorites.swift in Sources */,
 				B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */,
 				B34FC56B2C07740500A279B8 /* Post.swift in Sources */,

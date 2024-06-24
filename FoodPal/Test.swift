@@ -7,108 +7,114 @@
 
 import SwiftUI
 import CoreLocation
+import MapKit
 
 struct Test: View {
-    @State var images = [UIImage]()
-    @State var title = ""
-    @State var description = ""
-    @State var showImagePicker = false
-    @State var pickFromLibrary = true
-    @State var expiryDate = Date.now 
+    @State var searchText = ""
+    @State var address = ""
+    @State var latitude = 0.0
+    @State var longitude = 0.0
+    @State var addressResults = [Address]()
+    @State var locationResults = [MKMapItem]()
+    @State var showLocationPicker = false
+    @State var usingAlternateLocation = false
+    @State var alternateLocation: CLLocation? = nil
+    @State var position: MapCameraPosition = MapCameraPosition.region(
+        MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)))
+    @StateObject private var locationManager = LocationManager()
+    
+    //The pickup location
+     var pickUpLocation: CLLocation? {
+         if usingAlternateLocation {
+             return alternateLocation
+         }
+         return locationManager.location
+    }
 
     var body: some View {
-        
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .top) {
-                
-                Circle() //user pic
-                    .fill(.gray)
-                    .frame(width: 35)
-                
-                VStack (alignment: .leading, spacing: 10) {
-                    TextField("Food name", text: $title)
-                        .bold()
-                    
-                    TextField("Desribe food", text: $description, axis: .vertical)
-                    
-                    
-                    
-                }
-               
-                
-            }
-            
-                if !images.isEmpty {
-                    ScrollView(.horizontal, showsIndicators: false) {
+        NavigationView {
+            if let location = pickUpLocation {
+                ScrollView (.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading) {
+                        
                         HStack {
-                            ForEach(0..<images.count, id: \.self) {index in
-                                let image = images[index]
+                            VStack(alignment: .leading) {
+                                Text("Pickup location:")
+                                    .font(.headline)
+                                    .bold()
                                 
-                                ZStack(alignment: .topTrailing) {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 130, height: 200)
-                                        .cornerRadius(10)
-                                    
-                                    Image(systemName: "xmark.circle.fill")
-                                        .renderingMode(.template)
-                                        .onTapGesture {
-                                            print("about to remove image at index")
-                                            images.remove(at: index)
-                                            print("removed image at index")
-                                        }
-                                        .padding(8)
-                                }
+                                Text("\(address)")
+                                    .font(.caption)
+                            }
+                            
+                            Spacer()
+                            
+                            if usingAlternateLocation {
+                                Image(systemName: "")
+                                    .foregroundColor(.gray)
+                                    .onTapGesture {
+                                        usingAlternateLocation.toggle()
+                                    }
                             }
                         }
-                        .padding(.leading, 40)
                         
+                        ForEach(0..<addressResults.count, id: \.self) {index in
+                            let address = addressResults[index]
+                            
+                            VStack(alignment: .leading) {
+                                Text("\(flagMap[address.country]!) \(address.num) \(address.street)")
+                                    .font(.headline)
+                                Text("\(address.city), \(address.region)")
+                                    .font(.caption)
+                            }
+                            .onTapGesture {
+                                //  showResults = true
+                                let cod = locationResults[index].placemark.coordinate
+                                alternateLocation = CLLocation(latitude: cod.latitude, longitude: cod.longitude)
+                                usingAlternateLocation.toggle()
+                            }
+                        }
+                        
+                        Map(position: $position) {
+                            Marker("", coordinate: location.coordinate)
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .frame(height: 400)
                     }
-                    
-                }
-                
-                
-            VStack(alignment: .leading, spacing: 10) {
-
-                HStack {
-                    Image(systemName: "photo.on.rectangle.angled")
-                        .foregroundColor(.gray)
-                        .onTapGesture {
-                            pickFromLibrary = true
-                            showImagePicker = true
+                    .searchable(text: $searchText)
+                    .onSubmit(of: .search) {
+                        search(query: searchText)
+                    }
+                    .onChange(of: pickUpLocation) { _ , _ in
+                        
+                        //update camera position and get new address
+                        if let location = pickUpLocation {
+                            position = MapCameraPosition.region(MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
+                            getAddress(for: location) {updatedAddress in
+                                address = updatedAddress.getString()
+                            }
+                            latitude = location.coordinate.latitude
+                            longitude = location.coordinate.longitude
+                        } else {
+                            address = ""
                         }
-                    
-                    Image(systemName: "camera.fill")
-                        .foregroundColor(.gray)
-                        .onTapGesture {
-                            pickFromLibrary = false
-                            showImagePicker = true
-                        }
-                    
+                    }
                 }
-                
-                Text("At least 3 images required")
-                    .font(.caption)
-            }
-            .padding(.leading, 40)
-            
-        }
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                DatePicker("Expiry date", selection: $expiryDate, in: Date()..., displayedComponents: .date)
+                .padding()
             }
         }
-        .sheet(isPresented: $showImagePicker) {
-            if pickFromLibrary {
-                ImagePicker(images: $images, isPickerShowing: $showImagePicker, sourceType: .photoLibrary)
-            } else {
-                ImagePicker(images: $images, isPickerShowing: $showImagePicker, sourceType: .camera)
-            }
+    }
+    
+    func search(query: String) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = query
+        request.resultTypes = .address
+        
+        Task {
+            let search = MKLocalSearch(request: request)
+            let response = try? await search.start()
+            locationResults = response?.mapItems ?? []
         }
-        
-        
-        
     }
    
 }

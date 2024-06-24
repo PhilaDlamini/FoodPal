@@ -11,7 +11,7 @@ import FirebaseStorage
 import FirebaseDatabaseInternal
 
 enum CreationStage {
-    case details, pictures, location
+    case details, location
 }
 
 struct Create: View {
@@ -40,9 +40,7 @@ struct Create: View {
                 VStack {
                     switch creationStage {
                     case .details:
-                        FoodDetails(title: $title, description: $description, expiryDate: $expiryDate)
-                    case .pictures:
-                        FoodPictures(images: $images)
+                        PostDetails(title: $title, description: $description, expiryDate: $expiryDate, images: $images)
                     case .location:
                         PickupLocation(latitude: $latitude, longitude: $longitude)
                     }
@@ -62,16 +60,11 @@ struct Create: View {
                         switch creationStage {
                         case .details:
                             Button("Next") {
-                                creationStage = .pictures
-                            }
-                            .disabled(title.isEmpty || description.isEmpty)
-                            
-                        case .pictures:
-                            Button("Next") {
                                 creationStage = .location
                             }
-                            .disabled(images.count < 3)
+                            .disabled(title.isEmpty || description.isEmpty || images.count < 3)
                             
+        
                         case .location:
                             Button("Done") {
                                 sendingPost = true
