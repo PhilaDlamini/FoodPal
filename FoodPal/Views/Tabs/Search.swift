@@ -12,19 +12,23 @@ import MapKit
 struct Results: View {
     @Binding var showsResults: Bool
     @State var address: Address
-    @State var posts: [Post] = []
+    @State var results: [Post] = []
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
         
-                List {
-                    ForEach(posts) {post in
-                        PostListItem(post: post)
+                if results.isEmpty {
+                    Text ("No posts")
+                } else {
+                    List {
+                        ForEach(results) {post in
+                            PostListItem(post: post)
+                        }
                     }
                 }
             }
-            .navigationTitle("\(flagMap[address.country]!) \(address.city), \(address.region)")
+            .navigationTitle("\(flagMap[address.country]!) \(address.city)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem (placement: .topBarLeading) {
@@ -49,8 +53,8 @@ struct Results: View {
                         for key in snapData.keys {
                             do {
                                 let post: Post = try Post.fromDict(dictionary: snapData[key]!)
-                                posts.removeAll(where: { $0.id == post.id })
-                                posts.append(post)
+                                results.removeAll(where: { $0.id == post.id })
+                                results.append(post)
                             } catch {
                                 print("Failed to decode post from postData in search results")
                             }
@@ -72,7 +76,7 @@ struct Search: View {
     @State var countryIndex = 0
     @State var regionIndex = 0
     @State var cityIndex = 0
-    @EnvironmentObject var address: Address
+    @State var selectedAddress = Address()
     
     
     @State var showResults = false
@@ -82,7 +86,7 @@ struct Search: View {
     var body: some View {
         
         if showResults  {
-            Results(showsResults: $showResults, address: address)
+            Results(showsResults: $showResults, address: selectedAddress)
         } else {
             
             NavigationView {
@@ -95,14 +99,16 @@ struct Search: View {
                                     Text("\(address.region) \(address.country)")
                                         .font(.caption)
                                 }
-                                .onTapGesture {
-                                    showResults = true
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedAddress = address
+                                showResults = true
                             }
                         }
                     }
                     .padding(.top, 20)
                 }
-                .searchable(text: $searchText, prompt: "City, Country")
+                .searchable(text: $searchText, prompt: "City, State")
                 .onSubmit(of: .search) {
                     searchLocations(query: searchText)
                 }
@@ -122,6 +128,7 @@ struct Search: View {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         request.resultTypes = .address
+        searchResults = []
         
         Task {
             let search = MKLocalSearch(request: request)

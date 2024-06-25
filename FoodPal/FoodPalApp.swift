@@ -24,7 +24,7 @@ struct FoodPalApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Test()
+            Home()
         }
     }
 }

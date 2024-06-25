@@ -1,14 +1,16 @@
 //
-//  ProfilePic.swift
+//  AccountProfilePic.swift
 //  FoodPal
 //
-//  Created by Phila Dlamini on 6/16/24.
+//  Created by Phila Dlamini on 6/25/24.
 //
+
+import SwiftUI
 
 import Foundation
 import SwiftUI
 
-class ProfilePic: ObservableObject {
+class AccountPic: ObservableObject {
     @Published var image: Image?
     init() {
         self.image = nil

@@ -14,9 +14,15 @@ struct Favorites: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(Array(favorited.posts.values)) {post in
-                    PostListItem(post: post)
+            VStack {
+                if favorited.posts.isEmpty {
+                    Text("No favorites")
+                } else {
+                    List {
+                        ForEach(Array(favorited.posts.values)) {post in
+                            PostListItem(post: post)
+                        }
+                    }
                 }
             }
             .navigationTitle("Favorites")

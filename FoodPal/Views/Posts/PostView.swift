@@ -17,7 +17,7 @@ struct PostView: View {
     @State var showExpiredAlert = false
     
     //Provides a means to extract the loaded images
-    @EnvironmentObject var profile: ProfilePic
+    @EnvironmentObject var profile: PostProfilePic
     @EnvironmentObject var foodImages: FoodImages
     @State var id = UUID()
     @State var imgId = UUID()

@@ -14,9 +14,16 @@ struct Feed: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(Array(posts.posts.values)) {post in
-                   PostListItem(post: post)
+            
+            VStack {
+                if posts.posts.isEmpty {
+                    Text("No posts")
+                } else {
+                    List {
+                        ForEach(Array(posts.posts.values)) {post in
+                            PostListItem(post: post)
+                        }
+                    }
                 }
             }
             .toolbar {

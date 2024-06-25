@@ -9,6 +9,62 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
+struct A: View {
+    @Binding var addressResults: [Address]
+    @Binding var locationResults: [MKMapItem]
+    @Binding var usingAlternateLocation: Bool
+    @Binding var alternateLocation: CLLocation?
+    @State var searchText = ""
+    @Binding var showSheet: Bool
+    
+    var body: some View {
+        NavigationView {
+            ForEach(0..<addressResults.count, id: \.self) {index in
+                let address = addressResults[index]
+                
+                VStack(alignment: .leading) {
+                    Text("\(flagMap[address.country]!) \(address.num) \(address.street)")
+                        .font(.headline)
+                    Text("\(address.city), \(address.region)")
+                        .font(.caption)
+                }
+                .onTapGesture {
+                    //  showResults = true
+                    let cod = locationResults[index].placemark.coordinate
+                    alternateLocation = CLLocation(latitude: cod.latitude, longitude: cod.longitude)
+                    usingAlternateLocation.toggle()
+                    showSheet = false
+                }
+            }
+            .searchable(text: $searchText)
+            .onSubmit(of: .search) {
+                search(query: searchText)
+            }
+        }
+    }
+    
+    func search(query: String) {
+        print("Started search ")
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = query
+        request.resultTypes = .address
+        
+        Task {
+            let search = MKLocalSearch(request: request)
+            let response = try? await search.start()
+            locationResults = response?.mapItems ?? []
+            addressResults = []
+            for res in locationResults {
+                let cod = res.placemark.coordinate
+                getAddress(for: CLLocation(latitude: cod.latitude, longitude: cod.longitude)) {add in
+                    addressResults.append(add)
+                }
+            }
+            print("Completed search with \(locationResults.count) results")
+        }
+    }
+}
+
 struct Test: View {
     @State var searchText = ""
     @State var address = ""
@@ -22,6 +78,7 @@ struct Test: View {
     @State var position: MapCameraPosition = MapCameraPosition.region(
         MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)))
     @StateObject private var locationManager = LocationManager()
+    @State var showSheet = false
     
     //The pickup location
      var pickUpLocation: CLLocation? {
@@ -50,30 +107,20 @@ struct Test: View {
                             Spacer()
                             
                             if usingAlternateLocation {
-                                Image(systemName: "")
+                                Image(systemName: "location.circle.fill")
                                     .foregroundColor(.gray)
                                     .onTapGesture {
                                         usingAlternateLocation.toggle()
                                     }
                             }
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(.gray)
+                                .onTapGesture {
+                                    showSheet = true
+                                }
+                            
                         }
                         
-                        ForEach(0..<addressResults.count, id: \.self) {index in
-                            let address = addressResults[index]
-                            
-                            VStack(alignment: .leading) {
-                                Text("\(flagMap[address.country]!) \(address.num) \(address.street)")
-                                    .font(.headline)
-                                Text("\(address.city), \(address.region)")
-                                    .font(.caption)
-                            }
-                            .onTapGesture {
-                                //  showResults = true
-                                let cod = locationResults[index].placemark.coordinate
-                                alternateLocation = CLLocation(latitude: cod.latitude, longitude: cod.longitude)
-                                usingAlternateLocation.toggle()
-                            }
-                        }
                         
                         Map(position: $position) {
                             Marker("", coordinate: location.coordinate)
@@ -81,9 +128,8 @@ struct Test: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .frame(height: 400)
                     }
-                    .searchable(text: $searchText)
-                    .onSubmit(of: .search) {
-                        search(query: searchText)
+                    .sheet(isPresented: $showSheet) {
+                        A(addressResults: $addressResults, locationResults: $locationResults, usingAlternateLocation: $usingAlternateLocation, alternateLocation: $alternateLocation, showSheet: $showSheet)
                     }
                     .onChange(of: pickUpLocation) { _ , _ in
                         
@@ -105,17 +151,6 @@ struct Test: View {
         }
     }
     
-    func search(query: String) {
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = query
-        request.resultTypes = .address
-        
-        Task {
-            let search = MKLocalSearch(request: request)
-            let response = try? await search.start()
-            locationResults = response?.mapItems ?? []
-        }
-    }
    
 }
 

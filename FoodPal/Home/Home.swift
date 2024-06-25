@@ -30,6 +30,7 @@ struct Home: View {
     @StateObject var address = Address() //current user address
     @StateObject var posts = Posts() //all posts for the current city,region,country
     @StateObject var favorited = FavoritedPosts() //all posts favorited by the user 
+    @StateObject var accountPic = AccountPic() //ther user's profile pic
 
     
     //Database related
@@ -86,14 +87,18 @@ struct Home: View {
                                 
                                 HStack {
                                     Spacer()
-                                    Button(action: {
-                                        creatingPost = true
-                                    }) {
-                                        Image(systemName: "plus.app") //TODO: put background just like threads
-                                            .font(.title)
-                                            .foregroundColor(.white)
-                                            .padding(15)
-                                    }
+                                    
+                                    Image(systemName: "plus") //TODO: put background just like threads
+                                        .font(.title)
+                                        .padding(10)
+                                        .background(Color(red: 0.2, green: 0.2, blue: 0.2))
+                                        .foregroundColor(.gray)
+                                        .cornerRadius(15)
+                                        .padding(5)
+                                        .onTapGesture {
+                                            creatingPost = true
+                                        }
+                                    
                                     Spacer()
                                     
                                 }
@@ -141,6 +146,7 @@ struct Home: View {
             .environmentObject(posts)
             .environmentObject(favorited)
             .environmentObject(locationManager)
+            .environmentObject(accountPic)
         } else {
             Text("Location not accessible")
         }

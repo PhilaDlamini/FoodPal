@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseDatabase
 
 struct AccountInfo: View {
+    @EnvironmentObject var accountPic: AccountPic
     @EnvironmentObject var account: Account
     @State var showActionSheet = false
     @State var posts: [Post] = []
@@ -19,7 +20,7 @@ struct AccountInfo: View {
         NavigationView {
             ScrollView( .vertical, showsIndicators: false) {
                 VStack (spacing: 25) {
-                    VStack (spacing: 30) {
+                   /* VStack (spacing: 30) {
                         HStack (alignment: .top) {
                             VStack (alignment: .leading, spacing: 10) {
                                 
@@ -48,25 +49,37 @@ struct AccountInfo: View {
                                         showActionSheet = true
                                     }
                                 
-                                AsyncImage(url: account.picURL) {phase in
-                                    if let image = phase.image {
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                    } else if phase.error != nil {
-                                        Color.red
-                                            .onAppear {
-                                                imageId = UUID()
-                                            }
-                                    } else {
-                                        Circle()
-                                            .fill(.gray)
+                                if let image = accountPic.image {
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50)
+                                        .clipShape(Circle())
+                                } else {
+                                    
+                                    AsyncImage(url: account.picURL) {phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .onAppear {
+                                                    accountPic.image = image
+                                                }
+                                        } else if phase.error != nil {
+                                            Color.red
+                                                .onAppear {
+                                                    imageId = UUID()
+                                                }
+                                        } else {
+                                            Circle()
+                                                .fill(.gray)
+                                        }
                                     }
+                                    .id(imageId)
+                                    .frame(width: 50)
+                                    .clipShape(Circle())
                                 }
-                                .id(imageId)
-                                .frame(width: 50)
-                                .clipShape(Circle())
-                            }
+                    }
                         }
                         HStack {
                             
@@ -89,15 +102,64 @@ struct AccountInfo: View {
                                 Image(systemName: "square.and.arrow.up")
                             }
                         }
+                    } */
+                    
+                    HStack {
+                        if let image = accountPic.image {
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 70, height: 70)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .onTapGesture {
+                                    //show share sheet
+                                }
+                        } else {
+                            
+                            AsyncImage(url: account.picURL) {phase in
+                                if let image = phase.image {
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .onAppear {
+                                            accountPic.image = image
+                                        }
+                                } else if phase.error != nil {
+                                    Color.red
+                                        .onAppear {
+                                            imageId = UUID()
+                                        }
+                                } else {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(.gray)
+                                }
+                            }
+                            .id(imageId)
+                            .frame(width: 70, height: 70)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .onTapGesture {
+                                //show share sheet
+                            }
+                        }
+                        
+                        VStack(alignment: .leading){
+                            Text("\(account.fullName)")
+                                .font(.headline)
+                            Text("\(account.handle)")
+                                .font(.caption)
+                            Text("\(account.bio)")
+                        }
+                        
+                        Spacer()
+                         
+                        Image(systemName: "nosign")
+                    
                     }
                     
                     if posts.isEmpty {
                        
-                        VStack (alignment: .center, spacing: 10) {
-                            Image(systemName: "xmark.bin.fill")
-                            Text("No posts")
-                        }
-                        .padding(EdgeInsets(top: 150, leading: 0, bottom: 0, trailing: 0))
+                        Text("No posts")
+                            .padding(EdgeInsets(top: 150, leading: 0, bottom: 0, trailing: 0))
                             
                     } else {
                         ForEach(posts) {post in
@@ -106,6 +168,8 @@ struct AccountInfo: View {
                     }
                 }
             }
+            .navigationTitle("Account")
+            .navigationBarTitleDisplayMode(.large)
             .confirmationDialog("Logout of FoodPal", isPresented: $showActionSheet) {
                 Button("Logout", role: .destructive, action: signOut)
             }

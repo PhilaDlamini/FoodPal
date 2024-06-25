@@ -21,7 +21,7 @@
       ],
       "color" : {
         "platform" : "universal",
-        "reference" : "systemOrangeColor"
+        "reference" : "labelColor"
       },
       "idiom" : "universal"
     }

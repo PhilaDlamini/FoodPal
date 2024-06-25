@@ -37,7 +37,9 @@ struct Create: View {
             }
         } else {
             NavigationView {
-                VStack {
+                VStack(spacing: 0) {
+                    Divider()
+                    
                     switch creationStage {
                     case .details:
                         PostDetails(title: $title, description: $description, expiryDate: $expiryDate, images: $images)

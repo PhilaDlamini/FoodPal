@@ -12,18 +12,49 @@ struct PostDetails: View {
     @Binding var description: String
     @Binding var expiryDate: Date
     @Binding var images: [UIImage]
-    @State var showImagePicker = false
-    @State var pickFromLibrary = true
+    @State var showCameraPicker = false
+    @State var showLibraryPicker = false
+    @EnvironmentObject var accountPic: AccountPic
+    @EnvironmentObject var account: Account
+    @State var id = UUID()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top) {
-                
-                Circle() //user pic
-                    .fill(.gray)
+            
+                if let image = accountPic.image {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(Circle())
+                        .frame(width: 35)
+                    
+                } else {
+                    AsyncImage(url: account.picURL) {phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .onAppear {
+                                   // accountPic.image = image
+                                    print("downloaded account pic in post details")
+                                }
+                        } else if phase.error != nil {
+                            Color.red
+                                .onAppear {
+                                    id = UUID()
+                                }//Retry loading the image here (other idea: try async again in the postView if the iamge was never retrieved
+                        } else {
+                            Circle()
+                                .fill(.gray)
+                        }
+                    }
+                    .clipShape(Circle())
                     .frame(width: 35)
+                    .id(id)
+                }
                 
-                VStack (alignment: .leading, spacing: 10) {
+                VStack (alignment: .leading, spacing: 5) {
                     TextField("Food name", text: $title)
                         .bold()
                     
@@ -62,21 +93,19 @@ struct PostDetails: View {
             }
             
             
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 5) {
                 
                 HStack {
                     Image(systemName: "photo.on.rectangle.angled")
                         .foregroundColor(.gray)
                         .onTapGesture {
-                            pickFromLibrary = true
-                            showImagePicker = true
+                            showLibraryPicker = true
                         }
                     
                     Image(systemName: "camera.fill")
                         .foregroundColor(.gray)
                         .onTapGesture {
-                            pickFromLibrary = false
-                            showImagePicker = true
+                            showCameraPicker = true
                         }
                     
                 }
@@ -86,18 +115,20 @@ struct PostDetails: View {
             }
             .padding(.leading, 40)
             
+            Spacer()
+            
         }
+        .padding()
         .toolbar {
             ToolbarItem(placement: .keyboard) {
                 DatePicker("Expiry date", selection: $expiryDate, in: Date()..., displayedComponents: .date)
             }
         }
-        .sheet(isPresented: $showImagePicker) {
-            if pickFromLibrary {
-                ImagePicker(images: $images, isPickerShowing: $showImagePicker, sourceType: .photoLibrary)
-            } else {
-                ImagePicker(images: $images, isPickerShowing: $showImagePicker, sourceType: .camera)
-            }
+        .sheet(isPresented: $showCameraPicker) {
+            ImagePicker(images: $images, isPickerShowing: $showCameraPicker, sourceType: .camera)
+        }
+        .sheet(isPresented: $showLibraryPicker) {
+            ImagePicker(images: $images, isPickerShowing: $showLibraryPicker, sourceType: .photoLibrary)
         }
         
     }

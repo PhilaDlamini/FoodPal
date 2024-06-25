@@ -17,7 +17,7 @@ struct PostInfo: View {
     @State var imgId = UUID()
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var favorited: FavoritedPosts
-    @EnvironmentObject var profile: ProfilePic
+    @EnvironmentObject var profile: PostProfilePic
     @EnvironmentObject var foodImages: FoodImages
     @EnvironmentObject var account: Account
     @State var selectedImage: Image = Image(systemName: "")

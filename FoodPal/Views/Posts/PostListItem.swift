@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PostListItem: View {
     var post: Post
-    @StateObject var profile = ProfilePic()
+    @StateObject var profile = PostProfilePic()
     @StateObject var foodImages = FoodImages()
    // @EnvironmentObject var favorited: FavoritedPosts
     
