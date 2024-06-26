@@ -185,7 +185,7 @@ struct PostView: View {
             
         }
         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-        .alert("Expiry date", isPresented: $showExpiredAlert) {
+        .alert("Expired items", isPresented: $showExpiredAlert) {
             Button("Ok", role: .cancel) {}
         } message: {
             Text("Some food items in this post have expired")

@@ -20,18 +20,18 @@ struct LocationSearch: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            List {
                 ForEach(0..<addressResults.count, id: \.self) {index in
                     let address = addressResults[index]
                     
                     VStack(alignment: .leading) {
                         Text("\(flagMap[address.country]!) \(address.num) \(address.street)")
                             .font(.headline)
-                        Text("\(address.city), \(address.region)")
+                        Text("\(address.city), \(address.state)")
                             .font(.caption)
                     }
+                    .contentShape(Rectangle())
                     .onTapGesture {
-                        //  showResults = true
                         let cod = locationResults[index].placemark.coordinate
                         alternateLocation = CLLocation(latitude: cod.latitude, longitude: cod.longitude)
                         usingAlternateLocation.toggle()
@@ -40,6 +40,7 @@ struct LocationSearch: View {
                 }
                 
             }
+            .padding(.top, 20)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Image(systemName: "xmark.circle.fill")
@@ -82,7 +83,7 @@ struct LocationSearch: View {
 
 struct PickupLocation: View {
     @State var searchText = ""
-    @State var address = ""
+    @State var streetAddress = ""
     @Binding var latitude: Double
     @Binding var longitude: Double
     @State var addressResults = [Address]()
@@ -119,36 +120,35 @@ struct PickupLocation: View {
                                 .font(.headline)
                                 .bold()
                             
-                            Text("\(address)")
+                            Text("\(streetAddress)")
                                 .font(.caption)
                         }
                         
                         Spacer()
                         
-                        if usingAlternateLocation {
-                            Image(systemName: "location.circle.fill")
+                        HStack(alignment: .center, spacing: 10) {
+                            if usingAlternateLocation {
+                                Image(systemName: "location.circle.fill")
+                                    .foregroundColor(.gray)
+                                    .font(.title2)
+                                    .onTapGesture {
+                                        usingAlternateLocation.toggle()
+                                    }
+                            }
+                            
+                            Image(systemName: "magnifyingglass")
                                 .foregroundColor(.gray)
-                                .font(.headline)
+                                .font(.title2)
                                 .onTapGesture {
-                                    usingAlternateLocation.toggle()
+                                    showSheet = true
                                 }
                         }
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .font(.headline)
-                            .onTapGesture {
-                                showSheet = true
-                            }
                         
                     }
                     .padding()
                     
                     Spacer()
                     
-                  
-                    
-//                    .clipShape(RoundedRectangle(cornerRadius: 10))
-//                    .frame(height: 400)
                 }
                 .sheet(isPresented: $showSheet) {
                     LocationSearch(addressResults: $addressResults, locationResults: $locationResults, usingAlternateLocation: $usingAlternateLocation, alternateLocation: $alternateLocation, showSheet: $showSheet)
@@ -159,12 +159,12 @@ struct PickupLocation: View {
                     if let location = pickUpLocation {
                         position = MapCameraPosition.region(MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
                         getAddress(for: location) {updatedAddress in
-                            address = updatedAddress.getString()
+                            streetAddress = updatedAddress.getStreetAddress()
                         }
                         latitude = location.coordinate.latitude
                         longitude = location.coordinate.longitude
                     } else {
-                        address = ""
+                        streetAddress = ""
                     }
                 }
             }

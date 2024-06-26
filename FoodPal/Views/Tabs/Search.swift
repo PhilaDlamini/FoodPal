@@ -45,7 +45,7 @@ struct Results: View {
     }
     
     func searchPosts(at address: Address) {
-        let ref = Database.database().reference().child("posts/\(address.country)/\(address.region)/\(address.city)")
+        let ref = Database.database().reference().child("posts/\(address.country)/\(address.state)/\(address.city)")
         ref.getData {error, snapshot in
             if let snapshot = snapshot {
                 for _ in snapshot.children {
@@ -96,7 +96,7 @@ struct Search: View {
                             VStack(alignment: .leading) {
                                 Text("\(flagMap[address.country]!) \(address.city)")
                                         .font(.headline)
-                                    Text("\(address.region) \(address.country)")
+                                    Text("\(address.state) \(address.country)")
                                         .font(.caption)
                                 }
                             .contentShape(Rectangle())

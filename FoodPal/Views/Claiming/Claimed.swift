@@ -136,7 +136,7 @@ struct Claimed: View {
     func confirmPickUp(address: Address) {
           
         //remove post from main post section
-        ref.child("posts/\(address.country)/\(address.region)/\(address.city)/\(post.id)").removeValue()
+        ref.child("posts/\(address.country)/\(address.state)/\(address.city)/\(post.id)").removeValue()
         
         //remove post from user posts
         ref.child("user posts/\(account.uid)/\(post.id)").removeValue()

@@ -25,7 +25,7 @@ struct A: View {
                 VStack(alignment: .leading) {
                     Text("\(flagMap[address.country]!) \(address.num) \(address.street)")
                         .font(.headline)
-                    Text("\(address.city), \(address.region)")
+                    Text("\(address.city), \(address.state)")
                         .font(.caption)
                 }
                 .onTapGesture {

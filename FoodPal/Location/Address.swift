@@ -19,14 +19,14 @@ class Address: ObservableObject, Identifiable {
     @Published var num: String
     @Published var street: String
     @Published var city: String
-    @Published var region: String
+    @Published var state: String
     @Published var country: String
     
      init() {
         self.num = ""
         self.street = ""
         self.city = ""
-        self.region = ""
+        self.state = ""
         self.country = ""
     }
     
@@ -34,7 +34,7 @@ class Address: ObservableObject, Identifiable {
         self.num = num
         self.street = street
         self.city = city
-        self.region = region
+        self.state = region
         self.country = country
     }
     
@@ -42,12 +42,52 @@ class Address: ObservableObject, Identifiable {
         self.num = address.num
         self.street = address.street
         self.city = address.city
-        self.region = address.region
+        self.state = address.state
         self.country = address.country
     }
     
     func getString() -> String {
-        return "\(num) \(street) \(city) \(region) \(country)"
+        return "\(num) \(street) \(city) \(state) \(country)"
+    }
+    
+    func getStreetAddress() -> String {
+        var ret = ""
+        if !num.isEmpty {
+            ret.append("\(num) ")
+        }
+        
+        if !street.isEmpty {
+            ret.append("\(street) ")
+        }
+        
+        if !city.isEmpty {
+            ret.append("\(city) ")
+        }
+        
+        if ret.isEmpty {
+            return "- - -"
+        }
+        
+        return ret
+        
+    }
+    
+    func getStateAndCountry() -> String {
+        var ret = ""
+        if !state.isEmpty {
+            ret.append("\(state) ")
+        }
+        
+        if !country.isEmpty {
+            ret.append("\(country) ")
+        }
+        
+        if ret.isEmpty {
+            return "- -"
+        }
+        
+        return ret
+        
     }
 }
 

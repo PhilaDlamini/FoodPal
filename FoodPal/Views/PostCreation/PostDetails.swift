@@ -58,7 +58,7 @@ struct PostDetails: View {
                     TextField("Food name", text: $title)
                         .bold()
                     
-                    TextField("Desribe food", text: $description, axis: .vertical)
+                    TextField("Describe food", text: $description, axis: .vertical)
                 }
             }
             

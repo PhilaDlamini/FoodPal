@@ -157,7 +157,7 @@ struct Home: View {
         print("Addres string in home: \(address.getString())")
 
         //Observers for posts at current location
-        ref.child("posts/\(address.country)/\(address.region)/\(address.city)").observe(.childAdded) {snapshot in
+        ref.child("posts/\(address.country)/\(address.state)/\(address.city)").observe(.childAdded) {snapshot in
             for _ in snapshot.children {
                 if let postData = snapshot.value as? [String: Any] {
                     do {
@@ -170,7 +170,7 @@ struct Home: View {
             }
         }
         
-        ref.child("posts/\(address.country)/\(address.region)/\(address.city)").observe(.childRemoved) {snapshot in
+        ref.child("posts/\(address.country)/\(address.state)/\(address.city)").observe(.childRemoved) {snapshot in
             for _ in snapshot.children {
                 if let postData = snapshot.value as? [String: Any] {
                     do {

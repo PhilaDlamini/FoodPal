@@ -82,7 +82,7 @@ struct Create: View {
     
     func sendPost(address: Address) {
         let city = address.city
-        let region = address.region
+        let region = address.state
         let country = address.country
         print("Got city: \(city), region: \(region), country: \(country)")
         let group = DispatchGroup()
