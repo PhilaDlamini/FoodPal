@@ -8,10 +8,13 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
+import AlertToast
 
 struct SignIn: View {
     @State var email = ""
     @State var password = ""
+    @State var errorMessage = ""
+    @State var showErrorMessage = false
     @Binding var page: AuthPage
     @Binding var done: Bool
     @State var hidePassword = true
@@ -23,43 +26,54 @@ struct SignIn: View {
             ScrollView(showsIndicators: false) {
                 
                 VStack (alignment: .center, spacing: 20) {
-                    Form {
-                        TextField("Email", text: $email)
-                        HStack {
-                            TextField("Password", text: $password)
-                            Image(systemName: hidePassword ? "eye" : "eye.slash")
-                                .onTapGesture {
-                                    hidePassword.toggle()
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Form {
+                            TextField("Email", text: $email)
+                            HStack {
+                                if hidePassword {
+                                    SecureField("Password", text: $password)
+                                } else {
+                                    TextField("Password", text: $password)
                                 }
+                                Image(systemName: hidePassword ? "eye" : "eye.slash")
+                                    .onTapGesture {
+                                        hidePassword.toggle()
+                                    }
+                            }
                         }
+                        .scrollDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .frame(height: 130)
+                        
+                        if showErrorMessage {
+                            HStack {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                Text("\(errorMessage)")
+                            }
+                            .foregroundColor(.orange)
+                            .padding(.leading, 24)
+                        }
+
                     }
-                    .frame(height: 130)
                     
                     
                     Button("Sign in", action: signIn)
+                        .foregroundColor(.black)
                         .buttonStyle(.borderedProminent)
+                        .disabled(email.isEmpty || password.isEmpty)
                         .cornerRadius(15)
+
+
                     
                     HStack {
-                        Text("Dont' have account yet?")
-                        Text("Creat one")
+                        Text("Don't have an account?")
+                        Text("Create one")
                             .foregroundStyle(.blue)
                             .onTapGesture {
                                 page = .createAccount
                             }
                     }
-                    
-                    Divider()
-                    
-                    //                SignInWithAppleButton(onRequest: {a in
-                    //                    
-                    //                }, onCompletion: {b in
-                    //                    
-                    //                })
-                    //                .frame(width: 40)
-                    
-                    Button("Sign in with Apple") {}
-                    Button("Sign in with Phone") {}
                     
                     Spacer()
                 }
@@ -89,7 +103,29 @@ struct SignIn: View {
                     }
                 }
             } else {
-                print("Failed to sign in")
+                if let error = error {
+                    if let errorCode = AuthErrorCode.Code(rawValue: (error as NSError).code) {
+                       switch errorCode {
+                       case .invalidEmail:
+                           errorMessage = "Invalid email"
+                       case .wrongPassword:
+                           errorMessage = "Wrong password"
+                       case .userNotFound:
+                           errorMessage = "User not found"
+                       case .userDisabled:
+                           errorMessage = "Account disabled"
+                       case .tooManyRequests:
+                           errorMessage = "Too many attempts"
+                       case .networkError:
+                           errorMessage = "Network error"
+                       default:
+                           errorMessage = "Unknown error"
+                       }
+                   } else {
+                       errorMessage = "\(error.localizedDescription)"
+                   }
+                    showErrorMessage = true
+                }
             }
         }
     }

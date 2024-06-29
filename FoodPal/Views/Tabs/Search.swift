@@ -41,6 +41,7 @@ struct Results: View {
             .onAppear {
                 searchPosts(at: address)
             }
+            
         }
     }
     

@@ -7,10 +7,12 @@
 import SwiftUI
 import FirebaseDatabase
 import CoreLocation
+import AlertToast
 
 struct PostView: View {
     var post: Post
     var dense: Bool
+    @EnvironmentObject var postUnavailable: PostUnavailable
     @EnvironmentObject var account: Account
     @EnvironmentObject var favorited: FavoritedPosts
     @EnvironmentObject var locationManager: LocationManager
@@ -87,8 +89,14 @@ struct PostView: View {
                             
                             if dense {
                                 Menu {
-                                    Button("Block", systemImage: "hand.raised", action: {})
-                                    Button("Report", systemImage: "flag",  action: {})
+                                    Button("Block \(post.userHandle)", systemImage: "hand.raised", action: {
+                                        blockPoster(of: post, from: account)
+                                    })
+                                    Button("Report", systemImage: "flag",  action: {
+                                        getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {address in
+                                            deletePost(post: post, account: account, address: address)
+                                        }
+                                    })
                                     
                                 } label: {
                                     Image(systemName: "ellipsis")
@@ -155,7 +163,9 @@ struct PostView: View {
             if dense {
                 HStack (spacing: 10) {
                     
-                    Button(action: {claim(account: account, post: post)}) {
+                    Button(action: {
+                        claim(post: post, account: account, postUnavailable: postUnavailable)
+                    }) {
                         HStack(spacing: 5) {
                             Image(systemName: "fork.knife")
                             Text("Claim")
@@ -191,40 +201,6 @@ struct PostView: View {
             Text("Some food items in this post have expired")
         }
     }
-}
-
-func report(account: Account, post: Post) {
-    print("reporting this post")
-}
-
-func claim(account: Account, post: Post) {
-    let ref = Database.database().reference().child("claimed/\(account.uid)/\(post.id)")
-    let jsonData = toDict(model: post)
-    ref.setValue(jsonData)
-}
-
-func favorite(account: Account, post: Post) {
-            
-    //add the post to favorited posts
-    Database.database().reference().child("favorited/\(account.uid)/\(post.id)").setValue(toDict(model: post)) {error, _ in
-        if error != nil {
-            print("Error favoriting post")
-        } else {
-            print("Favorited post successfully")
-        }
-    }
-}
-
-func unfavorite(account: Account, post: Post) {
     
-    //romove post from favorites
-    Database.database().reference().child("favorited/\(account.uid)/\(post.id)").removeValue() {error, _ in
-        if error != nil {
-            print("Error unfavoriting post")
-        } else {
-            print("Unfavorited post")
-        }
-    }
+   
 }
-
-

@@ -21,7 +21,8 @@ import CoreLocation
      var images: [URL]
      
      var isExpired: Bool {
-         return expiryDate < Date.now
+         let diff = abs(expiryDate.timeIntervalSinceNow)
+         return diff > 24 * 60 * 60
      }
      
      var expiryDateText: String {

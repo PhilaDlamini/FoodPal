@@ -34,7 +34,7 @@ struct LocationSearch: View {
                     .onTapGesture {
                         let cod = locationResults[index].placemark.coordinate
                         alternateLocation = CLLocation(latitude: cod.latitude, longitude: cod.longitude)
-                        usingAlternateLocation.toggle()
+                        usingAlternateLocation = true
                         showSheet = false
                     }
                 }

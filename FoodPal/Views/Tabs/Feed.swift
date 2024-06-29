@@ -9,6 +9,8 @@ import SwiftUI
 import FirebaseDatabase
 
 struct Feed: View {
+    @State var displayedPosts = [Post]()
+    @EnvironmentObject var blocked: Blocked
     @EnvironmentObject var posts: Posts
     @EnvironmentObject var address: Address
     
@@ -34,6 +36,12 @@ struct Feed: View {
                         .onTapGesture {
                             print(address.getString())
                         }
+                }
+            }
+            .onAppear {
+                for id in blocked.blocked {
+                    print("Removing post for id \(id)")
+                    posts.posts.removeValue(forKey: id)
                 }
             }
         }

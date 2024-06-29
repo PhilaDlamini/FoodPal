@@ -27,6 +27,10 @@
 		B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5902C0C9DBA00A279B8 /* PostView.swift */; };
 		B34FC5942C107D4500A279B8 /* Capture in Frameworks */ = {isa = PBXBuildFile; productRef = B34FC5932C107D4500A279B8 /* Capture */; };
 		B38BA3D12C2AD7CB00DC194E /* AccountPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3D02C2AD7CB00DC194E /* AccountPic.swift */; };
+		B38BA3D42C2D783B00DC194E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = B38BA3D32C2D783B00DC194E /* AlertToast */; };
+		B38BA3D62C30566100DC194E /* PostUnavailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3D52C30566100DC194E /* PostUnavailable.swift */; };
+		B38BA3D92C30610400DC194E /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3D82C30610400DC194E /* functions.swift */; };
+		B38BA3DB2C30698200DC194E /* Blocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3DA2C30698200DC194E /* Blocked.swift */; };
 		B38D5E952C1345FC00C6E931 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E942C1345FC00C6E931 /* FirebaseAnalytics */; };
 		B38D5E982C134B5500C6E931 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E972C134B5500C6E931 /* FirebaseAuth */; };
 		B38D5E9A2C134B6000C6E931 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E992C134B6000C6E931 /* FirebaseDatabase */; };
@@ -71,6 +75,9 @@
 		B34FC58E2C0C8E2700A279B8 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B34FC5902C0C9DBA00A279B8 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		B38BA3D02C2AD7CB00DC194E /* AccountPic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPic.swift; sourceTree = "<group>"; };
+		B38BA3D52C30566100DC194E /* PostUnavailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUnavailable.swift; sourceTree = "<group>"; };
+		B38BA3D82C30610400DC194E /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
+		B38BA3DA2C30698200DC194E /* Blocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blocked.swift; sourceTree = "<group>"; };
 		B38D5E9F2C13A2B200C6E931 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		B38D5EA72C14920600C6E931 /* toDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDict.swift; sourceTree = "<group>"; };
@@ -97,6 +104,7 @@
 				B38D5E952C1345FC00C6E931 /* FirebaseAnalytics in Frameworks */,
 				B38D5E982C134B5500C6E931 /* FirebaseAuth in Frameworks */,
 				B38D5E9A2C134B6000C6E931 /* FirebaseDatabase in Frameworks */,
+				B38BA3D42C2D783B00DC194E /* AlertToast in Frameworks */,
 				B38D5E9C2C134B6700C6E931 /* FirebaseStorage in Frameworks */,
 				B34FC5942C107D4500A279B8 /* Capture in Frameworks */,
 			);
@@ -135,6 +143,7 @@
 		B340A49D2C0677C5007B6E9F /* FoodPal */ = {
 			isa = PBXGroup;
 			children = (
+				B38BA3D72C3060F200DC194E /* Database */,
 				B38D5EC52C270B0F00C6E931 /* cities_data.json */,
 				B38D5EA72C14920600C6E931 /* toDict.swift */,
 				B38D5E9D2C13515900C6E931 /* Location */,
@@ -182,6 +191,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		B38BA3D72C3060F200DC194E /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				B38BA3D82C30610400DC194E /* functions.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		B38D5E962C134B5500C6E931 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +233,8 @@
 				B38D5EB92C1F41FE00C6E931 /* FoodImages.swift */,
 				B38D5EBB2C1F423500C6E931 /* PostProfilePic.swift */,
 				B38D5EBD2C1F426100C6E931 /* PostListItem.swift */,
+				B38BA3D52C30566100DC194E /* PostUnavailable.swift */,
+				B38BA3DA2C30698200DC194E /* Blocked.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -282,6 +301,7 @@
 				B38D5E972C134B5500C6E931 /* FirebaseAuth */,
 				B38D5E992C134B6000C6E931 /* FirebaseDatabase */,
 				B38D5E9B2C134B6700C6E931 /* FirebaseStorage */,
+				B38BA3D32C2D783B00DC194E /* AlertToast */,
 			);
 			productName = FoodPal;
 			productReference = B340A49B2C0677C5007B6E9F /* FoodPal.app */;
@@ -314,6 +334,7 @@
 			packageReferences = (
 				B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */,
 				B32CEC562C13443C0028C1C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B38BA3D22C2D783B00DC194E /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = B340A49C2C0677C5007B6E9F /* Products */;
 			projectDirPath = "";
@@ -365,6 +386,7 @@
 				B34FC58C2C0B5EAA00A279B8 /* LocationManager.swift in Sources */,
 				B34FC5642C07679000A279B8 /* Search.swift in Sources */,
 				B38D5ECA2C27206B00C6E931 /* Country.swift in Sources */,
+				B38BA3D62C30566100DC194E /* PostUnavailable.swift in Sources */,
 				B34FC5622C07672A00A279B8 /* Feed.swift in Sources */,
 				B38D5EBE2C1F426100C6E931 /* PostListItem.swift in Sources */,
 				B34FC56E2C07BF9300A279B8 /* PostInfo.swift in Sources */,
@@ -372,6 +394,8 @@
 				B34FC5662C0767AF00A279B8 /* Favorites.swift in Sources */,
 				B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */,
 				B34FC56B2C07740500A279B8 /* Post.swift in Sources */,
+				B38BA3DB2C30698200DC194E /* Blocked.swift in Sources */,
+				B38BA3D92C30610400DC194E /* functions.swift in Sources */,
 				B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */,
 				B34FC5682C0767B600A279B8 /* AccountInfo.swift in Sources */,
 			);
@@ -613,6 +637,14 @@
 				minimumVersion = 0.2.0;
 			};
 		};
+		B38BA3D22C2D783B00DC194E /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast?tab=readme-ov-file#usage-example-with-regular-alert";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -620,6 +652,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */;
 			productName = Capture;
+		};
+		B38BA3D32C2D783B00DC194E /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B38BA3D22C2D783B00DC194E /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 		B38D5E942C1345FC00C6E931 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

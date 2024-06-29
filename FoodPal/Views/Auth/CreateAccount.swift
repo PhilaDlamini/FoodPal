@@ -26,6 +26,9 @@ struct CreateAccount: View {
     @State var hidePassword = true
     @State var showImagePicker = false
     @State var images = [UIImage]()
+    @State var errorMessage = ""
+    @State var showErrorMessage = false
+    @State var accountCreationInProgress = false
     
     var body: some View {
         NavigationView {
@@ -54,37 +57,57 @@ struct CreateAccount: View {
                         
                     }
                     
-                    Form {
-                        TextField("Name", text: $name)
-                        TextField("Email", text: $email)
-                        HStack {
-                            TextField("Password", text: $password)
-                            Image(systemName: hidePassword ? "eye" : "eye.slash")
-                                .onTapGesture {
-                                    hidePassword.toggle()
+                    VStack(alignment: .leading, spacing: 10) {
+                        Form {
+                            TextField("Name", text: $name)
+                            TextField("Email", text: $email)
+                                .textInputAutocapitalization(.never)
+                            
+                            HStack {
+                                if hidePassword {
+                                    SecureField("Password", text: $password)
+                                } else {
+                                    TextField("Password", text: $password)
                                 }
-                        }
-                        
-                        Section("Handle") {
-                            TextField("eg. @paul", text: $handle)
-                            if handleTaken {
-                                Text("Handle not available")
-                                    .font(.caption)
-                                    .foregroundStyle(.gray)
+                                Image(systemName: hidePassword ? "eye" : "eye.slash")
+                                    .onTapGesture {
+                                        hidePassword.toggle()
+                                    }
                             }
+                            .textInputAutocapitalization(.never)
+                            
+                            Section("Handle") {
+                                TextField("eg. @paul", text: $handle)
+                                if handleTaken {
+                                    Text("Handle not available")
+                                        .font(.caption)
+                                        .foregroundStyle(.gray)
+                                }
+                            }
+                            
+                            Section("Bio") {
+                                TextField("", text: $bio, axis: .vertical)
+                            }
+                            
                         }
+                        .scrollDisabled(true)
+                        .frame(height: 370)
                         
-                        Section("Bio") {
-                            TextField("", text: $bio, axis: .vertical)
+                        if showErrorMessage {
+                            HStack {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                Text("\(errorMessage)")
+                            }
+                            .foregroundColor(.orange)
+                            .padding([.leading, .bottom], 24)
                         }
-                        
                     }
-                    .frame(height: 370)
-                    
                     
                     Button("Create", action: createUser)
+                        .foregroundColor(.black)
                         .buttonStyle(.borderedProminent)
                         .cornerRadius(15)
+                        .disabled(name.isEmpty || email.isEmpty || password.isEmpty || handle.isEmpty || bio.isEmpty || images.isEmpty || accountCreationInProgress)
                     
                     HStack {
                         Text("Already have an account?")
@@ -110,41 +133,83 @@ struct CreateAccount: View {
         }
     }
     
+    //creates the user acccount
     func createUser() {
+        //so users doesn't double click button 
+        accountCreationInProgress = true
         
-        if let profilePic = images.first {
-            
-            //create the user
-            Auth.auth().createUser(withEmail: email, password: password) {authResult, error in
-                if let user = authResult?.user {
-                    print("Account created")
+        //check the handle
+        let ref = Database.database().reference().child("handles/\(handle)")
+        ref.getData{ error, snapshot in
+            if error != nil {
+                errorMessage = "Handle checking failure"
+                showErrorMessage = true
+                accountCreationInProgress = false
+            } else if let snapshot = snapshot {
+                if let data = snapshot.value as? Bool {
+                    errorMessage = "Handle taken"
+                    showErrorMessage = true
+                    accountCreationInProgress = false
+                } else {
                     
-                    //Upload the profile picture
-                    let storageRef = Storage.storage().reference().child("profile pictures").child(user.uid)
-                    storageRef.putData(profilePic.jpegData(compressionQuality: 0.4)!) {metadata, error in
-                        print("Pic uploaded")
-                        
-                        storageRef.downloadURL { url, error in
-                            guard let url = url else { 
-                                print("Failed to get pic url")
-                                return
+                    //create the user
+                    Auth.auth().createUser(withEmail: email, password: password) {authResult, error in
+                        if let user = authResult?.user {
+                            print("Account created")
+                            
+                            //Upload the profile picture
+                            let profilePic = images.first!
+                            let storageRef = Storage.storage().reference().child("profile pictures").child(user.uid)
+                            storageRef.putData(profilePic.jpegData(compressionQuality: 0.4)!) {metadata, error in
+                                print("Pic uploaded")
+                                
+                                storageRef.downloadURL { url, error in
+                                    guard let url = url else {
+                                        print("Failed to get pic url")
+                                        return
+                                    }
+                                    
+                                    //Save account info in database and user defaults
+                                    let acc = Account(fullName: name, email: email, handle: handle, bio: bio, timesDonated: 0, picURL: url, uid: user.uid)
+                                    let jsonData = toDict(model: acc)
+                                    Database.database().reference().child("users").child(user.uid).setValue(jsonData)
+                                    account.update(to: acc)
+                                    account.saveToDefaults()
+                                    
+                                    //Mark handle as taken
+                                    ref.setValue(true)
+                                    print("Account info saved to database")
+                                    done = true
+                                }
                             }
                             
-                            //Save account info in database and user defaults 
-                            let acc = Account(fullName: name, email: email, handle: handle, bio: bio, timesDonated: 0, picURL: url, uid: user.uid)
-                            let jsonData = toDict(model: acc)
-                            Database.database().reference().child("users").child(user.uid).setValue(jsonData)
-                            account.update(to: acc)
-                            account.saveToDefaults()
-                            print("Account info saved to database")
-                            done = true 
+                        } else {
+                            if let error = error {
+                                if let errorCode = AuthErrorCode.Code(rawValue: (error as NSError).code) {
+                                    switch errorCode {
+                                    case .invalidEmail:
+                                        errorMessage = "Invalid email"
+                                    case .emailAlreadyInUse:
+                                        errorMessage = "Email in use"
+                                    case .weakPassword:
+                                        errorMessage = "Password too weak"
+                                    case .operationNotAllowed:
+                                        errorMessage = "Operation not allowed"
+                                    case .networkError:
+                                        errorMessage = "Network error"
+                                    default:
+                                        errorMessage = "\(error.localizedDescription)"
+                                    }
+                                } else {
+                                    errorMessage = "\(error.localizedDescription)"
+                                }
+                                showErrorMessage = true
+                                accountCreationInProgress = false
+                            }
                         }
                     }
-                    
                 }
             }
-        } else {
-            print("No profile pic selected. Aborting")
         }
     }
 }

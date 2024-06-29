@@ -8,18 +8,22 @@
 import Foundation
 
 class Posts: ObservableObject {
-    @Published var posts: [UUID: Post]
+    @Published var posts: [String: Post]
     
     init() {
         self.posts = [:]
     }
     
+    func displayedPosts(blocked: Blocked) ->  [Post] {
+       return []
+    }
+    
     func add(post: Post) {
-        posts[post.id] = post
+        posts[post.id.uuidString] = post
     }
     
     func remove(post: Post) {
-        posts.removeValue(forKey: post.id)
+        posts.removeValue(forKey: post.id.uuidString)
     }
 }
  

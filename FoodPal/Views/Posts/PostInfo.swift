@@ -15,6 +15,7 @@ struct PostInfo: View {
     @State var address = ""
     @State var id = UUID()
     @State var imgId = UUID()
+    @EnvironmentObject var postUnavailable: PostUnavailable
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var favorited: FavoritedPosts
     @EnvironmentObject var profile: PostProfilePic
@@ -135,7 +136,7 @@ struct PostInfo: View {
                 HStack {
                     
                     Button(action: {
-                        claim(account: account, post: post)
+                        claim(post: post, account: account, postUnavailable: postUnavailable)
                     }) {
                         HStack(spacing: 5) {
                             Image(systemName: "fork.knife")
@@ -150,7 +151,7 @@ struct PostInfo: View {
                         
                     if favorited.posts.contains(where: { key, value in value.id.uuidString == post.id.uuidString}) {
                         Button(action: {
-                            favorite(account: account, post: post)
+                            unfavorite(account: account, post: post)
                         }) {
                             Image(systemName: "heart.fill")
                                 .foregroundColor(.red)
@@ -158,7 +159,7 @@ struct PostInfo: View {
                         }
                     } else {
                         Button(action: {
-                            unfavorite(account: account, post: post)
+                            favorite(account: account, post: post)
                         }) {
                             Image(systemName: "heart")
                                 .foregroundColor(.gray)
@@ -169,7 +170,11 @@ struct PostInfo: View {
                        
                     Spacer()
                     
-                    Button(action: {}) {
+                    Button(action: {
+                        getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {address in
+                            deletePost(post: post, account: account, address: address)
+                        }
+                    }) {
                         Image(systemName: "flag")
                             .foregroundColor(.white)
                             .padding()
@@ -177,9 +182,7 @@ struct PostInfo: View {
                         
     
                 }
-                
-                Text("    \n ")
-                
+                                
             }
            
         }

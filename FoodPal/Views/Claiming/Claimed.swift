@@ -7,13 +7,14 @@
 import SwiftUI
 import FirebaseDatabase
 import CoreLocation
+import FirebaseStorage
 
 struct Claimed: View {
     var post: Post
     @State var cancelClicked = false 
-    @State var pickUpAddress = Address()
+    @State var claimingInProgress = false
+    @State var pickUpAddress = ""
     @EnvironmentObject var account: Account
-    let ref = Database.database().reference()
     @State var selectedImage: Image = Image(systemName: "")
     @State var showSelectedImage = false
     @State var imgId = UUID()
@@ -31,8 +32,7 @@ struct Claimed: View {
                         LazyHStack { //creates views as needed, not all at once
                             
                             ForEach(post.images, id: \.self) {url in
-                                
-                                 AsyncImage(url: url) {phase in
+                                AsyncImage(url: url) {phase in
                                     if let image = phase.image {
                                         image
                                             .resizable()
@@ -46,12 +46,12 @@ struct Claimed: View {
                                             .fullScreenCover(isPresented: $showSelectedImage) {
                                                 ViewImage(image: selectedImage)
                                             }
-                                            
+                                        
                                     } else if phase.error != nil {
                                         Color.red
                                             .onAppear {
                                                 imgId = UUID()
-                                            }//Retry loading the image here (other idea: try async again in the postView if the iamge was never retrieved
+                                            }
                                     } else {
                                         RoundedRectangle(cornerRadius: 20)
                                             .fill(.gray)
@@ -69,37 +69,41 @@ struct Claimed: View {
                             Text("Pickup location:")
                                 .font(.headline)
                                 .bold()
-                            Text("43 Winthrop St\(pickUpAddress.getString())")
+                            Text("\(pickUpAddress)")
                                 .font(.caption)
                         }
                         
                         Spacer()
                         
-                        Button(action: {}) {
-                            HStack {
-                                Text("Directionss")
-                                Image(systemName: "arrow.clockwise.square.fill")
+                        Image(systemName: "location.circle")
+                            .font(.title2)
+                            .onTapGesture {
+                                let urlString = "http://maps.apple.com/?daddr=\(post.latitude),\(post.longitude)"
+                                if let url = URL(string: urlString) {
+                                    UIApplication.shared.open(url)
+                                }
                             }
-                        }
-                        .buttonStyle(.bordered)
-                        .cornerRadius(20)
                     }
                     
                     
-                    Divider()
-                    
-                    HStack {
+                    HStack () {
                         Spacer()
                         
                         Button("Confirm pickup") {
-                            getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude), completion: confirmPickUp)
+                            claimingInProgress = true
+                            getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {address in
+                                deletePost(post: post, account: account, address: address)
+                            }
                         }
+                        .disabled(claimingInProgress)
+                        .foregroundColor(.black)
                         .buttonStyle(.borderedProminent)
                         .cornerRadius(25)
                         
                         Spacer()
                         
                     }
+                    .padding(.top, 10)
                     
                 }
                 .padding()
@@ -107,10 +111,12 @@ struct Claimed: View {
             .toolbar {
                 
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("You claimed a post")
-                        .font(.headline)
+                    Text("Claimed post")
+                        .font(.title)
                         .bold()
+                    
                 }
+                
                 ToolbarItem {
                     Button(action: {
                         cancelClicked = true
@@ -118,36 +124,25 @@ struct Claimed: View {
                         Image(systemName: "multiply.circle.fill")
                             .foregroundColor(.gray)
                     }
+                    
+                }
+                
+            }
+            .onAppear {
+                getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {
+                    pickUpAddress = $0.getStreetAddress()
                 }
             }
             .alert("Cancel pickup", isPresented: $cancelClicked) {
-                Button("Ok", role: .cancel, action: cancelPickUp)
+                Button("Yes", role: .cancel, action: {
+                    cancelPickUp(post: post, account: account)
+                })
                 Button("No", role: .destructive) {}
             } message: {
                 Text("Are you sure you want to cancel this pickup?")
             }
         }
     }
-    
-    func cancelPickUp() {
-        ref.child("claimed/\(account.uid)/\(post.id)").removeValue()
-    }
-    
-    func confirmPickUp(address: Address) {
-          
-        //remove post from main post section
-        ref.child("posts/\(address.country)/\(address.state)/\(address.city)/\(post.id)").removeValue()
-        
-        //remove post from user posts
-        ref.child("user posts/\(account.uid)/\(post.id)").removeValue()
-        
-        //remove the post from favorites, if any
-        ref.child("favorited/\(account.uid)/\(post.id)").removeValue()
-        
-        //remove the claimed post
-        ref.child("claimed/\(account.uid)/\(post.id)").removeValue()
 
-        
-        
-    }
 }
+

@@ -9,13 +9,14 @@ import SwiftUI
 
 struct PostListItem: View {
     var post: Post
+    var dense = true
     @StateObject var profile = PostProfilePic()
     @StateObject var foodImages = FoodImages()
    // @EnvironmentObject var favorited: FavoritedPosts
     
     var body: some View { //TODO: move all of these into a separate file
         ZStack {
-            PostView(post: post, dense: true)
+            PostView(post: post, dense: dense)
             NavigationLink(destination: PostInfo(post: post)
                 .environmentObject(foodImages)
                 .environmentObject(profile)

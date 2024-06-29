@@ -28,18 +28,20 @@ struct AccountInfo: View {
                                 .scaledToFit()
                                 .clipShape(Circle())
                                 .frame(width: 70)
-                                .onTapGesture {
-                                    //show share sheet
-                                }
+//                                .onTapGesture {
+//                                    //show share sheet
+//                                }
                         } else {
                             
                             AsyncImage(url: account.picURL) {phase in
                                 if let image = phase.image {
                                     image
                                         .resizable()
-                                        .scaledToFill()
+                                        .scaledToFit()
+                                        .clipShape(Circle())
+                                        .frame(width: 70)
                                         .onAppear {
-                                            accountPic.image = image
+                                          //  accountPic.image = image
                                         }
                                 } else if phase.error != nil {
                                     Color.red
@@ -82,7 +84,7 @@ struct AccountInfo: View {
                             
                     } else {
                         ForEach(posts) {post in
-                            PostListItem(post: post)
+                            PostListItem(post: post, dense: false) 
                         }
                     }
                 }
@@ -91,6 +93,9 @@ struct AccountInfo: View {
             .navigationBarTitleDisplayMode(.large)
             .confirmationDialog("Logout of FoodPal", isPresented: $showActionSheet) {
                 Button("Logout", role: .destructive, action: signOut)
+            }
+            .onAppear {
+                getPosts()
             }
             .padding()
         }

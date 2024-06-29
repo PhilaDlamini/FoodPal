@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
     
 struct Favorites: View {
     @State var favoritedPosts: [Post] = []

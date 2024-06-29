@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
+import AlertToast
 
 enum AuthPage {
     case signIn, createAccount
@@ -25,12 +26,14 @@ struct Home: View {
     @State var claimedPost: Post? = nil
     
     //Data accessible to all child views (TODO: adopt this for posts as well)
+    @StateObject var postUnavailable = PostUnavailable()
     @StateObject var locationManager = LocationManager()
     @StateObject var account = Account(fullName: "", email: "", handle: "", bio: "", timesDonated: -1, picURL: URL(fileURLWithPath: ""), uid: "") //the user account
     @StateObject var address = Address() //current user address
     @StateObject var posts = Posts() //all posts for the current city,region,country
     @StateObject var favorited = FavoritedPosts() //all posts favorited by the user 
     @StateObject var accountPic = AccountPic() //ther user's profile pic
+    @StateObject var blocked = Blocked()
 
     
     //Database related
@@ -103,6 +106,8 @@ struct Home: View {
                                     
                                 }
                             }
+                            .ignoresSafeArea(.keyboard, edges: .bottom)
+
                         } else {
                             VStack (alignment: .center, spacing: 20) {
                                 ProgressView()
@@ -118,7 +123,11 @@ struct Home: View {
                             CreateAccount(page: $page, done: $doneUploading)
                         }
                     }
+                    .presentationDetents([.fraction(1.0)])
                 }
+            }
+            .toast(isPresenting: $postUnavailable.unavailable) {
+                AlertToast(displayMode: .hud, type: .error(.red), title: "Error", subTitle: "Post unavailable")
             }
             .onAppear {
                 
@@ -147,6 +156,9 @@ struct Home: View {
             .environmentObject(favorited)
             .environmentObject(locationManager)
             .environmentObject(accountPic)
+            .environmentObject(postUnavailable)
+            .environmentObject(blocked)
+            
         } else {
             Text("Location not accessible")
         }
@@ -229,8 +241,17 @@ struct Home: View {
         ref.child("claimed/\(account.uid)").observe(.childRemoved) {snapshot in
             claimedPost = nil
         }
-
         
+        //Observe blocked posts
+        ref.child("blocked/\(account.uid)").observe(.value) {snapshot in
+            if let blockedList = snapshot.value as? [String] {
+                blocked.blocked.formUnion(blockedList)
+                print("Blocked data successfully recevied")
+            } else {
+                print("got weird blocked data \(snapshot.value)")
+            }
+        }
+
     }
     
 }
