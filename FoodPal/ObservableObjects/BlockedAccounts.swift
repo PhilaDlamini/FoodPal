@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Blocked: ObservableObject {
+class BlockedAccounts: ObservableObject {
     @Published var blocked: Set<String>
 
     init() {

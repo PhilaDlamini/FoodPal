@@ -38,6 +38,10 @@ class Address: ObservableObject, Identifiable {
         self.country = country
     }
     
+    func isValid() -> Bool {
+        return !(city.isEmpty || state.isEmpty || country.isEmpty)
+    }
+    
     func update(to address: Address) {
         self.num = address.num
         self.street = address.street

@@ -32,8 +32,11 @@ struct Home: View {
     @StateObject var address = Address() //current user address
     @StateObject var posts = Posts() //all posts for the current city,region,country
     @StateObject var favorited = FavoritedPosts() //all posts favorited by the user 
-    @StateObject var accountPic = AccountPic() //ther user's profile pic
-    @StateObject var blocked = Blocked()
+    @StateObject var accountPic = AccountPic() //thee user's profile pic
+    @StateObject var blockedAccounts = BlockedAccounts() //accounts blocked by this user
+    @StateObject var accountBlocked = AccountBlocked() //for showing "user blocked" toast
+    @StateObject var postReported = PostReported() //for showing "post reported" toast
+
 
     
     //Database related
@@ -93,11 +96,12 @@ struct Home: View {
                                     
                                     Image(systemName: "plus") //TODO: put background just like threads
                                         .font(.title)
-                                        .padding(10)
+                                        .padding([.leading, .trailing], 12)
+                                        .padding([.top, .bottom], 6)
                                         .background(Color(red: 0.2, green: 0.2, blue: 0.2))
                                         .foregroundColor(.gray)
                                         .cornerRadius(15)
-                                        .padding(5)
+                                        .padding(.bottom, 8)
                                         .onTapGesture {
                                             creatingPost = true
                                         }
@@ -129,6 +133,12 @@ struct Home: View {
             .toast(isPresenting: $postUnavailable.unavailable) {
                 AlertToast(displayMode: .hud, type: .error(.red), title: "Error", subTitle: "Post unavailable")
             }
+            .toast(isPresenting: $accountBlocked.blocked) {
+                AlertToast(displayMode: .hud, type: .complete(.green), title: "\(accountBlocked.accountHandle) blocked")
+            }
+            .toast(isPresenting: $postReported.reported) {
+                AlertToast(displayMode: .hud, type: .complete(.green), title: "Post reported")
+            }
             .onAppear {
                 
                 //get the address
@@ -157,7 +167,9 @@ struct Home: View {
             .environmentObject(locationManager)
             .environmentObject(accountPic)
             .environmentObject(postUnavailable)
-            .environmentObject(blocked)
+            .environmentObject(blockedAccounts)
+            .environmentObject(accountBlocked)
+            .environmentObject(postReported)
             
         } else {
             Text("Location not accessible")
@@ -174,7 +186,9 @@ struct Home: View {
                 if let postData = snapshot.value as? [String: Any] {
                     do {
                         let post: Post = try Post.fromDict(dictionary: postData)
-                        posts.add(post: post)
+                        if !blockedAccounts.blocked.contains(post.uid) {
+                            posts.add(post: post)
+                        }
                     } catch {
                         print("Failed to decode post from postData")
                     }
@@ -202,7 +216,9 @@ struct Home: View {
                 if let postData = snapshot.value as? [String: Any] {
                     do {
                         let post: Post = try Post.fromDict(dictionary: postData)
-                        favorited.add(post: post)
+                        if !blockedAccounts.blocked.contains(post.uid) {
+                            favorited.add(post: post)
+                        }
                     } catch {
                         print("Failed to decode post from postData")
                     }
@@ -245,17 +261,20 @@ struct Home: View {
         //Observe blocked posts
         ref.child("blocked/\(account.uid)").observe(.value) {snapshot in
             if let blockedList = snapshot.value as? [String] {
-                blocked.blocked.formUnion(blockedList)
-                print("Blocked data successfully recevied")
-            } else {
-                print("got weird blocked data \(snapshot.value)")
+                blockedAccounts.blocked.formUnion(blockedList)
+                
+                //remove all posts from blocked users
+                posts.posts = posts.posts.filter({elem in
+                    !blockedAccounts.blocked.contains(elem.value.uid)
+                })
+                
+                //remove all favorited posts from blocked users
+                favorited.posts = favorited.posts.filter({elem in
+                    !blockedAccounts.blocked.contains(elem.value.uid)
+                })
             }
         }
 
     }
     
-}
-
-#Preview {
-    Home()
 }

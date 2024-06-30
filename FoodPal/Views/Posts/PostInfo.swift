@@ -21,6 +21,7 @@ struct PostInfo: View {
     @EnvironmentObject var profile: PostProfilePic
     @EnvironmentObject var foodImages: FoodImages
     @EnvironmentObject var account: Account
+    @EnvironmentObject var postReported: PostReported
     @State var selectedImage: Image = Image(systemName: "")
     @State var showSelectedImage = false
     
@@ -48,7 +49,7 @@ struct PostInfo: View {
                                             showSelectedImage = true
                                         }
                                         .fullScreenCover(isPresented: $showSelectedImage) {
-                                            ViewImage(image: selectedImage)
+                                            ImageViewer(image: selectedImage)
                                         }
                                     
                                 }
@@ -68,7 +69,7 @@ struct PostInfo: View {
                                                 showSelectedImage = true
                                             }
                                             .fullScreenCover(isPresented: $showSelectedImage) {
-                                                ViewImage(image: selectedImage)
+                                                ImageViewer(image: selectedImage)
                                             }
                                             
                                     } else if phase.error != nil {
@@ -173,6 +174,7 @@ struct PostInfo: View {
                     Button(action: {
                         getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {address in
                             deletePost(post: post, account: account, address: address)
+                            postReported.reported = true
                         }
                     }) {
                         Image(systemName: "flag")

@@ -33,7 +33,7 @@ func blockPoster(of post: Post, from account: Account) {
             }
             
             //first time. just upload the new list
-            ref.child("blocked/\(account.uid)").setValue([post.uid]) {error, _ in
+            ref.child("blocked/\(account.uid)").setValue(blockedUsers) {error, _ in
                 if error == nil {
                     print("Successfully blocked user ")
                 } else {
@@ -94,9 +94,8 @@ func claim(post: Post, account: Account, postUnavailable: PostUnavailable) {
                     
                     //post exists. claim it
                     print("Post was available. Proceeding to claim")
-                    ref.child("claimed/\(account.uid)/\(post.id)")
                     let jsonData = toDict(model: post)
-                    ref.setValue(jsonData)
+                    ref.child("claimed/\(account.uid)/\(post.id)").setValue(jsonData)
                     
                 } else {
                     print("Post not available for claiming. Canceling")
@@ -104,7 +103,7 @@ func claim(post: Post, account: Account, postUnavailable: PostUnavailable) {
                     //post does not exist
                     postUnavailable.unavailable = true
                     
-                    //remove post from currrent user favorites
+                    //remove post from currrent user favorites (post must have been claimed from favorites)
                     ref.child("favorited/\(account.uid)/\(post.id)").removeValue()
                 }
             }

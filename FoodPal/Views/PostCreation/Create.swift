@@ -70,7 +70,14 @@ struct Create: View {
                         case .location:
                             Button("Done") {
                                 sendingPost = true
-                                getAddress(for: CLLocation(latitude: latitude, longitude: longitude), completion: sendPost)
+                                getAddress(for: CLLocation(latitude: latitude, longitude: longitude)) {address in
+                                    if address.isValid() {
+                                        sendPost(address: address)
+                                    } else {
+                                        sendingPost = false
+                                        print("address invalid. not sending post") //TODO: turn this into a toast??
+                                    }
+                                }
                             }
                         }
                     }

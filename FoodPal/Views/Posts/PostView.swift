@@ -16,6 +16,8 @@ struct PostView: View {
     @EnvironmentObject var account: Account
     @EnvironmentObject var favorited: FavoritedPosts
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var accountBlocked: AccountBlocked //for showing "user blocked" toast
+    @EnvironmentObject var postReported: PostReported //for showing "post reported" toast
     @State var showExpiredAlert = false
     
     //Provides a means to extract the loaded images
@@ -91,10 +93,13 @@ struct PostView: View {
                                 Menu {
                                     Button("Block \(post.userHandle)", systemImage: "hand.raised", action: {
                                         blockPoster(of: post, from: account)
+                                        accountBlocked.blocked = true
+                                        accountBlocked.accountHandle = post.userHandle
                                     })
                                     Button("Report", systemImage: "flag",  action: {
                                         getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {address in
                                             deletePost(post: post, account: account, address: address)
+                                            postReported.reported = true
                                         }
                                     })
                                     
@@ -137,7 +142,7 @@ struct PostView: View {
                                         showSelectedImage = true
                                     }
                                     .fullScreenCover(isPresented: $showSelectedImage) {
-                                        ViewImage(image: selectedImage)
+                                        ImageViewer(image: selectedImage)
                                     }
                             } else if phase.error != nil {
                                 Color.red.onAppear {

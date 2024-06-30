@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ViewImage: View {
+struct ImageViewer: View {
     var image: Image
     @Environment(\.dismiss) var dismiss
     

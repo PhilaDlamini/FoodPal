@@ -14,10 +14,6 @@ class Posts: ObservableObject {
         self.posts = [:]
     }
     
-    func displayedPosts(blocked: Blocked) ->  [Post] {
-       return []
-    }
-    
     func add(post: Post) {
         posts[post.id.uuidString] = post
     }

@@ -30,7 +30,9 @@
 		B38BA3D42C2D783B00DC194E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = B38BA3D32C2D783B00DC194E /* AlertToast */; };
 		B38BA3D62C30566100DC194E /* PostUnavailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3D52C30566100DC194E /* PostUnavailable.swift */; };
 		B38BA3D92C30610400DC194E /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3D82C30610400DC194E /* functions.swift */; };
-		B38BA3DB2C30698200DC194E /* Blocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3DA2C30698200DC194E /* Blocked.swift */; };
+		B38BA3DB2C30698200DC194E /* BlockedAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3DA2C30698200DC194E /* BlockedAccounts.swift */; };
+		B38BA3DE2C3188A700DC194E /* PostReported.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3DD2C3188A700DC194E /* PostReported.swift */; };
+		B38BA3E02C3188C600DC194E /* AccountBlocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3DF2C3188C600DC194E /* AccountBlocked.swift */; };
 		B38D5E952C1345FC00C6E931 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E942C1345FC00C6E931 /* FirebaseAnalytics */; };
 		B38D5E982C134B5500C6E931 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E972C134B5500C6E931 /* FirebaseAuth */; };
 		B38D5E9A2C134B6000C6E931 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = B38D5E992C134B6000C6E931 /* FirebaseDatabase */; };
@@ -47,10 +49,8 @@
 		B38D5EBC2C1F423500C6E931 /* PostProfilePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EBB2C1F423500C6E931 /* PostProfilePic.swift */; };
 		B38D5EBE2C1F426100C6E931 /* PostListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EBD2C1F426100C6E931 /* PostListItem.swift */; };
 		B38D5EC02C1F43BA00C6E931 /* FavoritedPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EBF2C1F43BA00C6E931 /* FavoritedPosts.swift */; };
-		B38D5EC42C21EECB00C6E931 /* ViewImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EC32C21EECB00C6E931 /* ViewImage.swift */; };
-		B38D5EC62C270B0F00C6E931 /* cities_data.json in Resources */ = {isa = PBXBuildFile; fileRef = B38D5EC52C270B0F00C6E931 /* cities_data.json */; };
+		B38D5EC42C21EECB00C6E931 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EC32C21EECB00C6E931 /* ImageViewer.swift */; };
 		B38D5EC82C27164F00C6E931 /* countries_data.json in Resources */ = {isa = PBXBuildFile; fileRef = B38D5EC72C27164F00C6E931 /* countries_data.json */; };
-		B38D5ECA2C27206B00C6E931 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EC92C27206B00C6E931 /* Country.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,7 +77,9 @@
 		B38BA3D02C2AD7CB00DC194E /* AccountPic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPic.swift; sourceTree = "<group>"; };
 		B38BA3D52C30566100DC194E /* PostUnavailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUnavailable.swift; sourceTree = "<group>"; };
 		B38BA3D82C30610400DC194E /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
-		B38BA3DA2C30698200DC194E /* Blocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blocked.swift; sourceTree = "<group>"; };
+		B38BA3DA2C30698200DC194E /* BlockedAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedAccounts.swift; sourceTree = "<group>"; };
+		B38BA3DD2C3188A700DC194E /* PostReported.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReported.swift; sourceTree = "<group>"; };
+		B38BA3DF2C3188C600DC194E /* AccountBlocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBlocked.swift; sourceTree = "<group>"; };
 		B38D5E9F2C13A2B200C6E931 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		B38D5EA12C13A6A100C6E931 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		B38D5EA72C14920600C6E931 /* toDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDict.swift; sourceTree = "<group>"; };
@@ -90,10 +92,8 @@
 		B38D5EBB2C1F423500C6E931 /* PostProfilePic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProfilePic.swift; sourceTree = "<group>"; };
 		B38D5EBD2C1F426100C6E931 /* PostListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListItem.swift; sourceTree = "<group>"; };
 		B38D5EBF2C1F43BA00C6E931 /* FavoritedPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedPosts.swift; sourceTree = "<group>"; };
-		B38D5EC32C21EECB00C6E931 /* ViewImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewImage.swift; sourceTree = "<group>"; };
-		B38D5EC52C270B0F00C6E931 /* cities_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities_data.json; sourceTree = "<group>"; };
+		B38D5EC32C21EECB00C6E931 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		B38D5EC72C27164F00C6E931 /* countries_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries_data.json; sourceTree = "<group>"; };
-		B38D5EC92C27206B00C6E931 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				B32CEC4B2C10BB180028C1C4 /* ImagePicker.swift */,
-				B38D5EC32C21EECB00C6E931 /* ViewImage.swift */,
+				B38D5EC32C21EECB00C6E931 /* ImageViewer.swift */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -143,9 +143,8 @@
 		B340A49D2C0677C5007B6E9F /* FoodPal */ = {
 			isa = PBXGroup;
 			children = (
+				B38BA3DC2C3187C300DC194E /* ObservableObjects */,
 				B38BA3D72C3060F200DC194E /* Database */,
-				B38D5EC52C270B0F00C6E931 /* cities_data.json */,
-				B38D5EA72C14920600C6E931 /* toDict.swift */,
 				B38D5E9D2C13515900C6E931 /* Location */,
 				B32CEC4D2C10C3100028C1C4 /* Image */,
 				B34FC56C2C07BF7400A279B8 /* Views */,
@@ -194,9 +193,26 @@
 		B38BA3D72C3060F200DC194E /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				B38D5EA72C14920600C6E931 /* toDict.swift */,
 				B38BA3D82C30610400DC194E /* functions.swift */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		B38BA3DC2C3187C300DC194E /* ObservableObjects */ = {
+			isa = PBXGroup;
+			children = (
+				B38BA3D02C2AD7CB00DC194E /* AccountPic.swift */,
+				B38D5EB92C1F41FE00C6E931 /* FoodImages.swift */,
+				B38D5EBB2C1F423500C6E931 /* PostProfilePic.swift */,
+				B38BA3DA2C30698200DC194E /* BlockedAccounts.swift */,
+				B38BA3D52C30566100DC194E /* PostUnavailable.swift */,
+				B38BA3DD2C3188A700DC194E /* PostReported.swift */,
+				B38BA3DF2C3188C600DC194E /* AccountBlocked.swift */,
+				B38D5EAE2C1B180400C6E931 /* Posts.swift */,
+				B38D5EBF2C1F43BA00C6E931 /* FavoritedPosts.swift */,
+			);
+			path = ObservableObjects;
 			sourceTree = "<group>";
 		};
 		B38D5E962C134B5500C6E931 /* Frameworks */ = {
@@ -211,7 +227,6 @@
 			children = (
 				B34FC58B2C0B5EAA00A279B8 /* LocationManager.swift */,
 				B38D5EAB2C1AF21300C6E931 /* Address.swift */,
-				B38D5EC92C27206B00C6E931 /* Country.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -230,11 +245,7 @@
 			children = (
 				B34FC56D2C07BF9300A279B8 /* PostInfo.swift */,
 				B34FC5902C0C9DBA00A279B8 /* PostView.swift */,
-				B38D5EB92C1F41FE00C6E931 /* FoodImages.swift */,
-				B38D5EBB2C1F423500C6E931 /* PostProfilePic.swift */,
 				B38D5EBD2C1F426100C6E931 /* PostListItem.swift */,
-				B38BA3D52C30566100DC194E /* PostUnavailable.swift */,
-				B38BA3DA2C30698200DC194E /* Blocked.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -245,7 +256,6 @@
 				B34FC56F2C08AFE200A279B8 /* Create.swift */,
 				B32CEC522C1254F50028C1C4 /* PickupLocation.swift */,
 				B32CEC4E2C1254800028C1C4 /* PostDetails.swift */,
-				B38BA3D02C2AD7CB00DC194E /* AccountPic.swift */,
 			);
 			path = PostCreation;
 			sourceTree = "<group>";
@@ -265,8 +275,6 @@
 			isa = PBXGroup;
 			children = (
 				B340A4A02C0677C5007B6E9F /* Home.swift */,
-				B38D5EAE2C1B180400C6E931 /* Posts.swift */,
-				B38D5EBF2C1F43BA00C6E931 /* FavoritedPosts.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -355,7 +363,6 @@
 				B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */,
 				B38D5EB62C1C70B800C6E931 /* README.md in Resources */,
 				B32CEC552C133FCC0028C1C4 /* GoogleService-Info.plist in Resources */,
-				B38D5EC62C270B0F00C6E931 /* cities_data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,8 +380,9 @@
 				B38D5EB82C1DE96B00C6E931 /* Test.swift in Sources */,
 				B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */,
 				B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */,
-				B38D5EC42C21EECB00C6E931 /* ViewImage.swift in Sources */,
+				B38D5EC42C21EECB00C6E931 /* ImageViewer.swift in Sources */,
 				B340A4A12C0677C5007B6E9F /* Home.swift in Sources */,
+				B38BA3E02C3188C600DC194E /* AccountBlocked.swift in Sources */,
 				B38D5EAC2C1AF21300C6E931 /* Address.swift in Sources */,
 				B38D5EB42C1C66DF00C6E931 /* Claimed.swift in Sources */,
 				B38D5EA82C14920600C6E931 /* toDict.swift in Sources */,
@@ -385,16 +393,16 @@
 				B38BA3D12C2AD7CB00DC194E /* AccountPic.swift in Sources */,
 				B34FC58C2C0B5EAA00A279B8 /* LocationManager.swift in Sources */,
 				B34FC5642C07679000A279B8 /* Search.swift in Sources */,
-				B38D5ECA2C27206B00C6E931 /* Country.swift in Sources */,
 				B38BA3D62C30566100DC194E /* PostUnavailable.swift in Sources */,
 				B34FC5622C07672A00A279B8 /* Feed.swift in Sources */,
 				B38D5EBE2C1F426100C6E931 /* PostListItem.swift in Sources */,
 				B34FC56E2C07BF9300A279B8 /* PostInfo.swift in Sources */,
 				B32CEC4F2C1254800028C1C4 /* PostDetails.swift in Sources */,
+				B38BA3DE2C3188A700DC194E /* PostReported.swift in Sources */,
 				B34FC5662C0767AF00A279B8 /* Favorites.swift in Sources */,
 				B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */,
 				B34FC56B2C07740500A279B8 /* Post.swift in Sources */,
-				B38BA3DB2C30698200DC194E /* Blocked.swift in Sources */,
+				B38BA3DB2C30698200DC194E /* BlockedAccounts.swift in Sources */,
 				B38BA3D92C30610400DC194E /* functions.swift in Sources */,
 				B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */,
 				B34FC5682C0767B600A279B8 /* AccountInfo.swift in Sources */,

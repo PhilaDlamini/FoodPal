@@ -13,6 +13,7 @@ struct Results: View {
     @Binding var showsResults: Bool
     @State var address: Address
     @State var results: [Post] = []
+    @EnvironmentObject var blockedAccounts: BlockedAccounts
     
     var body: some View {
         NavigationView {
@@ -54,8 +55,12 @@ struct Results: View {
                         for key in snapData.keys {
                             do {
                                 let post: Post = try Post.fromDict(dictionary: snapData[key]!)
-                                results.removeAll(where: { $0.id == post.id })
-                                results.append(post)
+                                
+                                //show in search is user not blocked
+                                if !blockedAccounts.blocked.contains(post.uid) {
+                                    results.removeAll(where: { $0.id == post.id })
+                                    results.append(post)
+                                }
                             } catch {
                                 print("Failed to decode post from postData in search results")
                             }
@@ -73,7 +78,6 @@ struct Search: View {
     @State var country = ""
     @State var results: [Post] = []
     @State var searched = true
-    @State var countries = [Country]()
     @State var countryIndex = 0
     @State var regionIndex = 0
     @State var cityIndex = 0
@@ -115,12 +119,6 @@ struct Search: View {
                 }
                 .navigationTitle("Search")
                 .navigationBarTitleDisplayMode(.large)
-            }
-            .onAppear {
-//                address.country = "United States"
-//                address.region = "CA"
-//                address.city = "Cupertino"
-//                searchResults.append(address)
             }
         }
     }

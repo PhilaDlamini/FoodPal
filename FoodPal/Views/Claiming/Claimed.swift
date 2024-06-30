@@ -44,7 +44,7 @@ struct Claimed: View {
                                                 showSelectedImage = true
                                             }
                                             .fullScreenCover(isPresented: $showSelectedImage) {
-                                                ViewImage(image: selectedImage)
+                                                ImageViewer(image: selectedImage)
                                             }
                                         
                                     } else if phase.error != nil {
