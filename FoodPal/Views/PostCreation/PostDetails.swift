@@ -28,6 +28,7 @@ struct PostDetails: View {
                         .scaledToFit()
                         .clipShape(Circle())
                         .frame(width: 35)
+                        .id(id)
                     
                 } else {
                     AsyncImage(url: account.picURL) {phase in
@@ -36,7 +37,7 @@ struct PostDetails: View {
                                 .resizable()
                                 .scaledToFit()
                                 .onAppear {
-                                   // accountPic.image = image
+                                    accountPic.image = image
                                     print("downloaded account pic in post details")
                                 }
                         } else if phase.error != nil {

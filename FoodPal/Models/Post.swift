@@ -33,7 +33,7 @@ import CoreLocation
      
      var expiryDateSpelledOut: String {
          let formatter = DateFormatter()
-         formatter.setLocalizedDateFormatFromTemplate("MMMM dd") // This will localize to "M/d", "d/M", etc. based on locale
+         formatter.setLocalizedDateFormatFromTemplate("MMMM dd") 
          return formatter.string(from: expiryDate)
      }
      

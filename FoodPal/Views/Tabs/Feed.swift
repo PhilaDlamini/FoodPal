@@ -9,9 +9,11 @@ import SwiftUI
 import FirebaseDatabase
 
 struct Feed: View {
-    @State var displayedPosts = [Post]()
     @EnvironmentObject var posts: Posts
     @EnvironmentObject var address: Address
+    @State var showToolBar = true
+    @State private var lastContentOffset: CGFloat = 0
+    @State private var scrollDirection: String = "None"
     
     var body: some View {
         NavigationView {
