@@ -44,13 +44,11 @@
 		B38D5EAF2C1B180400C6E931 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EAE2C1B180400C6E931 /* Posts.swift */; };
 		B38D5EB42C1C66DF00C6E931 /* Claimed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EB32C1C66DF00C6E931 /* Claimed.swift */; };
 		B38D5EB62C1C70B800C6E931 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B38D5EB52C1C70B800C6E931 /* README.md */; };
-		B38D5EB82C1DE96B00C6E931 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EB72C1DE96B00C6E931 /* Test.swift */; };
 		B38D5EBA2C1F41FE00C6E931 /* FoodImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EB92C1F41FE00C6E931 /* FoodImages.swift */; };
 		B38D5EBC2C1F423500C6E931 /* PostProfilePic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EBB2C1F423500C6E931 /* PostProfilePic.swift */; };
 		B38D5EBE2C1F426100C6E931 /* PostListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EBD2C1F426100C6E931 /* PostListItem.swift */; };
 		B38D5EC02C1F43BA00C6E931 /* FavoritedPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EBF2C1F43BA00C6E931 /* FavoritedPosts.swift */; };
 		B38D5EC42C21EECB00C6E931 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D5EC32C21EECB00C6E931 /* ImageViewer.swift */; };
-		B38D5EC82C27164F00C6E931 /* countries_data.json in Resources */ = {isa = PBXBuildFile; fileRef = B38D5EC72C27164F00C6E931 /* countries_data.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,13 +85,11 @@
 		B38D5EAE2C1B180400C6E931 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		B38D5EB32C1C66DF00C6E931 /* Claimed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Claimed.swift; sourceTree = "<group>"; };
 		B38D5EB52C1C70B800C6E931 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		B38D5EB72C1DE96B00C6E931 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		B38D5EB92C1F41FE00C6E931 /* FoodImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodImages.swift; sourceTree = "<group>"; };
 		B38D5EBB2C1F423500C6E931 /* PostProfilePic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProfilePic.swift; sourceTree = "<group>"; };
 		B38D5EBD2C1F426100C6E931 /* PostListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListItem.swift; sourceTree = "<group>"; };
 		B38D5EBF2C1F43BA00C6E931 /* FavoritedPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedPosts.swift; sourceTree = "<group>"; };
 		B38D5EC32C21EECB00C6E931 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
-		B38D5EC72C27164F00C6E931 /* countries_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries_data.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,8 +151,6 @@
 				B340A4A22C0677C7007B6E9F /* Assets.xcassets */,
 				B32CEC542C133FCC0028C1C4 /* GoogleService-Info.plist */,
 				B34FC58D2C0B5F8900A279B8 /* Info.plist */,
-				B38D5EB72C1DE96B00C6E931 /* Test.swift */,
-				B38D5EC72C27164F00C6E931 /* countries_data.json */,
 			);
 			path = FoodPal;
 			sourceTree = "<group>";
@@ -358,7 +352,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B38D5EC82C27164F00C6E931 /* countries_data.json in Resources */,
 				B340A4A62C0677C7007B6E9F /* Preview Assets.xcassets in Resources */,
 				B340A4A32C0677C7007B6E9F /* Assets.xcassets in Resources */,
 				B38D5EB62C1C70B800C6E931 /* README.md in Resources */,
@@ -377,7 +370,6 @@
 				B38D5EC02C1F43BA00C6E931 /* FavoritedPosts.swift in Sources */,
 				B38D5EAF2C1B180400C6E931 /* Posts.swift in Sources */,
 				B38D5EBC2C1F423500C6E931 /* PostProfilePic.swift in Sources */,
-				B38D5EB82C1DE96B00C6E931 /* Test.swift in Sources */,
 				B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */,
 				B38D5EA02C13A2B200C6E931 /* SignIn.swift in Sources */,
 				B38D5EC42C21EECB00C6E931 /* ImageViewer.swift in Sources */,
