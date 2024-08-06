@@ -31,4 +31,31 @@ extension Decodable {
             let obj = try decoder.decode(T.self, from: jsonData)
             return obj
     }
+    
+    static func loadFromDefaults <T: Decodable> (key: String) -> T? {
+        if let jsonData = UserDefaults.standard.data(forKey: key) {
+            if let obj = try? JSONDecoder().decode(T.self, from: jsonData) {
+                return obj
+
+            } else {
+                print("Failed to decode \(key) from defaults")
+            }
+            
+        } else {
+            print("Failed to load \(key) data from defaults")
+        }
+        
+        return nil
+    }
+}
+
+extension Encodable {
+    static func saveToDefaults <T: Encodable> (model: T, key: String) {
+        if let encoded = try? JSONEncoder().encode(model) {
+            UserDefaults.standard.set(encoded, forKey: key)
+            print("Saved account data to user defaults")
+        } else {
+            print("Failed to save account data to defaults")
+        }
+    }
 }

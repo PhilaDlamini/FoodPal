@@ -127,6 +127,9 @@ struct Create: View {
         //attach a completion listener to the group
         group.notify(queue: .main) {
             //upload the images
+            title = title.trimmingCharacters(in: .whitespaces)
+            description = description.trimmingCharacters(in: .whitespaces)
+            
             print("post will have \(pics.count) associated images")
             let post = Post(id: postId, userPicURL: account.picURL, userHandle: account.handle, uid: account.uid, title: title, description: description, expiryDate: expiryDate, latitude: latitude, longitude: longitude, images: pics)
             let jsonData = toDict(model: post)

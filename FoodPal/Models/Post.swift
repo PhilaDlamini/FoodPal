@@ -37,6 +37,9 @@ import CoreLocation
          return formatter.string(from: expiryDate)
      }
      
+     func isFrom(account: Account) -> Bool {
+         return account.uid == uid
+     }
      
      func getDistance(from location: CLLocation) -> String {
          let formatter = NumberFormatter()

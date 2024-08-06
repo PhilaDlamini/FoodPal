@@ -16,6 +16,17 @@ func cancelPickUp(post: Post, account: Account) {
     
     //remove post from the users's claimed posts
     ref.child("claimed/\(account.uid)/\(post.id)").removeValue()
+    
+    //notify posting user this user canceled the claim
+    ref.child("users/\(post.uid)/token").getData {error, snapshot in
+        if let snapshot {
+            if snapshot.value is String {
+                let notif = NotificationData(userHandle: account.handle, title: post.title, token: snapshot.value as! String)
+                let notifJson = toDict(model: notif)
+                ref.child("notifications/unclaimed/\(notif.id)").setValue(notifJson)
+            }
+        }
+    }
 }
 
 //Blocks the poster of this post from being seen by the user
@@ -25,7 +36,7 @@ func blockPoster(of post: Post, from account: Account) {
     
     ref.child("blocked/\(account.uid)").getData { error, snapshot in
         if let snapshot = snapshot {
-            var blockedUsers = [post.uid]
+            let blockedUsers = [post.uid]
             
             if var blockedUsers = snapshot.value as? [String] {
                 blockedUsers.removeAll(where: {$0 == post.uid})
@@ -96,6 +107,17 @@ func claim(post: Post, account: Account, postUnavailable: PostUnavailable) {
                     print("Post was available. Proceeding to claim")
                     let jsonData = toDict(model: post)
                     ref.child("claimed/\(account.uid)/\(post.id)").setValue(jsonData)
+                    
+                    //send user the notification that it was claimed
+                    ref.child("users/\(post.uid)/token").getData {error, snapshot in
+                        if let snapshot {
+                            if snapshot.value is String {
+                                let notif = NotificationData(userHandle: account.handle, title: post.title, token: snapshot.value as! String)
+                                let notifJson = toDict(model: notif)
+                                ref.child("notifications/claimed/\(notif.id)").setValue(notifJson)
+                            }
+                        }
+                    }
                     
                 } else {
                     print("Post not available for claiming. Canceling")

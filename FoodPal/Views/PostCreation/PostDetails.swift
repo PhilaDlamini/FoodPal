@@ -23,36 +23,30 @@ struct PostDetails: View {
             HStack(alignment: .top) {
             
                 if let image = accountPic.image {
-                    image
+                    Image(uiImage: image)
                         .resizable()
-                        .scaledToFit()
+                        .scaledToFill()
                         .clipShape(Circle())
-                        .frame(width: 35)
-                        .id(id)
-                    
+                        .frame(width: 35, height: 35)
                 } else {
                     AsyncImage(url: account.picURL) {phase in
                         if let image = phase.image {
                             image
                                 .resizable()
-                                .scaledToFit()
-                                .onAppear {
-                                    accountPic.image = image
-                                    print("downloaded account pic in post details")
-                                }
+                                .scaledToFill()
                         } else if phase.error != nil {
                             Color.red
                                 .onAppear {
                                     id = UUID()
-                                }//Retry loading the image here (other idea: try async again in the postView if the iamge was never retrieved
+                                }
                         } else {
                             Circle()
                                 .fill(.gray)
                         }
                     }
                     .clipShape(Circle())
-                    .frame(width: 35)
                     .id(id)
+                    .frame(width: 35, height: 35)
                 }
                 
                 VStack (alignment: .leading, spacing: 5) {

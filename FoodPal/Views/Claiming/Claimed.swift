@@ -93,6 +93,18 @@ struct Claimed: View {
                             claimingInProgress = true
                             getAddress(for: CLLocation(latitude: post.latitude, longitude: post.longitude)) {address in
                                 deletePost(post: post, account: account, address: address)
+                                
+                                //notify posting user this has been picked up
+                                let ref = Database.database().reference()
+                                ref.child("users/\(post.uid)/token").getData {error, snapshot in
+                                    if let snapshot {
+                                        if snapshot.value is String {
+                                            let notif = NotificationData(userHandle: account.handle, title: post.title, token: snapshot.value as! String)
+                                            let notifJson = toDict(model: notif)
+                                            ref.child("notifications/picked/\(notif.id)").setValue(notifJson)
+                                        }
+                                    }
+                                }
                             }
                         }
                         .disabled(claimingInProgress)

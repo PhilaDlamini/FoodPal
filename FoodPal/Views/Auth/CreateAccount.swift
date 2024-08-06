@@ -9,9 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseDatabaseInternal
 import FirebaseStorage
-
-
-//TODO: only dismiss the sheet once the backend is done
+import FirebaseMessaging
 
 struct CreateAccount: View {
     @EnvironmentObject var account: Account
@@ -131,12 +129,18 @@ struct CreateAccount: View {
             }
             .interactiveDismissDisabled()
         }
+       
     }
     
     //creates the user acccount
     func createUser() {
         //so users doesn't double click button 
         accountCreationInProgress = true
+        email = email.trimmingCharacters(in: .whitespaces)
+        password = email.trimmingCharacters(in: .whitespaces)
+        bio = bio.trimmingCharacters(in: .whitespaces)
+        name = name.trimmingCharacters(in: .whitespaces)
+        handle = handle.trimmingCharacters(in: .whitespaces)
         
         //check the handle
         let ref = Database.database().reference().child("handles/\(handle)")
@@ -146,7 +150,7 @@ struct CreateAccount: View {
                 showErrorMessage = true
                 accountCreationInProgress = false
             } else if let snapshot = snapshot {
-                if let data = snapshot.value as? Bool {
+                if snapshot.value is Bool {
                     errorMessage = "Handle taken"
                     showErrorMessage = true
                     accountCreationInProgress = false
@@ -169,12 +173,21 @@ struct CreateAccount: View {
                                         return
                                     }
                                     
+                                    
                                     //Save account info in database and user defaults
-                                    let acc = Account(fullName: name, email: email, handle: handle, bio: bio, timesDonated: 0, picURL: url, uid: user.uid)
+                                    let acc = Account(fullName: name, email: email, handle: handle, bio: bio, timesDonated: 0, picURL: url, uid: user.uid, token: "")
+                                    
+                                    //attempt to retrieve this device token
+                                    Messaging.messaging().token { token, error in
+                                     if let token = token {
+                                         acc.token = token
+                                      }
+                                    }
+                                    
                                     let jsonData = toDict(model: acc)
                                     Database.database().reference().child("users").child(user.uid).setValue(jsonData)
                                     account.update(to: acc)
-                                    account.saveToDefaults()
+                                    Account.saveToDefaults(model: account, key: "account")
                                     
                                     //Mark handle as taken
                                     ref.setValue(true)
@@ -214,5 +227,11 @@ struct CreateAccount: View {
     }
 }
 
-//TODO: down-sample image (takes way too long to upload otherwise!!)
+/*
+ 
+ Known issue:
+ - If user creates account and then immediately proceeds to post a donation, they won't be able to receive
+ a notification when it is claimed
+ 
+ */
 

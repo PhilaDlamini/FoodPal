@@ -15,6 +15,7 @@ class Account: Codable, ObservableObject {
     var timesDonated: Int
     var picURL: URL 
     var uid: String
+    var token: String
     
     init() {
         self.fullName = "undefined"
@@ -24,9 +25,10 @@ class Account: Codable, ObservableObject {
         self.timesDonated = -1
         self.picURL = URL(string: "https://www.hackingwithswift.com/img/home-start-learning-2@2x.jpg")!
         self.uid = "undefined"
+        self.token = "undefined"
     }
     
-    init(fullName: String, email: String, handle: String, bio: String, timesDonated: Int, picURL: URL, uid: String) {
+    init(fullName: String, email: String, handle: String, bio: String, timesDonated: Int, picURL: URL, uid: String, token: String) {
         self.fullName = fullName
         self.email = email
         self.handle = handle
@@ -34,6 +36,7 @@ class Account: Codable, ObservableObject {
         self.timesDonated = timesDonated
         self.picURL = picURL
         self.uid = uid
+        self.token = "nil"
     }
     
     func update(to account:Account) {
@@ -44,10 +47,11 @@ class Account: Codable, ObservableObject {
         self.timesDonated = account.timesDonated
         self.picURL = account.picURL
         self.uid = account.uid
+        self.token = account.token
     }
     
     //loads an the account from user defaults
-    static func loadFromDefaults() -> Account? {
+   /* static func loadFromDefaults() -> Account? {
         if let accountData = UserDefaults.standard.data(forKey: "account") {
             if let account = try? JSONDecoder().decode(Account.self, from: accountData) {
                 return account
@@ -71,5 +75,5 @@ class Account: Codable, ObservableObject {
         } else {
             print("Failed to save account data to defaults")
         }
-    }
+    }*/
 }

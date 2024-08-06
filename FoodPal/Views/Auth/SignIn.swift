@@ -88,6 +88,9 @@ struct SignIn: View {
     }
     
     func signIn() {
+        email = email.trimmingCharacters(in: .whitespaces)
+        password = password.trimmingCharacters(in: .whitespaces)
+        
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let user = authResult?.user {
                 print("Sign in successful. Retrieving user info ")
@@ -99,7 +102,7 @@ struct SignIn: View {
                         let acc: Account = try! Account.fromDict(dictionary: accountData)
                         //update the account
                         account.update(to: acc)
-                        account.saveToDefaults()
+                        Account.saveToDefaults(model: acc, key: "account")
                     }
                 }
             } else {

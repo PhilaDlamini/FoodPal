@@ -39,7 +39,6 @@ struct PostView: View {
                             .scaledToFit()
                             .onAppear {
                                 profile.image = image
-                                print("PostView finished downloading profile pic")
                             }
                     } else if phase.error != nil {
                         Color.red
@@ -134,7 +133,6 @@ struct PostView: View {
                                             foodImages.images = [:]
                                         }
                                         foodImages.images![url.absoluteString] = image
-                                        print("PostView downloaded associated food pic")
                                         
                                     }
                                     .onTapGesture {
@@ -160,9 +158,6 @@ struct PostView: View {
                 }
                 .padding(EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 0))
                 
-            }
-            .onAppear {
-                print("num images \(post.images)")
             }
             
             if dense {

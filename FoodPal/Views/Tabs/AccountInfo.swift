@@ -132,24 +132,21 @@ struct AccountInfo: View {
                         
                         //profile pic
                         if let image = accountPic.image {
-                            image
+                            Image(uiImage: image)
                                 .resizable()
-                                .scaledToFit()
+                                .scaledToFill()
                                 .clipShape(Circle())
-                                .frame(width: 70)
-                                .id(imageId)
+                                .frame(width: 50, height: 50)
+                                .padding(.top)
                         } else {
                             
                             AsyncImage(url: account.picURL) {phase in
                                 if let image = phase.image {
                                     image
                                         .resizable()
-                                        .scaledToFit()
+                                        .scaledToFill()
                                         .clipShape(Circle())
-                                        .frame(width: 70)
-                                        .onAppear {
-                                            accountPic.image = image
-                                        }
+                                        .frame(width: 50, height: 50)
                                 } else if phase.error != nil {
                                     Color.red
                                         .onAppear {
@@ -158,9 +155,10 @@ struct AccountInfo: View {
                                 } else {
                                     Circle()
                                         .fill(.gray)
-                                        .frame(width: 70)
+                                        .frame(width: 50, height: 50)
                                 }
                             }
+                            .padding(.top)
                             .id(imageId)
                         }
                         
@@ -209,7 +207,7 @@ struct AccountInfo: View {
                 .onAppear {
                     getPosts()
                 }
-                .padding()
+                .padding([.leading, .trailing, .bottom])
             }
         }
     }

@@ -11,8 +11,19 @@ import Foundation
 import SwiftUI
 
 class AccountPic: ObservableObject {
-    @Published var image: Image?
-    init() {
-        self.image = nil
+    @Published var image: UIImage? = nil
+   
+    func downloadImage(from url: URL) {
+        let task = URLSession.shared.dataTask(with: url) {localUrl, response, error in
+            if error != nil {
+                print("Error downloading user profile picture")
+            } else if let data = localUrl, let downloadedImage = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.image = downloadedImage
+                }
+            }
+        }
+            
+        task.resume()
     }
 }

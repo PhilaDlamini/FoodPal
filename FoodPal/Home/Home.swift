@@ -21,27 +21,27 @@ struct Home: View {
     @State var creatingPost = false
     @State var isNotSignedIn = Auth.auth().currentUser == nil
     @State var doneUploading = true
-    @State var page = AuthPage.signIn
+    @State var page = AuthPage.createAccount
     @State var currentUser = Auth.auth().currentUser
     @State var claimedPost: Post? = nil
     
     //Data accessible to all child views (TODO: adopt this for posts as well)
     @StateObject var postUnavailable = PostUnavailable()
     @StateObject var locationManager = LocationManager()
-    @StateObject var account = Account(fullName: "", email: "", handle: "", bio: "", timesDonated: -1, picURL: URL(fileURLWithPath: ""), uid: "") //the user account
+    @StateObject var account = Account() //the user account
     @StateObject var address = Address() //current user address
     @StateObject var posts = Posts() //all posts for the current city,region,country
-    @StateObject var favorited = FavoritedPosts() //all posts favorited by the user 
+    @StateObject var favorited = FavoritedPosts() //all posts favorited by the user
     @StateObject var accountPic = AccountPic() //thee user's profile pic
     @StateObject var blockedAccounts = BlockedAccounts() //accounts blocked by this user
     @StateObject var accountBlocked = AccountBlocked() //for showing "user blocked" toast
     @StateObject var postReported = PostReported() //for showing "post reported" toast
-
-
+    
+    
     
     //Database related
     let ref = Database.database().reference()
-
+    
     var body: some View {
         
         if let location = locationManager.location {
@@ -111,11 +111,11 @@ struct Home: View {
                                 }
                             }
                             .ignoresSafeArea(.keyboard, edges: .bottom)
-
+                            
                         } else {
                             VStack (alignment: .center, spacing: 20) {
                                 ProgressView()
-                                Text("Finishing account set up")
+                                Text("Finishing account setup")
                             }
                         }
                     }
@@ -147,17 +147,25 @@ struct Home: View {
                     print("address in home \(address.getString())")
                     attachObservers()
                 }
-               
                 
                 //listen to auth events
                 Auth.auth().addStateDidChangeListener {auth, user in
                     isNotSignedIn = user == nil
                 }
                 
-                //get the account info of current user
-                if let acc = Account.loadFromDefaults() {
+                //load account and token info from user defaults
+                print("Attemping to load account data in Home")
+                if let acc: Account = Account.loadFromDefaults(key: "account") {
+                    print("Successfully loaded account data in home")
+                    if let token: String = String.loadFromDefaults(key: "token") {
+                        acc.token = token
+                    }
+                    
                     account.update(to: acc)
-                    print("Account data was loaded from user defaults")
+                    print("Data loaded. Now downloading user profile pic")
+                    
+                    //Download the user image
+                    accountPic.downloadImage(from: account.picURL)
                 }
             }
             .environmentObject(account)
@@ -179,14 +187,14 @@ struct Home: View {
     //Attach all observers
     func attachObservers() {
         print("Addres string in home: \(address.getString())")
-
+        
         //Observers for posts at current location
         ref.child("posts/\(address.country)/\(address.state)/\(address.city)").observe(.childAdded) {snapshot in
             for _ in snapshot.children {
                 if let postData = snapshot.value as? [String: Any] {
                     do {
                         let post: Post = try Post.fromDict(dictionary: postData)
-                        if !blockedAccounts.blocked.contains(post.uid) {
+                        if !(blockedAccounts.blocked.contains(post.uid) || post.isFrom(account: account)) {
                             posts.add(post: post)
                         }
                     } catch {
@@ -207,7 +215,6 @@ struct Home: View {
                     }
                 }
             }
-            
         }
         
         //Observer for favorited posts
@@ -224,7 +231,7 @@ struct Home: View {
                     }
                 }
             }
-
+            
         }
         
         ref.child("favorited/\(account.uid)").observe(.childRemoved) {snapshot in
@@ -274,7 +281,6 @@ struct Home: View {
                 })
             }
         }
-
+        
     }
-    
 }
