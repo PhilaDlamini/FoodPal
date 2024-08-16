@@ -165,7 +165,7 @@ struct AccountInfo: View {
                         Text("\(account.handle)")
                             .font(.caption)
                         Text("\(account.bio)")
-                        
+                            .multilineTextAlignment(.center)
                         
                         if posts.isEmpty {
                             
@@ -213,8 +213,6 @@ struct AccountInfo: View {
     }
     
     func getPosts() {
-        print("in get account info")
-        
         //Get user posts
         let ref = Database.database().reference().child("user posts/\(account.uid)")
         ref.observe(.childAdded) {snapshot in
@@ -225,7 +223,6 @@ struct AccountInfo: View {
                         posts.removeAll(where: {$0.id == post.id})
                         posts.append(post)
                     } catch {
-                        print("Failed to decode post from postData in account info")
                     }
                     
                 }
@@ -248,9 +245,7 @@ struct AccountInfo: View {
     
     func signOut() {
         do {
-            print("about to sign out")
             try Auth.auth().signOut()
-            print("should have signed out")
         } catch {
             print("\(error.localizedDescription)")
         }

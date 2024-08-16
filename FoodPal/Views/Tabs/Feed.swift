@@ -33,9 +33,6 @@ struct Feed: View {
                     Image("avocado.png")
                         .resizable()
                         .frame(width: 35, height: 35)
-                        .onTapGesture {
-                            print(address.getString())
-                        }
                 }
             }
         }

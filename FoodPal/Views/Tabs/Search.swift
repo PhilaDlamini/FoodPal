@@ -62,7 +62,6 @@ struct Results: View {
                                     results.append(post)
                                 }
                             } catch {
-                                print("Failed to decode post from postData in search results")
                             }
                         }
                     }

@@ -249,6 +249,7 @@ struct Home: View {
         
         //Observer for claimed posts
         ref.child("claimed/\(account.uid)").observe(.childAdded) {snapshot in
+            print("claimed observer triggered")
             for _ in snapshot.children {
                 if let postData = snapshot.value as? [String: Any] {
                     do {

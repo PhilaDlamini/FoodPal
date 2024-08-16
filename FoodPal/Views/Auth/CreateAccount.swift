@@ -159,17 +159,14 @@ struct CreateAccount: View {
                     //create the user
                     Auth.auth().createUser(withEmail: email, password: password) {authResult, error in
                         if let user = authResult?.user {
-                            print("Account created")
                             
                             //Upload the profile picture
                             let profilePic = images.first!
                             let storageRef = Storage.storage().reference().child("profile pictures").child(user.uid)
                             storageRef.putData(profilePic.jpegData(compressionQuality: 0.4)!) {metadata, error in
-                                print("Pic uploaded")
                                 
                                 storageRef.downloadURL { url, error in
                                     guard let url = url else {
-                                        print("Failed to get pic url")
                                         return
                                     }
                                     
@@ -182,16 +179,16 @@ struct CreateAccount: View {
                                      if let token = token {
                                          acc.token = token
                                       }
+                                        
+                                        let jsonData = toDict(model: acc)
+                                        Database.database().reference().child("users").child(user.uid).setValue(jsonData)
+                                        account.update(to: acc)
+                                        Account.saveToDefaults(model: account, key: "account")
                                     }
-                                    
-                                    let jsonData = toDict(model: acc)
-                                    Database.database().reference().child("users").child(user.uid).setValue(jsonData)
-                                    account.update(to: acc)
-                                    Account.saveToDefaults(model: account, key: "account")
+                            
                                     
                                     //Mark handle as taken
                                     ref.setValue(true)
-                                    print("Account info saved to database")
                                     done = true
                                 }
                             }
