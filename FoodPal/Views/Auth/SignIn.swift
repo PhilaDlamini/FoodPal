@@ -15,6 +15,7 @@ struct SignIn: View {
     @State var password = ""
     @State var errorMessage = ""
     @State var showErrorMessage = false
+    @State var signinInProgress = false
     @Binding var page: AuthPage
     @Binding var done: Bool
     @State var hidePassword = true
@@ -61,7 +62,7 @@ struct SignIn: View {
                     Button("Sign in", action: signIn)
                         .foregroundColor(.black)
                         .buttonStyle(.borderedProminent)
-                        .disabled(email.isEmpty || password.isEmpty)
+                        .disabled(email.isEmpty || password.isEmpty || signinInProgress)
                         .cornerRadius(15)
 
 
@@ -88,6 +89,7 @@ struct SignIn: View {
     }
     
     func signIn() {
+        signinInProgress = true
         email = email.trimmingCharacters(in: .whitespaces)
         password = password.trimmingCharacters(in: .whitespaces)
         
@@ -106,6 +108,7 @@ struct SignIn: View {
                     }
                 }
             } else {
+                signinInProgress = false
                 if let error = error {
                     if let errorCode = AuthErrorCode.Code(rawValue: (error as NSError).code) {
                        switch errorCode {
@@ -123,6 +126,7 @@ struct SignIn: View {
                            errorMessage = "Network error"
                        default:
                            errorMessage = "Unknown error"
+                           print("some error \(errorCode)")
                        }
                    } else {
                        errorMessage = "\(error.localizedDescription)"
