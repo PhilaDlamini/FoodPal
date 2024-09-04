@@ -4,4 +4,3 @@ Just write a quick description of the food, take a few pictures of it, and uploa
 can claim it and come collect it from you. 
 
 FoodPal is coming to the App Store as a free software update this Fall
-}
