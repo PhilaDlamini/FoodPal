@@ -10,6 +10,6 @@ import Foundation
 struct NotificationData: Identifiable, Codable {
     var id = UUID()
     var userHandle: String
-    var title: String 
+    var title: String
     var token: String
 }

@@ -26,6 +26,8 @@
 		B34FC58F2C0C8E2700A279B8 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC58E2C0C8E2700A279B8 /* Account.swift */; };
 		B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34FC5902C0C9DBA00A279B8 /* PostView.swift */; };
 		B34FC5942C107D4500A279B8 /* Capture in Frameworks */ = {isa = PBXBuildFile; productRef = B34FC5932C107D4500A279B8 /* Capture */; };
+		B35D54312DD6924E00057E55 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B35D54302DD6924E00057E55 /* FirebaseMessaging */; };
+		B379C2DB2DD695960081D1AC /* NotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B379C2DA2DD695960081D1AC /* NotificationData.swift */; };
 		B38BA3D12C2AD7CB00DC194E /* AccountPic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3D02C2AD7CB00DC194E /* AccountPic.swift */; };
 		B38BA3D42C2D783B00DC194E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = B38BA3D32C2D783B00DC194E /* AlertToast */; };
 		B38BA3D62C30566100DC194E /* PostUnavailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38BA3D52C30566100DC194E /* PostUnavailable.swift */; };
@@ -72,6 +74,7 @@
 		B34FC58D2C0B5F8900A279B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B34FC58E2C0C8E2700A279B8 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B34FC5902C0C9DBA00A279B8 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		B379C2DA2DD695960081D1AC /* NotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationData.swift; sourceTree = "<group>"; };
 		B38BA3D02C2AD7CB00DC194E /* AccountPic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPic.swift; sourceTree = "<group>"; };
 		B38BA3D52C30566100DC194E /* PostUnavailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUnavailable.swift; sourceTree = "<group>"; };
 		B38BA3D82C30610400DC194E /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 			files = (
 				B38D5E952C1345FC00C6E931 /* FirebaseAnalytics in Frameworks */,
 				B38D5E982C134B5500C6E931 /* FirebaseAuth in Frameworks */,
+				B35D54312DD6924E00057E55 /* FirebaseMessaging in Frameworks */,
 				B38D5E9A2C134B6000C6E931 /* FirebaseDatabase in Frameworks */,
 				B38BA3D42C2D783B00DC194E /* AlertToast in Frameworks */,
 				B38D5E9C2C134B6700C6E931 /* FirebaseStorage in Frameworks */,
@@ -168,6 +172,7 @@
 			children = (
 				B34FC56A2C07740500A279B8 /* Post.swift */,
 				B34FC58E2C0C8E2700A279B8 /* Account.swift */,
+				B379C2DA2DD695960081D1AC /* NotificationData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 				B38D5E992C134B6000C6E931 /* FirebaseDatabase */,
 				B38D5E9B2C134B6700C6E931 /* FirebaseStorage */,
 				B38BA3D32C2D783B00DC194E /* AlertToast */,
+				B35D54302DD6924E00057E55 /* FirebaseMessaging */,
 			);
 			productName = FoodPal;
 			productReference = B340A49B2C0677C5007B6E9F /* FoodPal.app */;
@@ -317,7 +323,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					B340A49A2C0677C5007B6E9F = {
 						CreatedOnToolsVersion = 15.4;
@@ -394,6 +400,7 @@
 				B34FC5662C0767AF00A279B8 /* Favorites.swift in Sources */,
 				B340A49F2C0677C5007B6E9F /* FoodPalApp.swift in Sources */,
 				B34FC56B2C07740500A279B8 /* Post.swift in Sources */,
+				B379C2DB2DD695960081D1AC /* NotificationData.swift in Sources */,
 				B38BA3DB2C30698200DC194E /* BlockedAccounts.swift in Sources */,
 				B38BA3D92C30610400DC194E /* functions.swift in Sources */,
 				B34FC5912C0C9DBA00A279B8 /* PostView.swift in Sources */,
@@ -439,6 +446,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Z4HDAL2M8R;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -502,6 +510,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Z4HDAL2M8R;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -531,7 +540,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FoodPal/Preview Content\"";
-				DEVELOPMENT_TEAM = Z4HDAL2M8R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodPal/Info.plist;
@@ -568,7 +576,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FoodPal/Preview Content\"";
-				DEVELOPMENT_TEAM = Z4HDAL2M8R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodPal/Info.plist;
@@ -652,6 +659,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B34FC5922C107D4500A279B8 /* XCRemoteSwiftPackageReference "Capture" */;
 			productName = Capture;
+		};
+		B35D54302DD6924E00057E55 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B32CEC562C13443C0028C1C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		B38BA3D32C2D783B00DC194E /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;

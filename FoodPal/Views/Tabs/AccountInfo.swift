@@ -199,6 +199,9 @@ struct AccountInfo: View {
                 }
                 .confirmationDialog("Logout of FoodPal", isPresented: $showActionSheet) {
                     Button("Logout", role: .destructive, action: signOut)
+                    Button("Delete account", role: .destructive, action: {
+                        deleteAccount(account: account)
+                    })
                     Button("Blocked accounts", role: .none) {
                         showBlockedAccounts = true
                     }
@@ -243,11 +246,16 @@ struct AccountInfo: View {
         }
     }
     
+    
     func signOut() {
-        do {
-            try Auth.auth().signOut()
-        } catch {
-            print("\(error.localizedDescription)")
+        if account.handle == "@guest" {
+            deleteAccount(account: account)
+        } else {
+            do {
+                try Auth.auth().signOut()
+            } catch {
+                print("\(error.localizedDescription)")
+            }
         }
     }
 }

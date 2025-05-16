@@ -36,8 +36,7 @@ struct Home: View {
     @StateObject var blockedAccounts = BlockedAccounts() //accounts blocked by this user
     @StateObject var accountBlocked = AccountBlocked() //for showing "user blocked" toast
     @StateObject var postReported = PostReported() //for showing "post reported" toast
-    
-    
+
     
     //Database related
     let ref = Database.database().reference()
@@ -178,10 +177,7 @@ struct Home: View {
             .environmentObject(blockedAccounts)
             .environmentObject(accountBlocked)
             .environmentObject(postReported)
-            
-        } else {
-            Text("Location not accessible")
-        }
+        } 
     }
     
     //Attach all observers

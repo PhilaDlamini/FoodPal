@@ -117,6 +117,15 @@ struct CreateAccount: View {
                     }
                     
                     Spacer()
+                    
+                    Divider()
+                                        
+                    Button("Continue as a guest", action: signInAnonymously)
+                        .foregroundColor(.white)
+                        .buttonStyle(.bordered)
+                        .cornerRadius(15)
+                    
+                    Spacer()
                 }
             }
             .onAppear {
@@ -130,6 +139,39 @@ struct CreateAccount: View {
             .interactiveDismissDisabled()
         }
        
+    }
+    
+    //Lets the user continue anonymously
+    func signInAnonymously() {
+        Auth.auth().signInAnonymously() { (authResult, error) in
+            if error != nil {
+                errorMessage = "Error signing in anonymously"
+                showErrorMessage = true
+                accountCreationInProgress = false
+            } else {
+                
+                if let user = authResult?.user {
+                    //Save account info in database and user defaults
+                   let url = URL(string: "https://avocadotea.com/cdn/shop/articles/avocado-leaf-an-antioxidant-game-changer-for-pharmaceutical-industry-843329_ef3b7aec-fe9c-4ddc-ad9e-3f6ae8b7f4dd.png?v=1743211359")!
+                    let acc = Account(fullName: "Anonymous", email: "", handle: "@guest", bio: "", timesDonated: 0, picURL: url, uid: user.uid, token: "")
+                    
+                    //attempt to retrieve this device token
+                    Messaging.messaging().token { token, error in
+                     if let token = token {
+                         acc.token = token
+                      }
+                        
+                        let jsonData = toDict(model: acc)
+                        Database.database().reference().child("users").child(user.uid).setValue(jsonData)
+                        account.update(to: acc)
+                        Account.saveToDefaults(model: account, key: "account")
+                    }
+            
+                    done = true
+                }
+          
+            }
+        }
     }
     
     //creates the user acccount

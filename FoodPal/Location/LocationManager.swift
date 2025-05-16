@@ -17,6 +17,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     //These are optional since the user could turn off location services at any point
     @Published var location: CLLocation?
     @Published var status: CLAuthorizationStatus?
+    @Published var usingDefaultLocation: Bool = false
 
     override init() {
         super.init()
@@ -27,31 +28,40 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     
-    // Called when the user updates their location authorization
+    //when authorization changes
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.status = status
         
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
             manager.startUpdatingLocation()
-            
+            self.usingDefaultLocation = false
+
         case .denied, .restricted:
-            print("location services denied or restricted -- tell user to go to settings")
-            
+            // User has denied permission - fallback to NYC
+            self.usingDefaultLocation = true
+            self.location = CLLocation(latitude: 40.7128, longitude: -74.0060)
+
         default:
             break
         }
     }
-    
-    
-    // Called when the user location updates
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let latestLocation = locations.last else { return }
-        self.location = latestLocation
+        if let latestLocation = locations.last {
+            self.location = latestLocation
+            self.usingDefaultLocation = false
+        }
     }
 
-    // Called when there's a failure with an error
+
+    // Called when there's a failure with an error --> fallback to NYC too
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get user location: \(error.localizedDescription)")
+        
+        // Fallback here too
+        self.usingDefaultLocation = true
+        self.location = CLLocation(latitude: 40.7128, longitude: -74.0060)
     }
+
 }

@@ -9,6 +9,7 @@ import FirebaseDatabase
 import FirebaseStorage
 import Foundation
 import CoreLocation
+import FirebaseAuth
 
 
 func cancelPickUp(post: Post, account: Account) {
@@ -56,6 +57,44 @@ func blockPoster(of post: Post, from account: Account) {
             print("Error getting blocked information")
         }
     }
+}
+
+func deleteAccount(account: Account) {
+    let ref = Database.database().reference()
+    
+    //remove post from the user who posted it 's posts
+    ref.child("user posts/\(account.uid)").removeValue()
+    
+    //remove the post from this user's favorites, if any
+    ref.child("favorited/\(account.uid)").removeValue()
+    
+    //remove the post from this user's claimed posts
+    ref.child("claimed/\(account.uid)").removeValue()
+    
+    //free handle
+    ref.child("handles/\(account.handle)").removeValue()
+    
+    //remove user data
+    ref.child( "users/\(account.uid)" ).removeValue()
+    
+    //remove user pics
+    Storage.storage().reference().child("profile pictures").child(account.uid).delete { error in
+        if error != nil {
+            print("Failed to delete profile picture")
+        } else {
+            print("Deleted user profile picture")
+        }
+    }
+    
+    //Delete user information
+    Auth.auth().currentUser?.delete { error in
+        if error != nil {
+            print("Failed to delete user")
+        } else {
+            print("Successfully deleted user")
+        }
+    }
+    
 }
 
 
