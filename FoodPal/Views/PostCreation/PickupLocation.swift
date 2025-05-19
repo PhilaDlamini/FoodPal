@@ -83,7 +83,7 @@ struct LocationSearch: View {
 
 struct PickupLocation: View {
     @State var searchText = ""
-    @State var streetAddress = ""
+    @Binding var streetAddress: String
     @Binding var latitude: Double
     @Binding var longitude: Double
     @State var addressResults = [Address]()
@@ -93,7 +93,7 @@ struct PickupLocation: View {
     @State var alternateLocation: CLLocation? = nil
     @State var position: MapCameraPosition = MapCameraPosition.region(
         MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)))
-    @StateObject private var locationManager = LocationManager()
+    @EnvironmentObject var locationManager: LocationManager
     @State var showSheet = false
     
     //The pickup location

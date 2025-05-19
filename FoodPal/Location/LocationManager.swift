@@ -40,7 +40,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         case .denied, .restricted:
             // User has denied permission - fallback to NYC
             self.usingDefaultLocation = true
-            self.location = CLLocation(latitude: 40.7128, longitude: -74.0060)
+            self.location = CLLocation(latitude: 40.713019, longitude: -74.013179)
 
         default:
             break
@@ -61,7 +61,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         // Fallback here too
         self.usingDefaultLocation = true
-        self.location = CLLocation(latitude: 40.7128, longitude: -74.0060)
+        self.location = CLLocation(latitude: 40.713019, longitude: -74.013179)
+        print("Defaulted to NYC location")
     }
 
 }

@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 import FirebaseStorage
 import FirebaseDatabaseInternal
+import AlertToast
 
 enum CreationStage {
     case details, location
@@ -17,15 +18,18 @@ enum CreationStage {
 struct Create: View {
     @State var title = ""
     @State var description = ""
+    @State var streetAddress = ""
     @State var expiryDate = Date.now
     @State var images = [UIImage]()
     @State var latitude = 0.0
     @State var longitude = 0.0
     @State var sendingPost = false
     @State var creationStage = CreationStage.details
+    @State var invalidLocation = false //shown when post location is invalid
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var account: Account
     @EnvironmentObject var address: Address
+    @EnvironmentObject var locationManager: LocationManager
     
     
     var body: some View {
@@ -44,11 +48,23 @@ struct Create: View {
                     case .details:
                         PostDetails(title: $title, description: $description, expiryDate: $expiryDate, images: $images)
                     case .location:
-                        PickupLocation(latitude: $latitude, longitude: $longitude)
+                        PickupLocation(streetAddress: $streetAddress, latitude: $latitude, longitude: $longitude)
+                    }
+                }
+                .onAppear {
+                    if let location = locationManager.location {
+                        latitude = location.coordinate.latitude
+                        longitude = location.coordinate.longitude
+                        getAddress(for: location) {updatedAddress in
+                            streetAddress = updatedAddress.getStreetAddress()
+                        }
                     }
                 }
                 .navigationTitle("New Post")
                 .navigationBarTitleDisplayMode(.inline)
+                .toast(isPresenting: $invalidLocation) {
+                    AlertToast(displayMode: .banner(.slide), type: .error(.red), title: "Invalid pickup location")
+                }
                 .toolbar {
                     
                     ToolbarItem(placement: .cancellationAction) {
@@ -75,7 +91,8 @@ struct Create: View {
                                         sendPost(address: address)
                                     } else {
                                         sendingPost = false
-                                        print("address invalid. not sending post") //TODO: turn this into a toast??
+                                        invalidLocation = true
+                                        print("pickup address invalid. not sending post") //TODO: turn this into a toast??
                                     }
                                 }
                             }
