@@ -93,6 +93,15 @@ struct SignIn: View {
         email = email.trimmingCharacters(in: .whitespaces)
         password = password.trimmingCharacters(in: .whitespaces)
         
+        //In case the user is signed-in still, sign them out
+        if Auth.auth().currentUser != nil {
+            do {
+                try Auth.auth().signOut()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let user = authResult?.user {
                 print("Sign in successful. Retrieving user info ")
@@ -125,7 +134,7 @@ struct SignIn: View {
                        case .networkError:
                            errorMessage = "Network error"
                        default:
-                           errorMessage = "Unknown error"
+                           errorMessage = "Error signing in"
                            print("some error \(errorCode)")
                        }
                    } else {

@@ -179,7 +179,7 @@ struct CreateAccount: View {
         //so users doesn't double click button 
         accountCreationInProgress = true
         email = email.trimmingCharacters(in: .whitespaces)
-        password = email.trimmingCharacters(in: .whitespaces)
+        password = password.trimmingCharacters(in: .whitespaces)
         bio = bio.trimmingCharacters(in: .whitespaces)
         name = name.trimmingCharacters(in: .whitespaces)
         handle = handle.trimmingCharacters(in: .whitespaces)
@@ -201,6 +201,7 @@ struct CreateAccount: View {
                     //create the user
                     Auth.auth().createUser(withEmail: email, password: password) {authResult, error in
                         if let user = authResult?.user {
+                            print("Account created with email: \(email), password: \(password)")
                             
                             //Upload the profile picture
                             let profilePic = images.first!
