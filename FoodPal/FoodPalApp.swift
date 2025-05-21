@@ -27,7 +27,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(
         options: [.alert, .badge, .sound],
-        completionHandler: { _, _ in }
+        completionHandler: { granted, _ in
+                if granted {
+                    print("Notification authorization granted.")
+                } else {
+                    print("Notification authorization denied.")
+                }
+            }
         )
 
         application.registerForRemoteNotifications()
@@ -39,6 +45,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
       Messaging.messaging().apnsToken = deviceToken
+        print("Should have registered for remote notifications. Device token: \(deviceToken)")
     }
     
 }
@@ -67,8 +74,8 @@ extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         if let token = fcmToken {
             
-            //save token to database 
-            print("Attemping to load account data in FoodPalApp")
+            //save token to database
+            print("FCM token: \(token)")
             if let acc: Account = Account.loadFromDefaults(key: "account") {
                 Database.database().reference().child("users/\(acc.uid)/token").setValue(token)
                 print("Token saved to database")
@@ -79,7 +86,7 @@ extension AppDelegate: MessagingDelegate {
             print("Saved token to user defaults")
            
         } else {
-            print("huh? \(String(describing: fcmToken))")
+            print("FCM token was nil in didReceiveRegistrationToken")
         }
     }
 
@@ -96,12 +103,3 @@ struct FoodPalApp: App {
         }
     }
 }
-
-/*
- 
- Notifications to do:
- - When a post is claimed,
-    unclaimed,
-    picked up
- - Recurring 'make a post' notifications (done)
- */

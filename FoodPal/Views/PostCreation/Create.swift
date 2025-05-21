@@ -10,6 +10,7 @@ import MapKit
 import FirebaseStorage
 import FirebaseDatabaseInternal
 import AlertToast
+import FirebaseMessaging
 
 enum CreationStage {
     case details, location
@@ -88,6 +89,21 @@ struct Create: View {
                                 sendingPost = true
                                 getAddress(for: CLLocation(latitude: latitude, longitude: longitude)) {address in
                                     if address.isValid() {
+                                        
+                                        //Attempt to retrieve the token again just in case
+                                        Messaging.messaging().token {token, _ in
+                                            if let token = token {
+                                                
+                                                //save token to database
+                                                Database.database().reference().child("users/\(account.uid)/token").setValue(token)
+                                                
+                                                //Also save token to user defaults
+                                                String.saveToDefaults(model: token, key: "token")
+                                            }
+                                            
+                                        }
+                                        
+                                        
                                         sendPost(address: address)
                                     } else {
                                         sendingPost = false

@@ -220,13 +220,17 @@ struct CreateAccount: View {
                                     //attempt to retrieve this device token
                                     Messaging.messaging().token { token, error in
                                      if let token = token {
+                                         print("Device token was retrieved: \(token)")
                                          acc.token = token
-                                      }
+                                     } else {
+                                         print("No device token retrieved")
+                                     }
                                         
                                         let jsonData = toDict(model: acc)
                                         Database.database().reference().child("users").child(user.uid).setValue(jsonData)
                                         account.update(to: acc)
                                         Account.saveToDefaults(model: account, key: "account")
+                                        
                                     }
                             
                                     

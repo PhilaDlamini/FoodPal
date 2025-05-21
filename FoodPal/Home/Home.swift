@@ -150,6 +150,12 @@ struct Home: View {
                 //listen to auth events
                 Auth.auth().addStateDidChangeListener {auth, user in
                     isNotSignedIn = user == nil
+                    
+                    if let user = user {
+                        //Re-attach observers since we now have a valid uid
+                        account.uid = user.uid
+                        attachObservers()
+                    }
                 }
                 
                 //load account and token info from user defaults
@@ -181,9 +187,7 @@ struct Home: View {
     }
     
     //Attach all observers
-    func attachObservers() {
-        print("Addres string in home: \(address.getString())")
-        
+    func attachObservers() {        
         //Observers for posts at current location
         ref.child("posts/\(address.country)/\(address.state)/\(address.city)").observe(.childAdded) {snapshot in
             for _ in snapshot.children {
@@ -278,6 +282,8 @@ struct Home: View {
                 })
             }
         }
+        
+        print("Should have attached all observers")
         
     }
 }
